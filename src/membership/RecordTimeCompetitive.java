@@ -1,6 +1,6 @@
 package membership;
 
-public class Competition extends RecordTime{
+public class RecordTimeCompetitive extends RecordTime{
   private SwimDiscipline swimDiscipline;
   private double timeInSeconds;
   private String convention;
@@ -9,7 +9,7 @@ public class Competition extends RecordTime{
   private int month;
   private int year;
 
-  public Competition(double timeInSeconds, String convention, String place, int dayOfMonth, int month, int year) {
+  public RecordTimeCompetitive(double timeInSeconds, String convention, String place, int dayOfMonth, int month, int year) {
     this.timeInSeconds = timeInSeconds;
     this.convention = convention;
     this.place = place;
