@@ -1,9 +1,21 @@
 package membership;
 
   enum SwimDiscipline{
-    butterfly,
-    crawl,
-    rygcrawl,
-    brystsvømning
+    BUTTERFLY,
+    CRAWL,
+    BACKCRAWL,
+    BREAST
   }
+
+enum AgeGroup {
+  U18,
+  O18
+}
+
+enum UserType {
+  ADMIN,
+  CHAIRMAN,
+  CASHIER,
+  COACH
+}
 
