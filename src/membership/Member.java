@@ -6,4 +6,9 @@ public class Member {
   private boolean active;
   //private ageGroup
 
+  public Member(String name, int age, boolean active){
+    this.name=name;
+    this.age=age;
+    this.active=active;
+  }
 }
