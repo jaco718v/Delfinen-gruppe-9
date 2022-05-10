@@ -1,7 +1,7 @@
 package membership;
 
 public class RecordTimeCompetitive extends RecordTime{
-  private SwimDiscipline swimDiscipline;
+  private Enum.SwimDiscipline swimDiscipline;
   private double timeInSeconds;
   private String convention;
   private String place;
