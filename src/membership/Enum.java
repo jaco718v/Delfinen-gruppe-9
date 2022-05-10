@@ -19,3 +19,8 @@ enum UserType {
   COACH
 }
 
+enum TeamType {
+    COMPETITIVE,
+    REGULAR
+}
+

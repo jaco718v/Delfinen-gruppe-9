@@ -1,7 +1,7 @@
 package membership;
 
-public class Competition {
-  //private enum swimDiscipline;
+public class Competition extends RecordTime{
+  private SwimDiscipline swimDiscipline;
   private double timeInSeconds;
   private String convention;
   private String place;
