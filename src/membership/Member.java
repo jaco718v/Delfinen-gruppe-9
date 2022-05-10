@@ -11,4 +11,16 @@ public class Member {
     this.age=age;
     this.active=active;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public boolean getActive() {
+    return active;
+  }
 }
