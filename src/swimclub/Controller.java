@@ -1,4 +1,4 @@
-package com.company;
+package swimclub;
 
 public class Controller {
 
