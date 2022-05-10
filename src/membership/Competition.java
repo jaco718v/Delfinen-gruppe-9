@@ -1,7 +1,7 @@
 package membership;
 
 public class Competition {
-  //private enum swimDiscipline;
+  private SwimDiscipline swimDiscipline;
   private double timeInSeconds;
   private String convention;
   private String place;
@@ -9,7 +9,7 @@ public class Competition {
   private int month;
   private int year;
 
-  public Competition(double timeInSeconds, String convention, String place, int dayOfMonth, int month, int year) {
+  public Competition(SwimDiscipline discipline, double timeInSeconds, String convention, String place, int dayOfMonth, int month, int year) {
     this.timeInSeconds = timeInSeconds;
     this.convention = convention;
     this.place = place;
