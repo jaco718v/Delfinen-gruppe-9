@@ -8,7 +8,7 @@ public class CompetitiveMember extends Member{
   private RecordTime crawlRecord;
   private RecordTime backCrawl;
   private RecordTime breastRecord;
-  private ArrayList<Competition> competitions = new ArrayList<>();
+  private ArrayList<RecordTimeCompetitive> competitions = new ArrayList<>();
 
   public CompetitiveMember(String name, int age, boolean active) {
     super(name, age, active);
