@@ -6,7 +6,7 @@ public class CompetitiveMember extends Member{
   //private RecordTime crawlRecord;
   //private RecordTime backCrawl;
   //private RecordTime breastRecord;
-  //private ArrayList<Convention> competitions;
+  //private ArrayList<Competition> competitions;
 
   public CompetitiveMember(String name, int age, boolean active) {
     super(name, age, active);
