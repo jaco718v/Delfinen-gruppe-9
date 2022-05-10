@@ -4,16 +4,16 @@ public abstract class Member {
   private String name;
   private int age;
   private boolean active;
-  private AgeGroup ageGroup;
+  private Enum.AgeGroup ageGroup;
 
   public Member(String name, int age, boolean active) {
     this.name = name;
     this.age = age;
     this.active = active;
     if (this.age < 18) {
-      this.ageGroup = AgeGroup.U18;
+      this.ageGroup = Enum.AgeGroup.U18;
     } else {
-      this.ageGroup = AgeGroup.O18;
+      this.ageGroup = Enum.AgeGroup.O18;
     }
   }
 
@@ -29,7 +29,7 @@ public abstract class Member {
     return active;
   }
 
-  public AgeGroup getAgeGroup() {
+  public Enum.AgeGroup getAgeGroup() {
     return ageGroup;
   }
 }
