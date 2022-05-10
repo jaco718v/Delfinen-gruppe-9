@@ -21,12 +21,26 @@ private Scanner sc = new Scanner(System.in);
     
     public void addMember(){
       String memberName = sc.nextLine();
-      int memberAge = sc.next();
+      String memberAgeString = sc.nextLine();
+
+      if (tryParseInt(memberAgeString)) {
+          int memberAge = Integer.parseInt(memberAgeString);
+      }
 
 
 
 
       
 
+    }
+
+
+    private boolean tryParseInt(String str) {
+        try {
+            Integer.parseInt(str);
+        } catch (Exception E) {
+            return false;
+        }
+        return true;
     }
 }
