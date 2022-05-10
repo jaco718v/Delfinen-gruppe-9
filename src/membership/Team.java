@@ -7,4 +7,18 @@ public class Team {
   //private User coach;
   private Enum.TeamType teamType;
   private Enum.AgeGroup ageGroup;
+
+  public void setMemberList(ArrayList<Member> memberList) {
+    this.memberList = memberList;
+  }
+
+  public ArrayList<Member> getMemberList() {
+    return memberList;
+  }
+
+  public void addMemberToTeamList(Member member){
+    memberList.add(member);
+
+  }
+
 }
