@@ -53,4 +53,24 @@ public class UI {
     public void showTopSwimmers() {
         System.out.println("Top swimmers:");
     }
+
+    public void displayPleaseTypeLoginName() {
+        System.out.println("Please type user login name: ");
+    }
+
+    public void displayPleaseTypeLoginPassword() {
+        System.out.println("Please type user login password: ");
+    }
+
+    public void displayPleaseEnterValidUser() {
+        System.out.println("Please enter a valid user.");
+    }
+
+    public void displayWrongPassword() {
+        System.out.println("Wrong password, try again.");
+    }
+
+    public void noRegisteredUsers() {
+        System.out.println("Can't login, no registered users.");
+    }
 }
