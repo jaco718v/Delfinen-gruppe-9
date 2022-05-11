@@ -27,10 +27,10 @@ public class Team {
     return activeMembers;
   }
 
-  public int getMembersAboveAge(int age){
+  public int getActiveMembersAboveAge(int age){
     int membersAboveAge = 0;
     for(Member member : memberList){
-      if (member.getAge()>age){
+      if (member.getAge()>age && member.getActive()){
         membersAboveAge++;
       }
     }

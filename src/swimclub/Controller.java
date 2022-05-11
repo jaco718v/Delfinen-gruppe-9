@@ -25,11 +25,13 @@ public class Controller {
       double seniorDiscount = 0.25;
       double subscriptionSum = 0;
       for (Team team : teamArray) {
-        subscriptionSum += team.getActiveMembers() * subscriptionJunior +
-            (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
+        double subscription = subscriptionJunior;
         if(team.getAgeGroup()== Enum.AgeGroup.O18){
-        subscriptionSum-= subscriptionSenior*seniorDiscount*team.getMembersAboveAge(seniorThreshold);
+          subscription = subscriptionSenior;
+          subscriptionSum-= subscriptionSenior*seniorDiscount*team.getActiveMembersAboveAge(seniorThreshold);
         }
+        subscriptionSum += team.getActiveMembers() * subscription +
+            (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
       }
       return subscriptionSum;
       }
