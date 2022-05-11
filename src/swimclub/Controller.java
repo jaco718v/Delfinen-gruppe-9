@@ -1,5 +1,6 @@
 package swimclub;
 
+import database.FileHandler;
 import membership.Enum;
 import membership.Team;
 import membership.Member;
@@ -11,11 +12,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Controller {
-    private ArrayList<Team> teamArray = new ArrayList<>();
-    private Scanner sc = new Scanner(System.in);
-    private UI ui = new UI();
+    private final Scanner sc = new Scanner(System.in);
+    private final FileHandler fileHandler = new FileHandler();
+    private final UI ui = new UI();
     private ArrayList<User> users = new ArrayList<>();
     private User loggedInUser;
+    private ArrayList<Team> teamArray = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -54,7 +56,6 @@ public class Controller {
         }
     }
 
-
     private void createTeams() {
         teamArray.add(new Team(Enum.TeamType.REGULAR, Enum.AgeGroup.U18));
         teamArray.add(new Team(Enum.TeamType.REGULAR, Enum.AgeGroup.O18));
@@ -70,7 +71,6 @@ public class Controller {
             int memberAge = Integer.parseInt(memberAgeString);
         }
     }
-
 
     private boolean tryParseInt(String str) {
         try {
@@ -155,7 +155,24 @@ public class Controller {
     private void removeUser() {
         if (users.size() > 0) {
             if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-                // Jeres kode her inde
+                String userName = "";
+                boolean enteredUserName = false;
+                while (!enteredUserName) {
+                    ui.displayPleaseTypeLoginName();
+                    userName = sc.nextLine();
+                    for (User user : users) {
+                        if (userName.equals(user.getName())) {
+                            enteredUserName = true;
+                            users.remove(user);
+                        }
+                    }
+                    ui.removeUser(enteredUserName);
+                    if (!enteredUserName) {
+                        ui.displayPleaseEnterValidUser(userName);
+                    }
+                }
+            } else {
+                ui.loggedInUserNoPrivilege();
             }
         } else {
             ui.noRegisteredUsers();
