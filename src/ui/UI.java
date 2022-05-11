@@ -103,6 +103,7 @@ public class UI {
     }
 
     public void listCommandsNotLoggedIn() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Login user");
         System.out.println("0. Exit program");
@@ -110,6 +111,7 @@ public class UI {
     }
 
     public void listCommandsAdmin() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Login user");
         System.out.println("2. Add user");
@@ -118,13 +120,14 @@ public class UI {
         System.out.println("5. Edit member");
         System.out.println("6. Remove member");
         System.out.println("7. Show subscriptions");
-        System.out.println("8. Show subscriptions in arrears");
+        System.out.println("8. Show members in arrears");
         System.out.println("9. Show top swimmers");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
 
     public void listCommandsChairman() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Login user");
         System.out.println("2. Add user");
@@ -137,15 +140,17 @@ public class UI {
     }
 
     public void listCommandsCashier() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Login user");
         System.out.println("7. Show subscriptions");
-        System.out.println("8. Show subscriptions in arrears");
+        System.out.println("8. Show members in arrears");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
 
     public void listCommandsCoach() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Login user");
         System.out.println("9. Show top swimmers");
