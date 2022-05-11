@@ -1,8 +1,14 @@
 package ui;
 
+import java.sql.SQLOutput;
+
 public class UI {
 
     public void loginUser(boolean success) {
+        System.out.println(" Indtast brugernavn");
+        System.out.println(" Indtast kode");
+
+
         if (success) {
             System.out.println("Login successful.");
         } else {
@@ -27,6 +33,11 @@ public class UI {
     }
 
     public void addMember(boolean success) {
+        System.out.println("Indtast fulde navn på nyt medlem");
+        System.out.println("Indtast alder");
+        System.out.println("Er det et aktivt medlem? ");
+        System.out.println("Er det et konkurrende medlem?");
+
         if (success) {
             System.out.println("Successfully added member.");
         } else {

@@ -9,4 +9,12 @@ public class MemberCompetitive extends Member {
     public MemberCompetitive(String name, int age, boolean active) {
         super(name, age, active);
     }
+
+    public ArrayList<RecordTimeCompetitive> getCompetitions() {
+        return competitions;
+    }
+
+    public void setCompetitions(ArrayList<RecordTimeCompetitive> competitions) {
+        this.competitions = competitions;
+    }
 }

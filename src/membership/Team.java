@@ -13,6 +13,10 @@ public class Team {
     this.ageGroup = ageGroup;
   }
 
+  public Team() {
+
+  }
+
   public Enum.AgeGroup getAgeGroup() {
     return ageGroup;
   }
@@ -45,9 +49,8 @@ public class Team {
     return memberList;
   }
 
-  public void addMemberToTeamList(Member member){
-    memberList.add(member);
 
-  }
+
+
 
 }
