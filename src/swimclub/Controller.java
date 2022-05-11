@@ -11,16 +11,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Controller {
-private ArrayList<Team> teamArray = new ArrayList<>();
-private Scanner sc = new Scanner(System.in);
-private UI ui = new UI();
-private ArrayList<User> users = new ArrayList<>();
-private User loggedInUser;
+    private ArrayList<Team> teamArray = new ArrayList<>();
+    private Scanner sc = new Scanner(System.in);
+    private UI ui = new UI();
+    private ArrayList<User> users = new ArrayList<>();
+    private User loggedInUser;
 
 
     public static void main(String[] args) {
-	   Controller con = new Controller();
-       con.run();
+        Controller con = new Controller();
+        con.run();
     }
 
     private void run() {
@@ -55,21 +55,20 @@ private User loggedInUser;
     }
 
 
-
-    private void createTeams(){
-      teamArray.add(new Team(Enum.TeamType.REGULAR,Enum.AgeGroup.U18));
-      teamArray.add(new Team(Enum.TeamType.REGULAR,Enum.AgeGroup.O18));
-      teamArray.add(new Team(Enum.TeamType.COMPETITIVE,Enum.AgeGroup.U18));
-      teamArray.add(new Team(Enum.TeamType.COMPETITIVE,Enum.AgeGroup.O18));
+    private void createTeams() {
+        teamArray.add(new Team(Enum.TeamType.REGULAR, Enum.AgeGroup.U18));
+        teamArray.add(new Team(Enum.TeamType.REGULAR, Enum.AgeGroup.O18));
+        teamArray.add(new Team(Enum.TeamType.COMPETITIVE, Enum.AgeGroup.U18));
+        teamArray.add(new Team(Enum.TeamType.COMPETITIVE, Enum.AgeGroup.O18));
     }
 
-    public void addMember(){
-      String memberName = sc.nextLine();
-      String memberAgeString = sc.nextLine();
+    public void addMember() {
+        String memberName = sc.nextLine();
+        String memberAgeString = sc.nextLine();
 
-      if (tryParseInt(memberAgeString)) {
-          int memberAge = Integer.parseInt(memberAgeString);
-      }
+        if (tryParseInt(memberAgeString)) {
+            int memberAge = Integer.parseInt(memberAgeString);
+        }
     }
 
 
@@ -85,60 +84,15 @@ private User loggedInUser;
     private void addUser() {
         if (users.size() > 0) {
             if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-                String userName = "";
-                String userPassword = "";
-                String userType;
+                String userName = addUserName();
+                String userPassword = addUserPassword();
+                String userType = addUserType();
 
-                boolean enteredUserName = false;
-                while (!enteredUserName) {
-                    ui.displayPleaseTypeLoginName();
-                    userName = sc.nextLine();
-                    if ((!userName.equals("")) && (!userName.equals(" "))) {
-                        enteredUserName = true;
-                    }
-                    if (!enteredUserName) {
-                        ui.displayPleaseEnterValidUser(userName);
-                    }
-                }
-
-                boolean enteredUserPassword = false;
-                while (!enteredUserPassword) {
-                    ui.displayPleaseTypeLoginPassword();
-                    userPassword = sc.nextLine();
-                    if ((!userPassword.equals("")) && (!userPassword.equals(" "))) {
-                            enteredUserPassword = true;
-                        }
-                    if (!enteredUserPassword) {
-                        ui.displayBadPassword(userPassword);
-                    }
-                }
-
-                boolean enteredUserType = false;
-                while (!enteredUserType) {
-                    ui.displayPleaseSelectUserType();
-                    userType = sc.nextLine();
-                    switch (userType) {
-                        case "1" -> {
-                            users.add(new User(userName, userPassword, Enum.UserType.ADMIN));
-                            enteredUserType = true;
-                        }
-                        case "2" -> {
-                            users.add(new User(userName, userPassword, Enum.UserType.CHAIRMAN));
-                            enteredUserType = true;
-                        }
-                        case "3" -> {
-                            users.add(new User(userName, userPassword, Enum.UserType.CASHIER));
-                            enteredUserType = true;
-                        }
-                        case "4" -> {
-                            users.add(new User(userName, userPassword, Enum.UserType.COACH));
-                            enteredUserType = true;
-                        }
-                    }
-                    ui.addUser(enteredUserType);
-                    if (!enteredUserType) {
-                        ui.displayBadPassword(userType);
-                    }
+                switch (userType) {
+                    case "1" -> users.add(new User(userName, userPassword, Enum.UserType.ADMIN));
+                    case "2" -> users.add(new User(userName, userPassword, Enum.UserType.CHAIRMAN));
+                    case "3" -> users.add(new User(userName, userPassword, Enum.UserType.CASHIER));
+                    case "4" -> users.add(new User(userName, userPassword, Enum.UserType.COACH));
                 }
             } else {
                 ui.loggedInUserNoPrivilege();
@@ -149,8 +103,63 @@ private User loggedInUser;
         }
     }
 
-    private void removeUser() {
+    private String addUserName() {
+        String userName = "";
+        boolean enteredUserName = false;
+        while (!enteredUserName) {
+            ui.displayPleaseTypeLoginName();
+            userName = sc.nextLine();
+            if ((!userName.equals("")) && (!userName.equals(" "))) {
+                enteredUserName = true;
+            }
+            if (!enteredUserName) {
+                ui.displayPleaseEnterValidUser(userName);
+            }
+        }
+        return userName;
+    }
 
+    private String addUserPassword() {
+        String userPassword = "";
+        boolean enteredUserPassword = false;
+        while (!enteredUserPassword) {
+            ui.displayPleaseTypeLoginPassword();
+            userPassword = sc.nextLine();
+            if ((!userPassword.equals("")) && (!userPassword.equals(" "))) {
+                enteredUserPassword = true;
+            }
+            if (!enteredUserPassword) {
+                ui.displayBadPassword(userPassword);
+            }
+        }
+        return userPassword;
+    }
+
+    private String addUserType() {
+        String userType = "";
+        boolean enteredUserType = false;
+        while (!enteredUserType) {
+            ui.displayPleaseSelectUserType();
+            userType = sc.nextLine();
+            switch (userType) {
+                case "1", "2", "3", "4" -> enteredUserType = true;
+            }
+            ui.addUser(enteredUserType);
+            if (!enteredUserType) {
+                ui.displayBadPassword(userType);
+            }
+        }
+        return userType;
+    }
+
+    private void removeUser() {
+        if (users.size() > 0) {
+            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+                // Jeres kode her inde
+            }
+        } else {
+            ui.noRegisteredUsers();
+        }
     }
 
     private void loginUser() {
