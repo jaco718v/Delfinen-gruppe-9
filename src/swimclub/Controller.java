@@ -15,6 +15,7 @@ public class Controller {
     private final Scanner sc = new Scanner(System.in);
     private final FileHandler fileHandler = new FileHandler();
     private final UI ui = new UI();
+    private boolean isRunning = true;
     private ArrayList<User> users = new ArrayList<>();
     private User loggedInUser;
     private ArrayList<Team> teamArray = new ArrayList<>();
@@ -26,33 +27,9 @@ public class Controller {
     }
 
     private void run() {
-
-    }
-
-    private void showExpectedSubscriptionFees() {
-        if (users.size() > 0) {
-            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
-                double subscriptionJunior = 1000;
-                double subscriptionSenior = 1600;
-                double subscriptionPassive = 500;
-                int seniorThreshold = 60;
-                double seniorDiscount = 0.25;
-                double subscriptionSum = 0;
-                for (Team team : teamArray) {
-                    double subscription = subscriptionJunior;
-                    if (team.getAgeGroup() == Enum.AgeGroup.O18) {
-                        subscription = subscriptionSenior;
-                        subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
-                    }
-                    subscriptionSum += team.getActiveMembers() * subscription +
-                        (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
-                }
-                ui.showExpectedSubscriptionFees(subscriptionSum);
-            } else {
-                ui.loggedInUserNoPrivilege();
-            }
-        } else {
-            ui.noRegisteredUsers();
+        createTeams();
+        while (isRunning) {
+            commands();
         }
     }
 
@@ -63,22 +40,117 @@ public class Controller {
         teamArray.add(new Team(Enum.TeamType.COMPETITIVE, Enum.AgeGroup.O18));
     }
 
-    public void addMember() {
-        String memberName = sc.nextLine();
-        String memberAgeString = sc.nextLine();
-
-        if (tryParseInt(memberAgeString)) {
-            int memberAge = Integer.parseInt(memberAgeString);
+    private void commands() {
+        if (loggedInUser != null) {
+            switch (loggedInUser.getUserType()) {
+                case ADMIN -> {
+                    ui.listCommandsAdmin();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> loginUser();
+                        case "2" -> addUser();
+                        case "3" -> removeUser();
+                        case "4" -> addMember();
+                        case "5" -> editMember();
+                        case "6" -> removeMember();
+                        case "7" -> showExpectedSubscriptionFees();
+                        case "8" -> showSubscriptionsInArrears();
+                        case "9" -> showTopSwimmers();
+                        case "0" -> exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+                case CHAIRMAN -> {
+                    ui.listCommandsChairman();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> loginUser();
+                        case "2" -> addUser();
+                        case "3" -> removeUser();
+                        case "4" -> addMember();
+                        case "5" -> editMember();
+                        case "6" -> removeMember();
+                        case "0" -> exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+                case CASHIER -> {
+                    ui.listCommandsCashier();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> loginUser();
+                        case "7" -> showExpectedSubscriptionFees();
+                        case "8" -> showSubscriptionsInArrears();
+                        case "0" -> exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+                case COACH -> {
+                    ui.listCommandsCoach();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> loginUser();
+                        case "9" -> showTopSwimmers();
+                        case "0" -> exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+            }
+        } else {
+            ui.listCommandsNotLoggedIn();
+            String command = sc.nextLine();
+            switch (command) {
+                case "1" -> loginUser();
+                case "0" -> exit();
+                default -> ui.displayNoSuchCommand(command);
+            }
         }
     }
 
-    private boolean tryParseInt(String str) {
-        try {
-            Integer.parseInt(str);
-        } catch (Exception E) {
-            return false;
+    private void exit() {
+        isRunning = false;
+    }
+
+    private void loginUser() {
+        if (users.size() > 0) {
+            String userName;
+            int userIndex = -1;
+            String userPassword;
+
+            boolean enteredUserName = false;
+            while (!enteredUserName) {
+                ui.displayPleaseTypeLoginName();
+                userName = sc.nextLine();
+                for (int i = 0; i < users.size(); i++) {
+                    if (users.get(i).getName().equals(userName)) {
+                        userIndex = i;
+                        enteredUserName = true;
+                    }
+                }
+                if (!enteredUserName) {
+                    ui.displayPleaseEnterValidUser(userName);
+                }
+            }
+
+            boolean enteredUserPassword = false;
+            while (!enteredUserPassword) {
+                ui.displayPleaseTypeLoginPassword();
+                userPassword = sc.nextLine();
+                if (users.get(userIndex) != null) {
+                    if (users.get(userIndex).getPassword().equals(userPassword)) {
+                        enteredUserPassword = true;
+                    }
+                }
+                ui.loginUser(enteredUserPassword);
+                if (!enteredUserPassword) {
+                    ui.displayWrongPassword();
+                }
+            }
+            loggedInUser = users.get(userIndex);
+        } else {
+            ui.noRegisteredUsers();
+            addUser();
         }
-        return true;
     }
 
     private void addUser() {
@@ -179,44 +251,64 @@ public class Controller {
         }
     }
 
-    private void loginUser() {
+    public void addMember() {
+        String memberName = sc.nextLine();
+        String memberAgeString = sc.nextLine();
+
+        if (tryParseInt(memberAgeString)) {
+            int memberAge = Integer.parseInt(memberAgeString);
+        }
+    }
+
+    private void editMember() {
+
+    }
+
+    private void removeMember() {
+
+    }
+
+    private void showExpectedSubscriptionFees() {
         if (users.size() > 0) {
-            String userName;
-            int userIndex = -1;
-            String userPassword;
-
-            boolean enteredUserName = false;
-            while (!enteredUserName) {
-                ui.displayPleaseTypeLoginName();
-                userName = sc.nextLine();
-                for (int i = 0; i < users.size(); i++) {
-                    if (users.get(i).getName().equals(userName)) {
-                        userIndex = i;
-                        enteredUserName = true;
+            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
+                double subscriptionJunior = 1000;
+                double subscriptionSenior = 1600;
+                double subscriptionPassive = 500;
+                int seniorThreshold = 60;
+                double seniorDiscount = 0.25;
+                double subscriptionSum = 0;
+                for (Team team : teamArray) {
+                    double subscription = subscriptionJunior;
+                    if (team.getAgeGroup() == Enum.AgeGroup.O18) {
+                        subscription = subscriptionSenior;
+                        subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
                     }
+                    subscriptionSum += team.getActiveMembers() * subscription +
+                            (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
                 }
-                if (!enteredUserName) {
-                    ui.displayPleaseEnterValidUser(userName);
-                }
+                ui.showExpectedSubscriptionFees(subscriptionSum);
+            } else {
+                ui.loggedInUserNoPrivilege();
             }
-
-            boolean enteredUserPassword = false;
-            while (!enteredUserPassword) {
-                ui.displayPleaseTypeLoginPassword();
-                userPassword = sc.nextLine();
-                if (users.get(userIndex) != null) {
-                    if (users.get(userIndex).getPassword().equals(userPassword)) {
-                        enteredUserPassword = true;
-                    }
-                }
-                ui.loginUser(enteredUserPassword);
-                if (!enteredUserPassword) {
-                    ui.displayWrongPassword();
-                }
-            }
-            loggedInUser = users.get(userIndex);
         } else {
             ui.noRegisteredUsers();
         }
+    }
+
+    private void showSubscriptionsInArrears() {
+
+    }
+
+    private void showTopSwimmers() {
+
+    }
+
+    private boolean tryParseInt(String str) {
+        try {
+            Integer.parseInt(str);
+        } catch (Exception E) {
+            return false;
+        }
+        return true;
     }
 }
