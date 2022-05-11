@@ -2,28 +2,28 @@ package membership;
 
 public class Enum {
 
-  public enum SwimDiscipline {
-    BUTTERFLY,
-    CRAWL,
-    BACKCRAWL,
-    BREAST
-  }
+    public enum SwimDiscipline {
+        BUTTERFLY,
+        CRAWL,
+        BACKCRAWL,
+        BREAST
+    }
 
-  public enum AgeGroup {
-    U18,
-    O18
-  }
+    public enum AgeGroup {
+        U18,
+        O18
+    }
 
-  public enum UserType {
-    ADMIN,
-    CHAIRMAN,
-    CASHIER,
-    COACH
-  }
+    public enum UserType {
+        ADMIN,
+        CHAIRMAN,
+        CASHIER,
+        COACH
+    }
 
-  public enum TeamType {
-    COMPETITIVE,
-    REGULAR
-  }
+    public enum TeamType {
+        COMPETITIVE,
+        REGULAR
+    }
 }
 

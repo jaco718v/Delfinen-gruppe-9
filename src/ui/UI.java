@@ -55,7 +55,7 @@ public class UI {
 
     public void showExpectedSubscriptionFees(double subscriptionFees) {
         System.out.println("Expected subscription fees:");
-        System.out.println(subscriptionFees+" kr.");
+        System.out.println(subscriptionFees + " kr.");
     }
 
     public void showMembersInArrears() {

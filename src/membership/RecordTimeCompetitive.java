@@ -1,20 +1,20 @@
 package membership;
 
-public class RecordTimeCompetitive extends RecordTime{
-  private Enum.SwimDiscipline swimDiscipline;
-  private double timeInSeconds;
-  private String convention;
-  private String place;
-  private int dayOfMonth;
-  private int month;
-  private int year;
+public class RecordTimeCompetitive extends RecordTime {
+    private final String convention;
+    private final String place;
 
-  public RecordTimeCompetitive(double timeInSeconds, String convention, String place, int dayOfMonth, int month, int year) {
-    this.timeInSeconds = timeInSeconds;
-    this.convention = convention;
-    this.place = place;
-    this.dayOfMonth = dayOfMonth;
-    this.month = month;
-    this.year = year;
-  }
+    public RecordTimeCompetitive(Enum.SwimDiscipline swimDiscipline, double recordInSeconds, int dayOfMonth, int month, int year, String convention, String place) {
+        super(swimDiscipline, recordInSeconds, dayOfMonth, month, year);
+        this.convention = convention;
+        this.place = place;
+    }
+
+    public String getConvention() {
+        return convention;
+    }
+
+    public String getPlace() {
+        return place;
+    }
 }

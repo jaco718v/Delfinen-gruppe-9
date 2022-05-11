@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FileHandler {
+
     public ArrayList<String[]> readCSV(String filepath) {
 
         ArrayList<String[]> csvData = new ArrayList<>();
@@ -25,7 +26,7 @@ public class FileHandler {
         return csvData;
     }
 
-    public void writeCSV(String filepath, ArrayList<String[]> data) throws IOException {
+    public void writeToCSV(String filepath, ArrayList<String[]> data) {
         ArrayList<String[]> csvData = new ArrayList<String[]>();
         try {
             FileReader fr = new FileReader(new File(filepath));
@@ -44,6 +45,16 @@ public class FileHandler {
         csvData.addAll(data);
         try (PrintWriter pw = new PrintWriter(new File(filepath))) {
             csvData.stream()
+                    .map(this::convertToCSV)
+                    .forEach(pw::println);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void overwriteCSV(String filepath, ArrayList<String[]> data) {
+        try (PrintWriter pw = new PrintWriter(new File(filepath))) {
+            data.stream()
                     .map(this::convertToCSV)
                     .forEach(pw::println);
         } catch (Exception e) {
