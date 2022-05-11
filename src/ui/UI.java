@@ -14,7 +14,7 @@ public class UI {
         if (success) {
             System.out.println("Successfully added user.");
         } else {
-            System.out.println("Failed to add user.");
+            System.out.println("Failed to add user. Please select user type between 1-4.");
         }
     }
 
@@ -62,8 +62,8 @@ public class UI {
         System.out.println("Please type user login password: ");
     }
 
-    public void displayPleaseEnterValidUser() {
-        System.out.println("Please enter a valid user.");
+    public void displayPleaseEnterValidUser(String userName) {
+        System.out.println("Please enter a valid user. You entered: " + userName);
     }
 
     public void displayWrongPassword() {
@@ -72,5 +72,28 @@ public class UI {
 
     public void noRegisteredUsers() {
         System.out.println("Can't login, no registered users.");
+    }
+
+    public void noRegisteredUsersCreatingAdmin() {
+        System.out.println("No registered users, creating default admin user.");
+        System.out.println("Login name: admin");
+        System.out.println("Login password: admin");
+    }
+
+    public void loggedInUserNoPrivilege() {
+        System.out.println("Logged in user does not have privileges for this action.");
+    }
+
+    public void displayBadPassword(String userPassword) {
+        System.out.println("Bad password, try something else than: " + userPassword);
+    }
+
+    public void displayPleaseSelectUserType() {
+        System.out.println("Please select one of the following user types:");
+        System.out.println("1. ADMIN");
+        System.out.println("2. CHAIRMAN");
+        System.out.println("3. CASHIER");
+        System.out.println("4. COACH");
+        System.out.print("Select user type: ");
     }
 }
