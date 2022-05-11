@@ -27,7 +27,7 @@ private User loggedInUser;
 
     }
 
-    private double showExpectedSubscriptionFees() {
+    private void showExpectedSubscriptionFees() {
       double subscriptionJunior = 1000;
       double subscriptionSenior = 1600;
       double subscriptionPassive = 500;
@@ -43,7 +43,7 @@ private User loggedInUser;
         subscriptionSum += team.getActiveMembers() * subscription +
             (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
       }
-      return subscriptionSum;
+      ui.showExpectedSubscriptionFees(subscriptionSum);
       }
 
 
