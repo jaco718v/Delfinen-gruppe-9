@@ -27,24 +27,32 @@ private User loggedInUser;
 
     }
 
-    private double showExpectedSubscriptionFees() {
-      double subscriptionJunior = 1000;
-      double subscriptionSenior = 1600;
-      double subscriptionPassive = 500;
-      int seniorThreshold = 60;
-      double seniorDiscount = 0.25;
-      double subscriptionSum = 0;
-      for (Team team : teamArray) {
-        double subscription = subscriptionJunior;
-        if(team.getAgeGroup()== Enum.AgeGroup.O18){
-          subscription = subscriptionSenior;
-          subscriptionSum-= subscriptionSenior*seniorDiscount*team.getActiveMembersAboveAge(seniorThreshold);
+    private void showExpectedSubscriptionFees() {
+        if (users.size() > 0) {
+            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
+                double subscriptionJunior = 1000;
+                double subscriptionSenior = 1600;
+                double subscriptionPassive = 500;
+                int seniorThreshold = 60;
+                double seniorDiscount = 0.25;
+                double subscriptionSum = 0;
+                for (Team team : teamArray) {
+                    double subscription = subscriptionJunior;
+                    if (team.getAgeGroup() == Enum.AgeGroup.O18) {
+                        subscription = subscriptionSenior;
+                        subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
+                    }
+                    subscriptionSum += team.getActiveMembers() * subscription +
+                        (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
+                }
+                ui.showExpectedSubscriptionFees(subscriptionSum);
+            } else {
+                ui.loggedInUserNoPrivilege();
+            }
+        } else {
+            ui.noRegisteredUsers();
         }
-        subscriptionSum += team.getActiveMembers() * subscription +
-            (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
-      }
-      return subscriptionSum;
-      }
+    }
 
 
 
