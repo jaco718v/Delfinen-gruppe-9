@@ -281,45 +281,59 @@ public class Controller {
     }
 
     public void addMember() {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+            ArrayList < String[]> data = new ArrayList<>();
 
-        ArrayList < String[]> data = new ArrayList<>();
-
-        String memberName = addMemberName();
-        String memberAge = addMemberAge();
-        String akORpas = addPassiveOrActive();
-        String compORreg = addCompetitiveMember();
-         data.add(new String[] {memberName, memberAge,akORpas,compORreg});
-        boolean success = fileHandler.writeToCSV("Members.csv",data);
-        ui.addMember(success);
-       }
+            String memberName = addMemberName();
+            String memberAge = addMemberAge();
+            String akORpas = addPassiveOrActive();
+            String compORreg = addCompetitiveMember();
+            data.add(new String[] {memberName, memberAge,akORpas,compORreg});
+            boolean success = fileHandler.writeToCSV("Members.csv",data);
+            ui.addMember(success);
+        } else {
+            ui.loggedInUserNoPrivilege();
+        }
+    }
 
 
 
     public void editMember() {
-
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+            // edit member kode her
+        } else {
+            ui.loggedInUserNoPrivilege();
+        }
     }
 
     public void removeMember() {
-        ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
-        String removeName = sc.nextLine();
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+            ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
+            String removeName = sc.nextLine();
 
-        for(int i = 0; i < memberData.size(); i++){
-            String[] array = memberData.get(i);
-            if (array[0].equals(removeName)) {
-                memberData.remove(i);
-                fileHandler.overwriteCSV("Members.csv",memberData);
-                ui.removeMember(true);
-
-            } else {
-                ui.removeMember(false);
+            for(int i = 0; i < memberData.size(); i++){
+                String[] array = memberData.get(i);
+                if (array[0].equals(removeName)) {
+                    memberData.remove(i);
+                    fileHandler.overwriteCSV("Members.csv", memberData);
+                    ui.removeMember(true);
+                    break;
+                } else {
+                    ui.removeMember(false);
+                }
             }
+        } else {
+            ui.loggedInUserNoPrivilege();
         }
     }
 
     public void showMembers() {
+        int teamNumber = 0;
         for (Team team : teamArray) {
+            teamNumber += 1;
+            ui.displayTeamInformation(teamNumber, team);
             for (String[] strArray : team.getMembers()) {
-                System.out.println("Name: " + strArray[0] + " - Age: " + strArray[1] + " - Active: " + strArray[2] + " - Competitive: " + strArray[3]);
+                ui.displayMemberInformation(strArray);
             }
         }
     }

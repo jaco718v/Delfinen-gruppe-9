@@ -1,5 +1,7 @@
 package ui;
 
+import membership.Team;
+
 public class UI {
 
     public void loginUser(boolean success) {
@@ -241,5 +243,13 @@ public class UI {
         System.out.println("2. Show all swimmers");
         System.out.println("0. Back");
         System.out.print("Select command: ");
+    }
+
+    public void displayMemberInformation(String[] strArray) {
+        System.out.println("Name: " + strArray[0] + " - Age: " + strArray[1] + " - Active: " + strArray[2] + " - Competitive: " + strArray[3]);
+    }
+
+    public void displayTeamInformation(int teamNumber, Team team) {
+        System.out.println("Team " + teamNumber + " - Competitive: " + team.getTeamType().name() + " - Age group: " + team.getAgeGroup().name());
     }
 }
