@@ -65,14 +65,14 @@ public class UI {
     }
 
     public void displayMemberName(){
-        System.out.println("Please type member name");
+        System.out.print("Please type member name: ");
     }
     public void displayPleaseEnterValidName(String memberName) {
         System.out.println("Please enter a valid name. You entered: " + memberName);
     }
 
     public void displayMemberAge(int memberAgee){
-        System.out.println("Please enter member age");
+        System.out.print("Please enter member age: ");
     }
 
     public void displayPleaseEnterValidAge(int memberAgee) {
@@ -85,6 +85,7 @@ public class UI {
                                Is this an active or passive member?
                                1. Active
                                2. Passive""");
+        System.out.print("Select command: ");
     }
 
     public void displayDefaultOption(){
@@ -96,7 +97,7 @@ public class UI {
             Is this an competitive or regular member?
             1. Competitive                             
             2. Regular """);
-
+        System.out.print("Select command: ");
     }
 
 
