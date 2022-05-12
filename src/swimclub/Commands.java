@@ -1,0 +1,122 @@
+package swimclub;
+import membership.Enum;
+import ui.UI;
+
+import java.util.Scanner;
+
+public class Commands {
+    private final UI ui = new UI();
+    public void commands(Controller con, Scanner sc) {
+        if (con.getLoggedInUser() != null) {
+            switch (con.getLoggedInUser().getUserType()) {
+                case ADMIN -> {
+                    ui.listCommandsAdmin();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> userMenu(con, sc);
+                        case "2" -> memberMenu(con, sc);
+                        case "3" -> subscriptionMenu(con, sc);
+                        case "4" -> swimmerMenu(con, sc);
+                        case "0" -> con.exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+                case CHAIRMAN -> {
+                    ui.listCommandsChairman();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> userMenu(con, sc);
+                        case "2" -> memberMenu(con, sc);
+                        case "0" -> con.exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+                case CASHIER -> {
+                    ui.listCommandsCashier();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> userMenuLoginOnly(con, sc);
+                        case "2" -> subscriptionMenu(con, sc);
+                        case "0" -> con.exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+                case COACH -> {
+                    ui.listCommandsCoach();
+                    String command = sc.nextLine();
+                    switch (command) {
+                        case "1" -> userMenuLoginOnly(con, sc);
+                        case "2" -> swimmerMenu(con, sc);
+                        case "0" -> con.exit();
+                        default -> ui.displayNoSuchCommand(command);
+                    }
+                }
+            }
+        } else {
+            ui.listCommandsNotLoggedIn();
+            String command = sc.nextLine();
+            switch (command) {
+                case "1" -> con.loginUser();
+                case "0" -> con.exit();
+                default -> ui.displayNoSuchCommand(command);
+            }
+        }
+    }
+
+    private void swimmerMenu(Controller con, Scanner sc) {
+        ui.listCommandsSwimmerMenu();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.showTopSwimmers();
+            case "2" -> con.showAllSwimmers();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
+        }
+    }
+
+    private void subscriptionMenu(Controller con, Scanner sc) {
+        ui.listCommandsSubscriptionMenu();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.showExpectedSubscriptionFees();
+            case "2" -> con.showSubscriptionsInArrears();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
+        }
+    }
+
+    private void memberMenu(Controller con, Scanner sc) {
+        ui.listCommandsMemberMenu();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.addMember();
+            case "2" -> con.editMember();
+            case "3" -> con.removeMember();
+            case "4" -> con.showMembers();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
+        }
+    }
+
+    private void userMenu(Controller con, Scanner sc) {
+        ui.listCommandsUserMenu();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.loginUser();
+            case "2" -> con.addUser();
+            case "3" -> con.removeUser();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
+        }
+    }
+
+    private void userMenuLoginOnly(Controller con, Scanner sc) {
+        ui.listCommandsUserMenuLoginOnly();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.loginUser();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
+        }
+    }
+}

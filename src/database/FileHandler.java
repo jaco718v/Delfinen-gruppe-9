@@ -26,7 +26,8 @@ public class FileHandler {
         return csvData;
     }
 
-    public void writeToCSV(String filepath, ArrayList<String[]> data) {
+    public boolean writeToCSV(String filepath, ArrayList<String[]> data) {
+        boolean value = true;
         ArrayList<String[]> csvData = new ArrayList<String[]>();
         try {
             FileReader fr = new FileReader(new File(filepath));
@@ -40,6 +41,7 @@ public class FileHandler {
             br.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+            value = false;
         }
 
         csvData.addAll(data);
@@ -49,7 +51,9 @@ public class FileHandler {
                     .forEach(pw::println);
         } catch (Exception e) {
             System.out.println(e);
+            value = false;
         }
+        return value;
     }
 
     public void overwriteCSV(String filepath, ArrayList<String[]> data) {
