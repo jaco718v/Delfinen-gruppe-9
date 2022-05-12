@@ -291,20 +291,5 @@ public class Controller {
 
     public User getLoggedInUser() {
         return loggedInUser;
-        Record
-        name
-        swimDiscipline
-        recordInSeconds
-        dayOfMonth
-        month
-        year
-        convention (comp)
-        place (comp)
-
-        Member
-        name
-        age
-        active
-        competitive
     }
 }
