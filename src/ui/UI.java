@@ -305,4 +305,12 @@ public class UI {
     public void displayTeamInformation(int teamNumber, Team team) {
         System.out.println("Team " + teamNumber + " - Team type: " + team.getTeamType().name() + " - Age group: " + team.getAgeGroup().name());
     }
+
+    public void displayReturningToMainMenu() {
+        System.out.println("Returning to main menu.");
+    }
+
+    public void displayShuttingDown() {
+        System.out.println("System shutting down.");
+    }
 }

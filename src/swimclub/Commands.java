@@ -69,7 +69,7 @@ public class Commands {
         switch (command) {
             case "1" -> con.showTopSwimmers();
             case "2" -> con.showAllSwimmers();
-            case "0" -> commands(con, sc);
+            case "0" -> ui.displayReturningToMainMenu();
             default -> ui.displayNoSuchCommand(command);
         }
     }
@@ -80,7 +80,7 @@ public class Commands {
         switch (command) {
             case "1" -> con.showExpectedSubscriptionFees();
             case "2" -> con.showSubscriptionsInArrears();
-            case "0" -> commands(con, sc);
+            case "0" -> ui.displayReturningToMainMenu();
             default -> ui.displayNoSuchCommand(command);
         }
     }
@@ -93,7 +93,7 @@ public class Commands {
             case "2" -> con.editMember();
             case "3" -> con.removeMember();
             case "4" -> con.showMembers();
-            case "0" -> commands(con, sc);
+            case "0" -> ui.displayReturningToMainMenu();
             default -> ui.displayNoSuchCommand(command);
         }
     }
@@ -105,7 +105,7 @@ public class Commands {
             case "1" -> con.loginUser();
             case "2" -> con.addUser();
             case "3" -> con.removeUser();
-            case "0" -> commands(con, sc);
+            case "0" -> ui.displayReturningToMainMenu();
             default -> ui.displayNoSuchCommand(command);
         }
     }
@@ -115,7 +115,7 @@ public class Commands {
         String command = sc.nextLine();
         switch (command) {
             case "1" -> con.loginUser();
-            case "0" -> commands(con, sc);
+            case "0" -> ui.displayReturningToMainMenu();
             default -> ui.displayNoSuchCommand(command);
         }
     }
