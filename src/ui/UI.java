@@ -252,6 +252,7 @@ public class UI {
     }
 
     public void listCommandsUserMenu() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Login user");
         System.out.println("2. Add user");
@@ -261,6 +262,7 @@ public class UI {
     }
 
     public void listCommandsUserMenuLoginOnly() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Login user");
         System.out.println("0. Back");
@@ -268,6 +270,7 @@ public class UI {
     }
 
     public void listCommandsMemberMenu() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Add member");
         System.out.println("2. Edit member");
@@ -278,6 +281,7 @@ public class UI {
     }
 
     public void listCommandsSubscriptionMenu() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Show subscriptions");
         System.out.println("2. Show members in arrears");
@@ -286,6 +290,7 @@ public class UI {
     }
 
     public void listCommandsSwimmerMenu() {
+        System.out.println();
         System.out.println("Commands:");
         System.out.println("1. Show top swimmers");
         System.out.println("2. Show all swimmers");
