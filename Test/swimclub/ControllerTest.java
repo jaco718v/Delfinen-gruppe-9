@@ -6,6 +6,7 @@ import membership.Team;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,5 +50,6 @@ class ControllerTest {
       //7*1600 + 3*500 - 1600*0,25*3 =11500
       //20000
     }
+
 
 }
