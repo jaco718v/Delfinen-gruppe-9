@@ -3,10 +3,6 @@ package ui;
 public class UI {
 
     public void loginUser(boolean success) {
-        System.out.println(" Indtast brugernavn");
-        System.out.println(" Indtast kode");
-
-
         if (success) {
             System.out.println("Login successful.");
         } else {
