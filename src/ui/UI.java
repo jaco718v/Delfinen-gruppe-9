@@ -1,7 +1,5 @@
 package ui;
 
-import java.sql.SQLOutput;
-
 public class UI {
 
     public void loginUser(boolean success) {
@@ -33,10 +31,6 @@ public class UI {
     }
 
     public void addMember(boolean success) {
-        System.out.println("Indtast fulde navn på nyt medlem");
-        System.out.println("Indtast alder");
-        System.out.println("Er det et aktivt medlem? ");
-        System.out.println("Er det et konkurrende medlem?");
 
         if (success) {
             System.out.println("Successfully added member.");
@@ -69,6 +63,49 @@ public class UI {
     public void displayPleaseTypeLoginName() {
         System.out.print("Please type user login name: ");
     }
+
+    public void displayMemberName(){
+        System.out.println("Please type member name");
+    }
+    public void displayPleaseEnterValidName(String memberName) {
+        System.out.println("Please enter a valid name. You entered: " + memberName);
+    }
+
+    public void displayMemberAge(int memberAgee){
+        System.out.println("Please enter member age");
+    }
+
+    public void displayPleaseEnterValidAge(int memberAgee) {
+        System.out.println("Please enter a valid name. You entered: " + memberAgee);
+    }
+
+
+    public void displayActiveOrPassiveOptions(){
+        System.out.println("""                               
+                               Is this an active or passive member?
+                               Please type 1 for active
+                               Press enter to continue """);
+    }
+
+    public void displayDefaultOption(){
+        System.out.println("You've have entered invalid information");
+    }
+
+    public void displayCompOrRegOptions() {
+        System.out.println("""                               
+            Is this an competitive or regular member?
+            Please type 1 for competitive                             
+            Continue for regular """);
+
+    }
+
+
+
+    public void displayCompOrReg(){
+        System.out.println("Regular member");
+    }
+
+
 
     public void displayPleaseTypeLoginPassword() {
         System.out.print("Please type user login password: ");

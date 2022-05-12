@@ -20,6 +20,7 @@ public class Controller {
     private User loggedInUser;
     private ArrayList<Team> teamArray = new ArrayList<>();
 
+
     public static void main(String[] args) {
         Controller con = new Controller();
         con.run();
@@ -210,43 +211,82 @@ public class Controller {
         }
     }
 
+    private String addMemberName(){
+          String memberName  = "";
+          boolean enteredmemberName = false;
+          while (!enteredmemberName)
+        {
+              ui.displayMemberName();
+              memberName = sc.nextLine();
+              if ((!memberName.equals("")) && (!memberName.equals(" "))) {
+                  enteredmemberName = true;
+              }
+              if (!enteredmemberName) {
+                  ui.displayPleaseEnterValidName(memberName);
+              }
+          }
+          return memberName;
+
+
+    }
+
+    private String addMemberAge() {
+        int memberAgee = 0;
+        String memberAge = "";
+
+        boolean enteredmemberAgee = false;
+        while (!enteredmemberAgee) {
+            ui.displayMemberAge(memberAgee);
+        memberAge = sc.nextLine();
+        enteredmemberAgee = true;
+          }
+
+        if (!enteredmemberAgee) {
+            ui.displayMemberAge(memberAgee);
+        } return memberAge;
+      }
+
+    private String addPassiveOrActive(){
+
+        String value = "false";
+       ui.displayActiveOrPassiveOptions();
+       String input = sc.nextLine();
+
+       switch (input) {
+           case "1" -> value = "true";
+           default ->  ui.displayDefaultOption();
+       }  return value;
+      }
+
+    private String addCompetitiveMember(){
+        String competitive = "false";
+        String input = sc.nextLine();
+        switch (input) {
+            case "1" -> competitive = "true";
+            default -> ui.displayCompOrReg();
+        }  return competitive;
+    }
+
     public void addMember() {
-        ui.addMember(true);
-        String memberName = sc.nextLine(); // member name
-        String memberAgeString = sc.nextLine();
-        int memberAge = Integer.parseInt(memberAgeString);
-        String akORpas;  // aktiv or passive
-        MemberCompetitive newCompMember = new MemberCompetitive(memberName, memberAge, true);
-        MemberRegular newRegMember = new MemberRegular(memberName, memberAge, true);
 
-        Boolean answer = false;
-        do {
-            akORpas = sc.next().toLowerCase();
-            if (akORpas.equals("ja")) {
-                answer = true;
-            } else {
-                answer = false;
-            }
-        } while (!answer);
-        // "Er medlem konkurrence medlem, ja compMedlem, nej ... automatisk regular medlem
-        String regOrcomp = new String();  // Competitive or Regular
-        while (regOrcomp.equals("ja")) {
-            regOrcomp = sc.next().toLowerCase();
-            if (regOrcomp.equals("ja")) {
-                // t.getMemberList().add(newCompMember);
-            } else {
-                // t.getMemberList().add(newRegMember);
-            }
+        ArrayList < String[]> data = new ArrayList<>();
 
-        }
+        String memberName = addMemberName();
+        String memberAge = addMemberAge();
+        String akORpas = addPassiveOrActive();
+        String compORreg = addCompetitiveMember();
+         data.add(new String[] {memberName, memberAge,akORpas,compORreg});
+        boolean success = fileHandler.writeToCSV("Members.csv",data);
+        ui.addMember(success);
+       }
+
+
+
+    private void editMember() {
 
     }
 
-    public void editMember() {
-
-    }
-
-    public void removeMember() {
+    private void removeMember() {
 
     }
 
