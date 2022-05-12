@@ -300,16 +300,21 @@ public class Controller {
     }
 
     public void removeMember() {
+    ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
+    String removeName = sc.nextLine();
 
-    }
+    for(int i = 0; i < memberData.size(); i++){
+        String[] array = memberData.get(i);
+       if (array[0].equals(removeName)) {
+           memberData.remove(i);
+           fileHandler.overwriteCSV("Members.csv",memberData);
+           ui.removeMember(true);
 
-    public void showMembers() {
-        for (Team team : teamArray) {
-            for (String[] strArray : team.getMembers()) {
-                System.out.println("Name: " + strArray[0] + " - Age: " + strArray[1] + " - Active: " + strArray[2] + " - Competitive: " + strArray[3]);
-            }
-        }
+       } else {
+           ui.removeMember(false);
     }
+   }
+  }
 
     public void showExpectedSubscriptionFees() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
