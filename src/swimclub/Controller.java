@@ -329,6 +329,10 @@ public class Controller {
 
     }
 
+    public void showAllSwimmers() {
+
+    }
+
     private boolean tryParseInt(String str) {
         try {
             Integer.parseInt(str);

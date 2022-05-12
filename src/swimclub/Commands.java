@@ -15,13 +15,8 @@ public class Commands {
                     switch (command) {
                         case "1" -> userMenu(con, sc);
                         case "2" -> memberMenu(con, sc);
-                        case "3" -> con.removeUser();
-                        case "4" -> con.addMember();
-                        case "5" -> con.editMember();
-                        case "6" -> con.removeMember();
-                        case "7" -> con.showExpectedSubscriptionFees();
-                        case "8" -> con.showSubscriptionsInArrears();
-                        case "9" -> con.showTopSwimmers();
+                        case "3" -> subscriptionMenu(con, sc);
+                        case "4" -> swimmerMenu(con, sc);
                         case "0" -> con.exit();
                         default -> ui.displayNoSuchCommand(command);
                     }
@@ -30,12 +25,8 @@ public class Commands {
                     ui.listCommandsChairman();
                     String command = sc.nextLine();
                     switch (command) {
-                        case "1" -> con.loginUser();
-                        case "2" -> con.addUser();
-                        case "3" -> con.removeUser();
-                        case "4" -> con.addMember();
-                        case "5" -> con.editMember();
-                        case "6" -> con.removeMember();
+                        case "1" -> userMenu(con, sc);
+                        case "2" -> memberMenu(con, sc);
                         case "0" -> con.exit();
                         default -> ui.displayNoSuchCommand(command);
                     }
@@ -44,9 +35,8 @@ public class Commands {
                     ui.listCommandsCashier();
                     String command = sc.nextLine();
                     switch (command) {
-                        case "1" -> con.loginUser();
-                        case "7" -> con.showExpectedSubscriptionFees();
-                        case "8" -> con.showSubscriptionsInArrears();
+                        case "1" -> userMenuLoginOnly(con, sc);
+                        case "2" -> subscriptionMenu(con, sc);
                         case "0" -> con.exit();
                         default -> ui.displayNoSuchCommand(command);
                     }
@@ -55,8 +45,8 @@ public class Commands {
                     ui.listCommandsCoach();
                     String command = sc.nextLine();
                     switch (command) {
-                        case "1" -> con.loginUser();
-                        case "9" -> con.showTopSwimmers();
+                        case "1" -> userMenuLoginOnly(con, sc);
+                        case "2" -> swimmerMenu(con, sc);
                         case "0" -> con.exit();
                         default -> ui.displayNoSuchCommand(command);
                     }
@@ -70,6 +60,28 @@ public class Commands {
                 case "0" -> con.exit();
                 default -> ui.displayNoSuchCommand(command);
             }
+        }
+    }
+
+    private void swimmerMenu(Controller con, Scanner sc) {
+        ui.listCommandsSwimmerMenu();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.showTopSwimmers();
+            case "2" -> con.showAllSwimmers();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
+        }
+    }
+
+    private void subscriptionMenu(Controller con, Scanner sc) {
+        ui.listCommandsSubscriptionMenu();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.showExpectedSubscriptionFees();
+            case "2" -> con.showSubscriptionsInArrears();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
         }
     }
 
@@ -92,6 +104,16 @@ public class Commands {
             case "1" -> con.loginUser();
             case "2" -> con.addUser();
             case "3" -> con.removeUser();
+            case "0" -> commands(con, sc);
+            default -> ui.displayNoSuchCommand(command);
+        }
+    }
+
+    private void userMenuLoginOnly(Controller con, Scanner sc) {
+        ui.listCommandsUserMenuLoginOnly();
+        String command = sc.nextLine();
+        switch (command) {
+            case "1" -> con.loginUser();
             case "0" -> commands(con, sc);
             default -> ui.displayNoSuchCommand(command);
         }

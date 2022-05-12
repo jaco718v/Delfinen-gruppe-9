@@ -147,6 +147,14 @@ public class UI {
         System.out.print("Select user type: ");
     }
 
+    public void displayActiveOrPassiveOutcome(boolean b) {
+        if (b) {
+            System.out.println("Member is active.");
+        } else {
+            System.out.println("Member is passive.");
+        }
+    }
+
     public void displayNoSuchCommand(String command) {
         System.out.println("No such command: " + command);
     }
@@ -162,15 +170,10 @@ public class UI {
     public void listCommandsAdmin() {
         System.out.println();
         System.out.println("Commands:");
-        System.out.println("1. Login user");
-        System.out.println("2. Add user");
-        System.out.println("3. Remove user");
-        System.out.println("4. Add member");
-        System.out.println("5. Edit member");
-        System.out.println("6. Remove member");
-        System.out.println("7. Show subscriptions");
-        System.out.println("8. Show members in arrears");
-        System.out.println("9. Show top swimmers");
+        System.out.println("1. User menu");
+        System.out.println("2. Member menu");
+        System.out.println("3. Subscription menu");
+        System.out.println("4. Swimmer menu");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
@@ -178,12 +181,8 @@ public class UI {
     public void listCommandsChairman() {
         System.out.println();
         System.out.println("Commands:");
-        System.out.println("1. Login user");
-        System.out.println("2. Add user");
-        System.out.println("3. Remove user");
-        System.out.println("4. Add member");
-        System.out.println("5. Edit member");
-        System.out.println("6. Remove member");
+        System.out.println("1. User menu");
+        System.out.println("2. Member menu");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
@@ -191,9 +190,8 @@ public class UI {
     public void listCommandsCashier() {
         System.out.println();
         System.out.println("Commands:");
-        System.out.println("1. Login user");
-        System.out.println("7. Show subscriptions");
-        System.out.println("8. Show members in arrears");
+        System.out.println("1. User menu");
+        System.out.println("3. Subscription menu");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
@@ -201,8 +199,8 @@ public class UI {
     public void listCommandsCoach() {
         System.out.println();
         System.out.println("Commands:");
-        System.out.println("1. Login user");
-        System.out.println("9. Show top swimmers");
+        System.out.println("1. User menu");
+        System.out.println("9. Swimmer menu");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
@@ -216,6 +214,13 @@ public class UI {
         System.out.print("Select command: ");
     }
 
+    public void listCommandsUserMenuLoginOnly() {
+        System.out.println("Commands:");
+        System.out.println("1. Login user");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
     public void listCommandsMemberMenu() {
         System.out.println("Commands:");
         System.out.println("1. Add member");
@@ -225,11 +230,19 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void displayActiveOrPassiveOutcome(boolean b) {
-        if (b) {
-            System.out.println("Member is active.");
-        } else {
-            System.out.println("Member is passive.");
-        }
+    public void listCommandsSubscriptionMenu() {
+        System.out.println("Commands:");
+        System.out.println("1. Show subscriptions");
+        System.out.println("2. Show members in arrears");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsSwimmerMenu() {
+        System.out.println("Commands:");
+        System.out.println("1. Show top swimmers");
+        System.out.println("2. Show all swimmers");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
     }
 }
