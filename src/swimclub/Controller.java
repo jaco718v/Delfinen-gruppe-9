@@ -316,6 +316,14 @@ public class Controller {
         }
     }
 
+    public void showMembers() {
+        for (Team team : teamArray) {
+            for (String[] strArray : team.getMembers()) {
+                System.out.println("Name: " + strArray[0] + " - Age: " + strArray[1] + " - Active: " + strArray[2] + " - Competitive: " + strArray[3]);
+            }
+        }
+    }
+
     public void showExpectedSubscriptionFees() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
             double subscriptionJunior = 1000;
