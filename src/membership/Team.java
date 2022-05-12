@@ -1,8 +1,11 @@
 package membership;
 
+import database.FileHandler;
+
 import java.util.ArrayList;
 
 public class Team {
+    private FileHandler fileHandler = new FileHandler();
     private ArrayList<Member> memberList = new ArrayList<>();
     private User coach;
     private final Enum.TeamType teamType;
@@ -29,10 +32,31 @@ public class Team {
         this.coach = coach;
     }
 
+    public ArrayList<String[]> getMembers() {
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> returnData = new ArrayList<>();
+        for (int i = 0; i < memberData.size(); i++) {
+            String[] strArray = memberData.get(i);
+            int age = Integer.parseInt(strArray[1]);
+            if ((ageGroup == Enum.AgeGroup.U18) && (age < 18)) {
+                if (((strArray[3].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
+                    returnData.add(strArray);
+                }
+            } else if ((ageGroup == Enum.AgeGroup.O18) && (age >= 18)) {
+                if (((strArray[3].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
+                    returnData.add(strArray);
+                }
+            }
+        }
+        return returnData;
+    }
+
     public int getActiveMembers() {
         int activeMembers = 0;
-        for (Member member : memberList) {
-            if (member.getActive()) {
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        for (int i = 0; i < memberData.size(); i++) {
+            String[] strArray = memberData.get(i);
+            if (strArray[2].equals("true")) {
                 activeMembers++;
             }
         }

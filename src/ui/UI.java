@@ -226,6 +226,7 @@ public class UI {
         System.out.println("1. Add member");
         System.out.println("2. Edit member");
         System.out.println("3. Remove member");
+        System.out.println("4. Show members");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }

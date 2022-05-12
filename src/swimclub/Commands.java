@@ -92,6 +92,7 @@ public class Commands {
             case "1" -> con.addMember();
             case "2" -> con.editMember();
             case "3" -> con.removeMember();
+            case "4" -> con.showMembers();
             case "0" -> commands(con, sc);
             default -> ui.displayNoSuchCommand(command);
         }
