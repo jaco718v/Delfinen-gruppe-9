@@ -300,21 +300,21 @@ public class Controller {
     }
 
     public void removeMember() {
-    ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
-    String removeName = sc.nextLine();
+        ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
+        String removeName = sc.nextLine();
 
-    for(int i = 0; i < memberData.size(); i++){
-        String[] array = memberData.get(i);
-       if (array[0].equals(removeName)) {
-           memberData.remove(i);
-           fileHandler.overwriteCSV("Members.csv",memberData);
-           ui.removeMember(true);
+        for(int i = 0; i < memberData.size(); i++){
+            String[] array = memberData.get(i);
+            if (array[0].equals(removeName)) {
+                memberData.remove(i);
+                fileHandler.overwriteCSV("Members.csv",memberData);
+                ui.removeMember(true);
 
-       } else {
-           ui.removeMember(false);
+            } else {
+                ui.removeMember(false);
+            }
+        }
     }
-   }
-  }
 
     public void showExpectedSubscriptionFees() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
