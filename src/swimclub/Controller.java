@@ -299,7 +299,7 @@ public class Controller {
 
     }
 
-    private void removeMember() {
+    public void removeMember() {
     ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
     String removeName = sc.nextLine();
 
