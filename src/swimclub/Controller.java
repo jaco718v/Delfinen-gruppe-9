@@ -211,6 +211,10 @@ public class Controller {
         }
     }
 
+    public void showUsers() {
+
+    }
+
     private String addMemberName(){
           String memberName  = "";
           boolean enteredmemberName = false;
@@ -296,6 +300,10 @@ public class Controller {
     }
 
     public void removeMember() {
+
+    }
+
+    public void showMembers() {
 
     }
 
