@@ -303,6 +303,6 @@ public class UI {
     }
 
     public void displayTeamInformation(int teamNumber, Team team) {
-        System.out.println("Team " + teamNumber + " - Competitive: " + team.getTeamType().name() + " - Age group: " + team.getAgeGroup().name());
+        System.out.println("Team " + teamNumber + " - Team type: " + team.getTeamType().name() + " - Age group: " + team.getAgeGroup().name());
     }
 }
