@@ -253,16 +253,25 @@ public class Controller {
        String input = sc.nextLine();
 
        switch (input) {
-           case "1" -> value = "true";
+           case "1" -> {
+               value = "true";
+               ui.displayActiveOrPassiveOutcome(true);
+           }
+           case "2" -> {
+               value = "false";
+               ui.displayActiveOrPassiveOutcome(false);
+           }
            default ->  ui.displayDefaultOption();
        }  return value;
       }
 
     private String addCompetitiveMember(){
+        ui.displayCompOrRegOptions();
         String competitive = "false";
         String input = sc.nextLine();
         switch (input) {
             case "1" -> competitive = "true";
+            case "2" -> competitive = "false";
             default -> ui.displayCompOrReg();
         }  return competitive;
     }
@@ -282,11 +291,11 @@ public class Controller {
 
 
 
-    private void editMember() {
+    public void editMember() {
 
     }
 
-    private void removeMember() {
+    public void removeMember() {
 
     }
 

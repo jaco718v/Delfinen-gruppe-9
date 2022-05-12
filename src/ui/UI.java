@@ -83,8 +83,8 @@ public class UI {
     public void displayActiveOrPassiveOptions(){
         System.out.println("""                               
                                Is this an active or passive member?
-                               Please type 1 for active
-                               Press enter to continue """);
+                               1. Active
+                               2. Passive""");
     }
 
     public void displayDefaultOption(){
@@ -94,15 +94,15 @@ public class UI {
     public void displayCompOrRegOptions() {
         System.out.println("""                               
             Is this an competitive or regular member?
-            Please type 1 for competitive                             
-            Continue for regular """);
+            1. Competitive                             
+            2. Regular """);
 
     }
 
 
 
     public void displayCompOrReg(){
-        System.out.println("Regular member");
+        System.out.println("No such option.");
     }
 
 
@@ -222,5 +222,13 @@ public class UI {
         System.out.println("3. Remove member");
         System.out.println("0. Back");
         System.out.print("Select command: ");
+    }
+
+    public void displayActiveOrPassiveOutcome(boolean b) {
+        if (b) {
+            System.out.println("Member is active.");
+        } else {
+            System.out.println("Member is passive.");
+        }
     }
 }
