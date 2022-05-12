@@ -8,6 +8,7 @@ import membership.*;
 import ui.UI;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Controller {
@@ -352,6 +353,96 @@ public class Controller {
     private void showTopSwimmers() {
 
     }
+
+    private Member FindSwimmerByName(){
+        ui.displayPleaseTypeMemberName();
+        String name = sc.nextLine();
+        for(Team team : teamArray){     //Skal måske flyttes - Information expert
+            for(Member member :team.getMemberList()){
+              if(member.getName().equalsIgnoreCase(name)){
+                  return member;
+              }
+            }
+        }
+        return null;
+    }
+
+    private void addRecordToMember(){
+        Member member = FindSwimmerByName();
+        if (member==null){
+            ui.memberNotFound();
+        }
+        String recordType = null;
+        if(member instanceof MemberCompetitive){
+            ui.recordTypeChoice();
+            while(recordType==null || recordType.equalsIgnoreCase("regular") || recordType.equalsIgnoreCase("competitive")){
+                recordType = sc.next();
+            }
+
+        }
+        if(member!=null){
+            ui.displayEnterSwimDiscipline();
+            Enum.SwimDiscipline swimDiscipline = null;
+            while(swimDiscipline==null){
+                try {
+                    swimDiscipline= Enum.SwimDiscipline.valueOf(sc.nextLine().toUpperCase());
+                }
+                catch (IllegalArgumentException iae){
+                ui.displayEnterSwimDisciplineException();
+                }
+            }
+            ui.displayEnterRecordInSeconds();
+            double recordInSeconds = 0;
+            while(recordInSeconds==0){
+                try {
+                    recordInSeconds = sc.nextDouble();
+                }
+                catch (InputMismatchException ime){
+                    ui.displayEnterRecordInSecondsException();
+                }
+            }
+            ui.displayEnterDate();
+            int day = 0;
+            int month = 0;
+            int year = 0;
+            while(year==0){
+                try {
+                    day = sc.nextInt();
+                    month = sc.nextInt();
+                    year = sc.nextInt();
+                }
+                catch (InputMismatchException ime){
+                    ui.displayEnterDateException();
+                }
+            }
+            if(recordType==null || recordType.equals("regular")){
+                member.removePreviousRecord(swimDiscipline);
+                member.getBestPracticeRecords().add(new RecordTimeRegular(swimDiscipline,recordInSeconds,day,month,year));
+            }
+            else{
+               addCompetitiveRecordToMember((MemberCompetitive)member,swimDiscipline,recordInSeconds,day,month,year);
+            }
+
+        }
+
+
+    }
+
+    private void addCompetitiveRecordToMember(MemberCompetitive member, Enum.SwimDiscipline swimDiscipline, double recordInSeconds,int day,int month,int year){
+        ui.displayEnterConventionName();
+        String convention = sc.nextLine();
+        ui.displayEnterPlacing();
+        int place = 0;
+        while(place==0){
+        try {
+            place = sc.nextInt();
+        }catch (InputMismatchException ime){
+            ui.displayEnterPlacingException();
+        }
+        }
+        member.getCompetitions().add(new RecordTimeCompetitive(swimDiscipline,recordInSeconds,day,month,year,convention,place));
+    }
+
 
     private boolean tryParseInt(String str) {
         try {

@@ -1,10 +1,13 @@
 package membership;
 
+import java.util.ArrayList;
+
 public abstract class Member {
   private String name;
   private int age;
   private boolean active;
   private Enum.AgeGroup ageGroup;
+  private ArrayList<RecordTimeRegular> bestPracticeRecords;
 
   public Member(String name, int age, boolean active) {
     this.name = name;
@@ -15,6 +18,27 @@ public abstract class Member {
     } else {
       this.ageGroup = Enum.AgeGroup.O18;
     }
+  }
+
+  public void removePreviousRecord(Enum.SwimDiscipline swimDiscipline){
+    RecordTimeRegular previousRecord = findPreviousRecord(swimDiscipline);
+    if(previousRecord!=null){
+    bestPracticeRecords.remove(previousRecord);
+    }
+
+  }
+
+  private RecordTimeRegular findPreviousRecord(Enum.SwimDiscipline swimDiscipline){
+    for(RecordTimeRegular recordTimeRegular : bestPracticeRecords){
+      if(recordTimeRegular.getSwimDiscipline()==swimDiscipline){
+      return recordTimeRegular;
+      }
+    }
+    return null;
+  }
+
+  public ArrayList<RecordTimeRegular> getBestPracticeRecords() {
+    return bestPracticeRecords;
   }
 
   public String getName() {

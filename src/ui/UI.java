@@ -66,6 +66,54 @@ public class UI {
         System.out.println("Top swimmers:");
     }
 
+    public void displayPleaseTypeMemberName(){
+        System.out.println("Please enter the name of the member whose record needs updating");
+    }
+
+    public void memberNotFound(){
+        System.out.println("Member not found in database");
+    }
+
+    public void recordTypeChoice(){
+        System.out.println("Type \"regular\" or \"competitive\", depending on what record you wish to update");
+    }
+
+    public void displayEnterSwimDiscipline(){
+        System.out.println("Enter the relevant swim discipline");
+    }
+
+    public void displayEnterSwimDisciplineException(){
+        System.out.println("Swim Discipline not found, please enter one of the following: Butterfly,Crawl,BackCrawl or Breast");
+    }
+
+    public void displayEnterRecordInSeconds(){
+        System.out.println("Enter the newly recorded time in seconds");
+    }
+
+    public void displayEnterRecordInSecondsException(){
+        System.out.println("Error in input, try again");
+    }
+
+    public void displayEnterDate(){
+        System.out.println("Enter date of the record, in the following format: dd mm year or on separate lines ");
+    }
+
+    public void displayEnterDateException(){
+        System.out.println("Error in input, please only type in digits and spaces");
+    }
+
+    public void displayEnterConventionName(){
+        System.out.println("Enter the name of the competition or convention");
+    }
+
+    public void displayEnterPlacing(){
+        System.out.println("Enter the participants placing in the competition");
+    }
+
+    public void displayEnterPlacingException(){
+        System.out.println("Error in input, enter a valid number");
+    }
+
     public void displayPleaseTypeLoginName() {
         System.out.print("Please type user login name: ");
     }
