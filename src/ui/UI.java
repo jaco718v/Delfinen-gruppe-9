@@ -168,4 +168,22 @@ public class UI {
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
+
+    public void listCommandsUserMenu() {
+        System.out.println("Commands:");
+        System.out.println("1. Login user");
+        System.out.println("2. Add user");
+        System.out.println("3. Remove user");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsMemberMenu() {
+        System.out.println("Commands:");
+        System.out.println("1. Add member");
+        System.out.println("2. Edit member");
+        System.out.println("3. Remove member");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
 }

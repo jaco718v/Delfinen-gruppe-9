@@ -15,10 +15,10 @@ public class Controller {
     private final Scanner sc = new Scanner(System.in);
     private final FileHandler fileHandler = new FileHandler();
     private final UI ui = new UI();
+    private final Commands cmds = new Commands();
     private boolean isRunning = true;
     private User loggedInUser;
     private ArrayList<Team> teamArray = new ArrayList<>();
-
 
     public static void main(String[] args) {
         Controller con = new Controller();
@@ -28,7 +28,7 @@ public class Controller {
     private void run() {
         createTeams();
         while (isRunning) {
-            commands();
+            cmds.commands(this, sc);
         }
     }
 
@@ -39,78 +39,11 @@ public class Controller {
         teamArray.add(new Team(Enum.TeamType.COMPETITIVE, Enum.AgeGroup.O18));
     }
 
-    private void commands() {
-        if (loggedInUser != null) {
-            switch (loggedInUser.getUserType()) {
-                case ADMIN -> {
-                    ui.listCommandsAdmin();
-                    String command = sc.nextLine();
-                    switch (command) {
-                        case "1" -> loginUser();
-                        case "2" -> addUser();
-                        case "3" -> removeUser();
-                        case "4" -> addMember();
-                        case "5" -> editMember();
-                        case "6" -> removeMember();
-                        case "7" -> showExpectedSubscriptionFees();
-                        case "8" -> showSubscriptionsInArrears();
-                        case "9" -> showTopSwimmers();
-                        case "0" -> exit();
-                        default -> ui.displayNoSuchCommand(command);
-                    }
-                }
-                case CHAIRMAN -> {
-                    ui.listCommandsChairman();
-                    String command = sc.nextLine();
-                    switch (command) {
-                        case "1" -> loginUser();
-                        case "2" -> addUser();
-                        case "3" -> removeUser();
-                        case "4" -> addMember();
-                        case "5" -> editMember();
-                        case "6" -> removeMember();
-                        case "0" -> exit();
-                        default -> ui.displayNoSuchCommand(command);
-                    }
-                }
-                case CASHIER -> {
-                    ui.listCommandsCashier();
-                    String command = sc.nextLine();
-                    switch (command) {
-                        case "1" -> loginUser();
-                        case "7" -> showExpectedSubscriptionFees();
-                        case "8" -> showSubscriptionsInArrears();
-                        case "0" -> exit();
-                        default -> ui.displayNoSuchCommand(command);
-                    }
-                }
-                case COACH -> {
-                    ui.listCommandsCoach();
-                    String command = sc.nextLine();
-                    switch (command) {
-                        case "1" -> loginUser();
-                        case "9" -> showTopSwimmers();
-                        case "0" -> exit();
-                        default -> ui.displayNoSuchCommand(command);
-                    }
-                }
-            }
-        } else {
-            ui.listCommandsNotLoggedIn();
-            String command = sc.nextLine();
-            switch (command) {
-                case "1" -> loginUser();
-                case "0" -> exit();
-                default -> ui.displayNoSuchCommand(command);
-            }
-        }
-    }
-
-    private void exit() {
+    public void exit() {
         isRunning = false;
     }
 
-    private void loginUser() {
+    public void loginUser() {
         ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
         if (userData.size() > 0) {
             int userIndex = -1;
@@ -157,7 +90,7 @@ public class Controller {
         }
     }
 
-    private void addUser() {
+    public void addUser() {
         ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
         if (userData.size() > 0) {
             if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
@@ -246,10 +179,10 @@ public class Controller {
         return userType;
     }
 
-    private void removeUser() {
-        ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
-        if (userData.size() > 0) {
-            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+    public void removeUser() {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+            ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
+            if (userData.size() > 0) {
                 String userName = "";
                 boolean enteredUserName = false;
                 while (!enteredUserName) {
@@ -270,10 +203,10 @@ public class Controller {
                     }
                 }
             } else {
-                ui.loggedInUserNoPrivilege();
+                ui.noRegisteredUsers();
             }
         } else {
-            ui.noRegisteredUsers();
+            ui.loggedInUserNoPrivilege();
         }
     }
 
@@ -309,47 +242,41 @@ public class Controller {
 
     }
 
-
-    private void editMember() {
-
-    }
-
-    private void removeMember() {
+    public void editMember() {
 
     }
 
-    private void showExpectedSubscriptionFees() {
-        ArrayList<String[]> data = fileHandler.readCSV("Users.csv");
-        if (data.size() > 0) {
-            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
-                double subscriptionJunior = 1000;
-                double subscriptionSenior = 1600;
-                double subscriptionPassive = 500;
-                int seniorThreshold = 60;
-                double seniorDiscount = 0.25;
-                double subscriptionSum = 0;
-                for (Team team : teamArray) {
-                    double subscription = subscriptionJunior;
-                    if (team.getAgeGroup() == Enum.AgeGroup.O18) {
-                        subscription = subscriptionSenior;
-                        subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
-                    }
-                    subscriptionSum += team.getActiveMembers() * subscription + (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
+    public void removeMember() {
+
+    }
+
+    public void showExpectedSubscriptionFees() {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
+            double subscriptionJunior = 1000;
+            double subscriptionSenior = 1600;
+            double subscriptionPassive = 500;
+            int seniorThreshold = 60;
+            double seniorDiscount = 0.25;
+            double subscriptionSum = 0;
+            for (Team team : teamArray) {
+                double subscription = subscriptionJunior;
+                if (team.getAgeGroup() == Enum.AgeGroup.O18) {
+                    subscription = subscriptionSenior;
+                    subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
                 }
-                ui.showExpectedSubscriptionFees(subscriptionSum);
-            } else {
-                ui.loggedInUserNoPrivilege();
+                subscriptionSum += team.getActiveMembers() * subscription + (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
             }
+            ui.showExpectedSubscriptionFees(subscriptionSum);
         } else {
-            ui.noRegisteredUsers();
+            ui.loggedInUserNoPrivilege();
         }
     }
 
-    private void showSubscriptionsInArrears() {
+    public void showSubscriptionsInArrears() {
 
     }
 
-    private void showTopSwimmers() {
+    public void showTopSwimmers() {
 
     }
 
@@ -360,5 +287,24 @@ public class Controller {
             return false;
         }
         return true;
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+        Record
+        name
+        swimDiscipline
+        recordInSeconds
+        dayOfMonth
+        month
+        year
+        convention (comp)
+        place (comp)
+
+        Member
+        name
+        age
+        active
+        competitive
     }
 }
