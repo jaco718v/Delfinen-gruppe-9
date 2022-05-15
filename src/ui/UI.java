@@ -87,11 +87,11 @@ public class UI {
     }
 
     public void displayEnterDate(){
-        System.out.println("Enter date of the record, in the following format: dd mm year or on separate lines ");
+        System.out.println("Enter date of the record in the following format: dd/mm/year");
     }
 
     public void displayEnterDateException(){
-        System.out.println("Error in input, please only type in digits and spaces");
+        System.out.println("Error in input, please only type in the format: dd/mm/year");
     }
 
     public void displayEnterConventionName(){

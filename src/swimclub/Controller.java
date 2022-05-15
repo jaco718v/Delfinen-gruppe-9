@@ -9,6 +9,7 @@ import ui.UI;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Controller {
@@ -425,13 +426,15 @@ public class Controller {
             int day = 0;
             int month = 0;
             int year = 0;
-            while(year==0){
+            while (year == 0  || day > 31 || month > 12) {
                 try {
-                    day = sc.nextInt();
-                    month = sc.nextInt();
-                    year = sc.nextInt();
-                }
-                catch (InputMismatchException ime){
+                    String date = sc.nextLine();
+                    Scanner dateInputScanner = new Scanner(date);
+                    dateInputScanner.useDelimiter("/");
+                    day = Integer.parseInt(dateInputScanner.next());
+                    month = Integer.parseInt(dateInputScanner.next());
+                    year = Integer.parseInt(dateInputScanner.next());
+                } catch (NoSuchElementException | NumberFormatException nsee) {
                     ui.displayEnterDateException();
                 }
             }
