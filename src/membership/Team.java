@@ -54,8 +54,7 @@ public class Team {
     public int getActiveMembers() {
         int activeMembers = 0;
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
-        for (int i = 0; i < memberData.size(); i++) {
-            String[] strArray = memberData.get(i);
+        for (String[] strArray : memberData) {
             if (strArray[2].equals("true")) {
                 activeMembers++;
             }
@@ -63,10 +62,11 @@ public class Team {
         return activeMembers;
     }
 
-    public int getActiveMembersAboveAge(int age) {
+    public int getActiveMembersAboveAge(int ageThreshold) {
         int membersAboveAge = 0;
-        for (Member member : memberList) {
-            if (member.getAge() > age && member.getActive()) {
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        for (String[] strArray : memberData) {
+            if (Integer.parseInt(strArray[1]) > ageThreshold && strArray[2].equals("true")) {
                 membersAboveAge++;
             }
         }
