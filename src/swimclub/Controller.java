@@ -215,7 +215,10 @@ public class Controller {
     }
 
     public void showUsers() {
-
+        ArrayList<String[]> memberData = fileHandler.readCSV("Users.csv");
+        for (String[] strArray : memberData) {
+            ui.displayUserInformation(strArray, loggedInUser);
+        }
     }
 
     private String addMemberName(){
@@ -285,14 +288,15 @@ public class Controller {
 
     public void addMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-            ArrayList < String[]> data = new ArrayList<>();
+            ArrayList<String[]> memberData = new ArrayList<>();
 
             String memberName = addMemberName();
             String memberAge = addMemberAge();
-            String akORpas = addPassiveOrActive();
-            String compORreg = addCompetitiveMember();
-            data.add(new String[] {memberName, memberAge,akORpas,compORreg});
-            boolean success = fileHandler.writeToCSV("Members.csv",data);
+            String isActive = addPassiveOrActive();
+            String isCompetitive = addCompetitiveMember();
+
+            memberData.add(new String[] {memberName, memberAge, isActive, isCompetitive});
+            boolean success = fileHandler.writeToCSV("Members.csv", memberData);
             ui.addMember(success);
         } else {
             ui.loggedInUserNoPrivilege();
@@ -331,14 +335,35 @@ public class Controller {
     }
 
     public void showMembers() {
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         int teamNumber = 0;
         for (Team team : teamArray) {
+            ArrayList<String[]> returnData = new ArrayList<>();
             teamNumber += 1;
             ui.displayTeamInformation(teamNumber, team);
-            for (String[] strArray : team.getMembers()) {
-                ui.displayMemberInformation(strArray);
+
+            for (int i = 0; i < memberData.size(); i++) {
+                String[] strArray = memberData.get(i);
+                int age = Integer.parseInt(strArray[1]);
+                if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
+                    if (((strArray[3].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                        ui.displayMemberInformation(strArray, i);
+                    }
+                } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
+                    if (((strArray[3].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                        ui.displayMemberInformation(strArray, i);
+                    }
+                }
             }
         }
+    }
+
+    public void setPaymentStatus() {
+
+    }
+
+    public void showSubscriptions() {
+
     }
 
     public void showExpectedSubscriptionFees() {

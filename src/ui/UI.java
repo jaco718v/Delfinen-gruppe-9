@@ -1,6 +1,8 @@
 package ui;
 
+import membership.Enum;
 import membership.Team;
+import membership.User;
 
 public class UI {
 
@@ -257,6 +259,7 @@ public class UI {
         System.out.println("1. Login user");
         System.out.println("2. Add user");
         System.out.println("3. Remove user");
+        System.out.println("4. Show users");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }
@@ -283,8 +286,10 @@ public class UI {
     public void listCommandsSubscriptionMenu() {
         System.out.println();
         System.out.println("Commands:");
-        System.out.println("1. Show subscriptions");
-        System.out.println("2. Show members in arrears");
+        System.out.println("1. Set payment status");
+        System.out.println("2. Show subscriptions");
+        System.out.println("3. Show expected subscription fees");
+        System.out.println("4. Show members in arrears");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }
@@ -298,8 +303,8 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void displayMemberInformation(String[] strArray) {
-        System.out.println("Name: " + strArray[0] + " - Age: " + strArray[1] + " - Active: " + strArray[2] + " - Competitive: " + strArray[3]);
+    public void displayMemberInformation(String[] strArray, int index) {
+        System.out.println(index + ". Name: " + strArray[0] + " - Age: " + strArray[1] + " - Active: " + strArray[2] + " - Competitive: " + strArray[3]);
     }
 
     public void displayTeamInformation(int teamNumber, Team team) {
@@ -312,5 +317,17 @@ public class UI {
 
     public void displayShuttingDown() {
         System.out.println("System shutting down.");
+    }
+
+    public void displayUserInformation(String[] strArray, User user) {
+        String password = "";
+        if (user.getUserType() == Enum.UserType.ADMIN) {
+            System.out.println("Name: " + strArray[0] + " - Password: " + strArray[1] + " - User Type: " + strArray[2]);
+        } else {
+            for (int i = 0; i < strArray[1].length(); i++) {
+                password += "*";
+            }
+            System.out.println("Name: " + strArray[0] + " - Password: " + password + " - User Type: " + strArray[2]);
+        }
     }
 }
