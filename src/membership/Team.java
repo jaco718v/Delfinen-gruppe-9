@@ -59,7 +59,7 @@ public class Team {
             if (ageGroup == Enum.AgeGroup.U18) {
                 if(age<18){
                 totalMembers++;
-                    if(strArray[4].equals("true")){
+                    if(strArray[3].equals("true")){
                     competitiveMembers++;
                 }
                 }
