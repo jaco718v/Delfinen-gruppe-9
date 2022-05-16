@@ -379,7 +379,7 @@ public class Controller {
                     subscription = subscriptionSenior;
                     subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
                 }
-                subscriptionSum += team.getActiveMembers() * subscription + (team.getMemberList().size() - team.getActiveMembers()) * subscriptionPassive;
+                subscriptionSum += team.getActiveMembers() * subscription + (team.getTeamSize() - team.getActiveMembers()) * subscriptionPassive;
             }
             ui.showExpectedSubscriptionFees(subscriptionSum);
         } else {
@@ -425,9 +425,7 @@ public class Controller {
         return  swimDiscipline;
     }
 
-
-
-   public String recordTypeChoice(String memberName){
+    public String recordTypeChoice(String memberName){
        String recordType = null;
        for(Team team : teamArray){
            if(team.findMemberCompetitiveStatus(memberName)){

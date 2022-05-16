@@ -50,6 +50,40 @@ public class Team {
         return returnData;
     }
 
+    public int getTeamSize() {
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        for (String[] strArray : memberData) {
+            int totalMembers = 0;
+            int competitiveMembers = 0;
+            int age = Integer.parseInt(strArray[1]);
+            if (ageGroup == Enum.AgeGroup.U18) {
+                if(age<18){
+                totalMembers++;
+                    if(strArray[4].equals("true")){
+                    competitiveMembers++;
+                }
+                }
+                if (teamType == Enum.TeamType.REGULAR){
+                return totalMembers-competitiveMembers;
+                }
+                else return competitiveMembers;
+            }
+            if(ageGroup == Enum.AgeGroup.O18){
+                if(age>=18){
+                    totalMembers++;}
+                if(strArray[4].equals("true")){
+                    competitiveMembers++;
+            }
+                if (teamType== Enum.TeamType.REGULAR){
+                    return totalMembers-competitiveMembers;
+            }
+                else return competitiveMembers;
+            }
+        }
+        return 0;
+    }
+
+
     public int getActiveMembers() {
         int activeMembers = 0;
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");

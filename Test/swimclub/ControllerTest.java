@@ -25,7 +25,7 @@ class ControllerTest {
     //teamArray.add(new Team(Enum.TeamType.COMPETITIVE,Enum.AgeGroup.U18));
     //teamArray.add(new Team(Enum.TeamType.COMPETITIVE,Enum.AgeGroup.O18));
 
-    double subscriptionJunior = 1000;
+      double subscriptionJunior = 1000;
       double subscriptionSenior = 1600;
       double subscriptionPassive = 500;
       int seniorThreshold = 60;
