@@ -78,8 +78,10 @@ public class Commands {
         ui.listCommandsSubscriptionMenu();
         String command = sc.nextLine();
         switch (command) {
-            case "1" -> con.showExpectedSubscriptionFees();
-            case "2" -> con.showSubscriptionsInArrears();
+            case "1" -> con.setPaymentStatus();
+            case "2" -> con.showSubscriptions();
+            case "3" -> con.showExpectedSubscriptionFees();
+            case "4" -> con.showSubscriptionsInArrears();
             case "0" -> ui.displayReturningToMainMenu();
             default -> ui.displayNoSuchCommand(command);
         }
@@ -105,6 +107,7 @@ public class Commands {
             case "1" -> con.loginUser();
             case "2" -> con.addUser();
             case "3" -> con.removeUser();
+            case "4" -> con.showUsers();
             case "0" -> ui.displayReturningToMainMenu();
             default -> ui.displayNoSuchCommand(command);
         }

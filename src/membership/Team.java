@@ -35,8 +35,7 @@ public class Team {
     public ArrayList<String[]> getMembers() {
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         ArrayList<String[]> returnData = new ArrayList<>();
-        for (int i = 0; i < memberData.size(); i++) {
-            String[] strArray = memberData.get(i);
+        for (String[] strArray : memberData) {
             int age = Integer.parseInt(strArray[1]);
             if ((ageGroup == Enum.AgeGroup.U18) && (age < 18)) {
                 if (((strArray[3].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
