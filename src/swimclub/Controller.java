@@ -338,7 +338,6 @@ public class Controller {
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         int teamNumber = 0;
         for (Team team : teamArray) {
-            ArrayList<String[]> returnData = new ArrayList<>();
             teamNumber += 1;
             ui.displayTeamInformation(teamNumber, team);
 
