@@ -73,10 +73,10 @@ public class Team {
         return membersAboveAge;
     }
 
-    public boolean findMemberByName(String name){
+    public boolean findCompetitiveMemberByName(String name){
         ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
-            if (strArray[0].equalsIgnoreCase(name)) {
+            if (strArray[0].equalsIgnoreCase(name) && strArray[3].equals("true")) {
                 return true;
             }
         }

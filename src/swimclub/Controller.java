@@ -399,11 +399,11 @@ public class Controller {
 
     }
 
-    private String FindMemberByName(){
+    private String FindCompetitiveMemberByName(){
         ui.displayPleaseTypeMemberName();
         String name = sc.nextLine();
         for(Team team : teamArray){
-                  if(team.findMemberByName(name)){
+                  if(team.findCompetitiveMemberByName(name)){
                       return name;
                   }
         }
@@ -428,12 +428,16 @@ public class Controller {
     public String recordTypeChoice(String memberName){
        String recordType = null;
        for(Team team : teamArray){
-           if(team.findMemberCompetitiveStatus(memberName)){
            ui.DisplayRecordTypeChoice();
-           while(recordType==null || !recordType.equalsIgnoreCase("regular") && !recordType.equalsIgnoreCase("competitive")){
+           while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
                recordType = sc.next();
            }
-        }
+       }
+       if(recordType.equals("1")){
+           recordType="regular";
+       }
+       if(recordType.equals("2")){
+           recordType="competitive";
        }
        return recordType;
     }
@@ -488,7 +492,7 @@ public class Controller {
     }
 
     private void addRecordToMember(){
-        String memberName = FindMemberByName();
+        String memberName = FindCompetitiveMemberByName();     //Change to id?
         if(memberName!=null){
             ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
             ArrayList<String[]> data = new ArrayList<>();
@@ -496,8 +500,6 @@ public class Controller {
             String swimDiscipline = addSwimDisciplineToRecord();
             String recordInSeconds = addRecordInSeconds();
             String date = addDate();
-
-
             if(recordType.equals("regular")){
                 String[] newRecord = {memberName,swimDiscipline,recordInSeconds,date,null,null};
                 data.add(newRecord);
@@ -506,7 +508,7 @@ public class Controller {
                 fileHandler.writeToCSV("Records",data);
                 }
             }
-            else{
+            if(recordType.equals("competitive")){
                addCompetitiveRecordToMember(data,memberName,swimDiscipline,recordInSeconds,date);
             }
         }

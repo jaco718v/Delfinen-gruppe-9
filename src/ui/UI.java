@@ -65,11 +65,11 @@ public class UI {
     }
 
     public void memberNotFound(){
-        System.out.println("Member not found in database");
+        System.out.println("Member not found in database of competitive members");
     }
 
     public void DisplayRecordTypeChoice(){
-        System.out.println("Type \"regular\" or \"competitive\", depending on what record you wish to update");
+        System.out.println("Choose the record-type:\n1. Practice record \n 2. Competition placing");
     }
 
     public void displayEnterSwimDiscipline(){
