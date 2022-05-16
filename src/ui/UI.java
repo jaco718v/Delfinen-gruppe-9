@@ -66,7 +66,7 @@ public class UI {
         System.out.println("Member not found in database");
     }
 
-    public void recordTypeChoice(){
+    public void DisplayRecordTypeChoice(){
         System.out.println("Type \"regular\" or \"competitive\", depending on what record you wish to update");
     }
 

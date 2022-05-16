@@ -375,95 +375,140 @@ public class Controller {
 
     }
 
-    private Member FindSwimmerByName(){
+    private String FindMemberByName(){
         ui.displayPleaseTypeMemberName();
         String name = sc.nextLine();
-        for(Team team : teamArray){     //Skal måske flyttes - Information expert
-            for(Member member :team.getMemberList()){
-              if(member.getName().equalsIgnoreCase(name)){
-                  return member;
-              }
-            }
+        for(Team team : teamArray){
+                  if(team.findMemberByName(name)){
+                      return name;
+                  }
         }
+        ui.memberNotFound();
         return null;
     }
 
-    private void addRecordToMember(){
-        Member member = FindSwimmerByName();
-        if (member==null){
-            ui.memberNotFound();
-        }
-        String recordType = null;
-        if(member instanceof MemberCompetitive){
-            ui.recordTypeChoice();
-            while(recordType==null || recordType.equalsIgnoreCase("regular") || recordType.equalsIgnoreCase("competitive")){
-                recordType = sc.next();
+    public String addSwimDisciplineToRecord(){
+        ui.displayEnterSwimDiscipline();
+        String swimDiscipline = null;
+        while(swimDiscipline==null){
+            try {
+                swimDiscipline = String.valueOf(Enum.SwimDiscipline.valueOf(sc.nextLine().toUpperCase()));
             }
-
-        }
-        if(member!=null){
-            ui.displayEnterSwimDiscipline();
-            Enum.SwimDiscipline swimDiscipline = null;
-            while(swimDiscipline==null){
-                try {
-                    swimDiscipline= Enum.SwimDiscipline.valueOf(sc.nextLine().toUpperCase());
-                }
-                catch (IllegalArgumentException iae){
+            catch (IllegalArgumentException iae){
                 ui.displayEnterSwimDisciplineException();
-                }
             }
-            ui.displayEnterRecordInSeconds();
-            double recordInSeconds = 0;
-            while(recordInSeconds==0){
-                try {
-                    recordInSeconds = sc.nextDouble();
-                }
-                catch (InputMismatchException ime){
-                    ui.displayEnterRecordInSecondsException();
-                }
-            }
-            ui.displayEnterDate();
-            int day = 0;
-            int month = 0;
-            int year = 0;
-            while (year == 0  || day > 31 || month > 12) {
-                try {
-                    String date = sc.nextLine();
-                    Scanner dateInputScanner = new Scanner(date);
-                    dateInputScanner.useDelimiter("/");
-                    day = Integer.parseInt(dateInputScanner.next());
-                    month = Integer.parseInt(dateInputScanner.next());
-                    year = Integer.parseInt(dateInputScanner.next());
-                } catch (NoSuchElementException | NumberFormatException nsee) {
-                    ui.displayEnterDateException();
-                }
-            }
-            if(recordType==null || recordType.equals("regular")){
-                member.removePreviousRecord(swimDiscipline);
-                member.getBestPracticeRecords().add(new RecordTimeRegular(swimDiscipline,recordInSeconds,day,month,year));
-            }
-            else{
-               addCompetitiveRecordToMember((MemberCompetitive)member,swimDiscipline,recordInSeconds,day,month,year);
-            }
-
         }
-
-
+        return  swimDiscipline;
     }
 
-    private void addCompetitiveRecordToMember(MemberCompetitive member, Enum.SwimDiscipline swimDiscipline, double recordInSeconds,int day,int month,int year){
-        ui.displayEnterConventionName();
-        String convention = sc.nextLine();
+
+
+   public String recordTypeChoice(String memberName){
+       String recordType = null;
+       for(Team team : teamArray){
+           if(team.findMemberCompetitiveStatus(memberName)){
+           ui.DisplayRecordTypeChoice();
+           while(recordType==null || !recordType.equalsIgnoreCase("regular") && !recordType.equalsIgnoreCase("competitive")){
+               recordType = sc.next();
+           }
+        }
+       }
+       return recordType;
+    }
+
+    public String addRecordInSeconds(){
+        ui.displayEnterRecordInSeconds();
+        double recordInSeconds = 0;
+        while(recordInSeconds==0){
+            try {
+                recordInSeconds = sc.nextDouble();
+            }
+            catch (InputMismatchException ime){
+                ui.displayEnterRecordInSecondsException();
+            }
+        }
+        String recordInSecondsString = String.valueOf(recordInSeconds);
+        return recordInSecondsString;
+    }
+
+    public String addDate(){
+        ui.displayEnterDate();
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        String dateInput = null;
+        int[] date = {day,month,year};
+        while (year == 0  || day > 31 || month > 12) {
+            try {
+                dateInput = sc.nextLine();
+                Scanner dateInputScanner = new Scanner(dateInput);
+                dateInputScanner.useDelimiter("/");
+                day = Integer.parseInt(dateInputScanner.next());
+                month = Integer.parseInt(dateInputScanner.next());
+                year = Integer.parseInt(dateInputScanner.next());
+            } catch (NoSuchElementException | NumberFormatException nsee) {
+                ui.displayEnterDateException();
+            }
+        }
+        return dateInput;
+    }
+
+    public boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord){
+       boolean previousRecordFound = false;
+       for(String[] record : recordList){
+           if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])){
+               record = newRecord;
+               previousRecordFound = true;
+               fileHandler.overwriteCSV("Records",recordList);
+           }
+       }
+       return previousRecordFound;
+    }
+
+    private void addRecordToMember(){
+        String memberName = FindMemberByName();
+        if(memberName!=null){
+            ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
+            ArrayList<String[]> data = new ArrayList<>();
+            String recordType = recordTypeChoice(memberName);
+            String swimDiscipline = addSwimDisciplineToRecord();
+            String recordInSeconds = addRecordInSeconds();
+            String date = addDate();
+
+
+            if(recordType.equals("regular")){
+                String[] newRecord = {memberName,swimDiscipline,recordInSeconds,date,null,null};
+                data.add(newRecord);
+                boolean updateStatus = updateRecord(recordList,newRecord);
+                if(!updateStatus){
+                fileHandler.writeToCSV("Records",data);
+                }
+            }
+            else{
+               addCompetitiveRecordToMember(data,memberName,swimDiscipline,recordInSeconds,date);
+            }
+        }
+    }
+
+    public String addPlacing(){
         ui.displayEnterPlacing();
         int place = 0;
         while(place==0){
-        try {
-            place = sc.nextInt();
-        }catch (InputMismatchException ime){
-            ui.displayEnterPlacingException();
+            try {
+                place = sc.nextInt();
+            }catch (InputMismatchException ime){
+                ui.displayEnterPlacingException();
+            }
         }
-        }
-        member.getCompetitions().add(new RecordTimeCompetitive(swimDiscipline,recordInSeconds,day,month,year,convention,place));
+        return String.valueOf(place);
+    }
+
+    private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberName, String swimDiscipline, String recordInSeconds,String date){
+        ui.displayEnterConventionName();
+        String convention = sc.nextLine();
+        String placing = addPlacing();
+        data.add(new String[]{memberName,swimDiscipline,recordInSeconds,date,convention,placing});
+        fileHandler.writeToCSV("Records",data);
     }
 
 

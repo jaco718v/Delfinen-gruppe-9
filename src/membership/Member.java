@@ -20,22 +20,6 @@ public abstract class Member {
     }
   }
 
-  public void removePreviousRecord(Enum.SwimDiscipline swimDiscipline){
-    RecordTimeRegular previousRecord = findPreviousRecord(swimDiscipline);
-    if(previousRecord!=null){
-    bestPracticeRecords.remove(previousRecord);
-    }
-
-  }
-
-  private RecordTimeRegular findPreviousRecord(Enum.SwimDiscipline swimDiscipline){
-    for(RecordTimeRegular recordTimeRegular : bestPracticeRecords){
-      if(recordTimeRegular.getSwimDiscipline()==swimDiscipline){
-      return recordTimeRegular;
-      }
-    }
-    return null;
-  }
 
   public ArrayList<RecordTimeRegular> getBestPracticeRecords() {
     return bestPracticeRecords;

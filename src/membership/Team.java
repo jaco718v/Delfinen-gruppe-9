@@ -73,6 +73,26 @@ public class Team {
         return membersAboveAge;
     }
 
+    public boolean findMemberByName(String name){
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        for (String[] strArray : memberData) {
+            if (strArray[0].equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean findMemberCompetitiveStatus(String name){
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        for (String[] strArray : memberData) {
+            if (strArray[0].equalsIgnoreCase(name)) {
+                return Boolean.parseBoolean(strArray[3]);
+            }
+        }
+        return false;
+    }
+
     public void setMemberList(ArrayList<Member> memberList) {
         this.memberList = memberList;
     }
