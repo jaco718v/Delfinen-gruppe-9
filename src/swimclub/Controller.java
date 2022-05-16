@@ -379,7 +379,7 @@ public class Controller {
                     subscription = subscriptionSenior;
                     subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
                 }
-                subscriptionSum += team.getActiveMembers() * subscription + (team.getTeamSize() - team.getActiveMembers()) * subscriptionPassive;
+                subscriptionSum += team.getActiveMembers() * subscription + (team.getMembers().size() - team.getActiveMembers()) * subscriptionPassive;
             }
             ui.showExpectedSubscriptionFees(subscriptionSum);
         } else {

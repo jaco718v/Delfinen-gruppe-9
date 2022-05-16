@@ -50,43 +50,10 @@ public class Team {
         return returnData;
     }
 
-    public int getTeamSize() {
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
-        for (String[] strArray : memberData) {
-            int totalMembers = 0;
-            int competitiveMembers = 0;
-            int age = Integer.parseInt(strArray[1]);
-            if (ageGroup == Enum.AgeGroup.U18) {
-                if(age<18){
-                totalMembers++;
-                    if(strArray[3].equals("true")){
-                    competitiveMembers++;
-                }
-                }
-                if (teamType == Enum.TeamType.REGULAR){
-                return totalMembers-competitiveMembers;
-                }
-                else return competitiveMembers;
-            }
-            if(ageGroup == Enum.AgeGroup.O18){
-                if(age>=18){
-                    totalMembers++;}
-                if(strArray[3].equals("true")){
-                    competitiveMembers++;
-            }
-                if (teamType== Enum.TeamType.REGULAR){
-                    return totalMembers-competitiveMembers;
-            }
-                else return competitiveMembers;
-            }
-        }
-        return 0;
-    }
-
 
     public int getActiveMembers() {
         int activeMembers = 0;
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
             if (strArray[2].equals("true")) {
                 activeMembers++;
@@ -97,7 +64,7 @@ public class Team {
 
     public int getActiveMembersAboveAge(int ageThreshold) {
         int membersAboveAge = 0;
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
             if (Integer.parseInt(strArray[1]) > ageThreshold && strArray[2].equals("true")) {
                 membersAboveAge++;
@@ -107,7 +74,7 @@ public class Team {
     }
 
     public boolean findMemberByName(String name){
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
             if (strArray[0].equalsIgnoreCase(name)) {
                 return true;
