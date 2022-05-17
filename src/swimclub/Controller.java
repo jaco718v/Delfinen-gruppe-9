@@ -411,9 +411,22 @@ public class Controller {
         return null;
     }
 
-    public String addSwimDisciplineToRecord(){
+    public String addSwimDisciplineToRecord(String name){
+        String swimDiscipline = null;
+        for (Team team : teamArray){
+            swimDiscipline = team.findMemberSwimDiscipline(name);
+            if(swimDiscipline!=null){
+                return  swimDiscipline;
+            }
+        }
+
+        return null;
+    }
+
+    public String addSwimDisciplineToRecordViaInput(){
         ui.displayEnterSwimDiscipline();
         String swimDiscipline = null;
+        sc.nextLine();
         while(swimDiscipline==null){
             try {
                 swimDiscipline = String.valueOf(Enum.SwimDiscipline.valueOf(sc.nextLine().toUpperCase()));
@@ -427,12 +440,10 @@ public class Controller {
 
     public String recordTypeChoice(String memberName){
        String recordType = null;
-       for(Team team : teamArray){
            ui.DisplayRecordTypeChoice();
            while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
                recordType = sc.next();
            }
-       }
        if(recordType.equals("1")){
            recordType="regular";
        }
@@ -451,6 +462,7 @@ public class Controller {
             }
             catch (InputMismatchException ime){
                 ui.displayEnterRecordInSecondsException();
+                sc.nextLine();
             }
         }
         String recordInSecondsString = String.valueOf(recordInSeconds);
@@ -462,6 +474,7 @@ public class Controller {
         int day = 0;
         int month = 0;
         int year = 0;
+        sc.nextLine();
         String dateInput = null;
         int[] date = {day,month,year};
         while (year == 0  || day > 31 || month > 12) {
@@ -472,6 +485,9 @@ public class Controller {
                 day = Integer.parseInt(dateInputScanner.next());
                 month = Integer.parseInt(dateInputScanner.next());
                 year = Integer.parseInt(dateInputScanner.next());
+                if (day > 31 || month > 12){
+                    ui.displayEnterDateException();
+                }
             } catch (NoSuchElementException | NumberFormatException nsee) {
                 ui.displayEnterDateException();
             }
@@ -491,27 +507,36 @@ public class Controller {
        return previousRecordFound;
     }
 
-    private void addRecordToMember(){
-        String memberName = FindCompetitiveMemberByName();     //Change to id?
-        if(memberName!=null){
-            ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
-            ArrayList<String[]> data = new ArrayList<>();
-            String recordType = recordTypeChoice(memberName);
-            String swimDiscipline = addSwimDisciplineToRecord();
-            String recordInSeconds = addRecordInSeconds();
-            String date = addDate();
-            if(recordType.equals("regular")){
-                String[] newRecord = {memberName,swimDiscipline,recordInSeconds,date,null,null};
-                data.add(newRecord);
-                boolean updateStatus = updateRecord(recordList,newRecord);
-                if(!updateStatus){
-                fileHandler.writeToCSV("Records",data);
+    public void addRecordToMember(){
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)){
+            String memberName = FindCompetitiveMemberByName();     //Change to id?
+            if(memberName!=null){
+                ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
+                ArrayList<String[]> data = new ArrayList<>();
+                String recordType = recordTypeChoice(memberName);
+                String swimDiscipline = addSwimDisciplineToRecord(memberName); // Der er en alternativ metode der tager input
+                String recordInSeconds = addRecordInSeconds();
+                String date = addDate();
+                if(recordType.equals("regular")){
+                    String[] newRecord = {memberName,swimDiscipline,recordInSeconds,date," "," "};
+                    data.add(newRecord);
+                    boolean updateStatus = updateRecord(recordList,newRecord);
+                    if(!updateStatus){
+                        fileHandler.writeToCSV("Records.csv",data);
+                    }
                 }
+                if(recordType.equals("competitive")){
+                    addCompetitiveRecordToMember(data,memberName,swimDiscipline,recordInSeconds,date);
+                }
+                ui.displayRecordAddSucces(recordType);
             }
-            if(recordType.equals("competitive")){
-               addCompetitiveRecordToMember(data,memberName,swimDiscipline,recordInSeconds,date);
-            }
+        else {
+            ui.loggedInUserNoPrivilege();
         }
+    }
+    else {
+        ui.noRegisteredUsers();
+    }
     }
 
     public String addPlacing(){
@@ -520,6 +545,7 @@ public class Controller {
         while(place==0){
             try {
                 place = sc.nextInt();
+                sc.nextLine();
             }catch (InputMismatchException ime){
                 ui.displayEnterPlacingException();
             }
@@ -532,7 +558,7 @@ public class Controller {
         String convention = sc.nextLine();
         String placing = addPlacing();
         data.add(new String[]{memberName,swimDiscipline,recordInSeconds,date,convention,placing});
-        fileHandler.writeToCSV("Records",data);
+        fileHandler.writeToCSV("Records.csv",data);
     }
 
 

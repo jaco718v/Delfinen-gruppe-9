@@ -69,7 +69,9 @@ public class UI {
     }
 
     public void DisplayRecordTypeChoice(){
-        System.out.println("Choose the record-type:\n1. Practice record \n 2. Competition placing");
+        System.out.println("Choose the record-type:");
+        System.out.println("1. Practice record");
+        System.out.println("2. Competition placing");
     }
 
     public void displayEnterSwimDiscipline(){
@@ -106,6 +108,10 @@ public class UI {
 
     public void displayEnterPlacingException(){
         System.out.println("Error in input, enter a valid number");
+    }
+
+    public void displayRecordAddSucces(String recordType){
+        System.out.println("Successfully added "+recordType+ " record to swimmer");
     }
 
     public void displayPleaseTypeLoginName() {
@@ -299,6 +305,7 @@ public class UI {
         System.out.println("Commands:");
         System.out.println("1. Show top swimmers");
         System.out.println("2. Show all swimmers");
+        System.out.println("3. Update swimmer records");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }
