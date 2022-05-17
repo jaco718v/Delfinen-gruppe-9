@@ -64,6 +64,7 @@ public class Commands {
     }
 
     private void swimmerMenu(Controller con, Scanner sc) {
+        ui.displaySelectedSwimmerMenu();
         boolean menuOpen = true;
         while (menuOpen) {
             ui.listCommandsSwimmerMenu();
@@ -81,6 +82,7 @@ public class Commands {
     }
 
     private void subscriptionMenu(Controller con, Scanner sc) {
+        ui.displaySelectedSubscriptionMenu();
         boolean menuOpen = true;
         while (menuOpen) {
             ui.listCommandsSubscriptionMenu();
@@ -100,6 +102,7 @@ public class Commands {
     }
 
     private void memberMenu(Controller con, Scanner sc) {
+        ui.displaySelectedMemberMenu();
         boolean menuOpen = true;
         while (menuOpen) {
             ui.listCommandsMemberMenu();
@@ -119,6 +122,7 @@ public class Commands {
     }
 
     private void userMenu(Controller con, Scanner sc) {
+        ui.displaySelectedUserMenu();
         boolean menuOpen = true;
         while (menuOpen) {
             ui.listCommandsUserMenu();

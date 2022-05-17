@@ -13,7 +13,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Controller {
-    // Team t = new Team();
     private final Scanner sc = new Scanner(System.in);
     private final FileHandler fileHandler = new FileHandler();
     private final UI ui = new UI();
@@ -222,58 +221,50 @@ public class Controller {
     }
 
     private String addMemberName(){
-          String memberName  = "";
-          boolean enteredmemberName = false;
-          while (!enteredmemberName)
-        {
-              ui.displayMemberName();
-              memberName = sc.nextLine();
-              if ((!memberName.equals("")) && (!memberName.equals(" "))) {
-                  enteredmemberName = true;
-              }
-              if (!enteredmemberName) {
-                  ui.displayPleaseEnterValidName(memberName);
-              }
-          }
-          return memberName;
-
-
+        String memberName  = "";
+        boolean enteredMemberName = false;
+        while (!enteredMemberName) {
+            ui.displayPleaseEnterMemberName();
+            memberName = sc.nextLine();
+            if ((!memberName.equals("")) && (!memberName.equals(" ")) && (!tryParseInt(memberName))) {
+                enteredMemberName = true;
+            }
+            if (!enteredMemberName) {
+                ui.displayPleaseEnterValidName(memberName);
+            }
+        }
+        return memberName;
     }
 
     private String addMemberAge() {
-        int memberAgee = 0;
         String memberAge = "";
-
-        boolean enteredmemberAgee = false;
-        while (!enteredmemberAgee) {
-            ui.displayMemberAge(memberAgee);
-        memberAge = sc.nextLine();
-        enteredmemberAgee = true;
-          }
-
-        if (!enteredmemberAgee) {
-            ui.displayMemberAge(memberAgee);
-        } return memberAge;
-      }
+        boolean enteredMemberAge = false;
+        while (!enteredMemberAge) {
+            ui.displayPleaseEnterMemberAge();
+            memberAge = sc.nextLine();
+            if (tryParseInt(memberAge)) {
+                enteredMemberAge = true;
+            }
+        }
+        return memberAge;
+    }
 
     private String addPassiveOrActive(){
-
         String value = "false";
-       ui.displayActiveOrPassiveOptions();
-       String input = sc.nextLine();
-
-       switch (input) {
-           case "1" -> {
-               value = "true";
-               ui.displayActiveOrPassiveOutcome(true);
-           }
-           case "2" -> {
-               value = "false";
-               ui.displayActiveOrPassiveOutcome(false);
-           }
-           default ->  ui.displayDefaultOption();
-       }  return value;
-      }
+        ui.displayActiveOrPassiveOptions();
+        String input = sc.nextLine();
+        switch (input) {
+            case "1" -> {
+                value = "true";
+                ui.displayActiveOrPassiveOutcome(true);
+            }
+            case "2" -> {
+                value = "false";
+                ui.displayActiveOrPassiveOutcome(false);
+            }
+            default ->  ui.displayDefaultOption();
+        }  return value;
+    }
 
     private String addCompetitiveMember(){
         ui.displayCompOrRegOptions();
@@ -288,22 +279,59 @@ public class Controller {
 
     public void addMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-            ArrayList<String[]> memberData = new ArrayList<>();
+            ArrayList<String[]> newMemberData = new ArrayList<>();
 
-            String memberName = addMemberName();
-            String memberAge = addMemberAge();
-            String isActive = addPassiveOrActive();
-            String isCompetitive = addCompetitiveMember();
+            String memberId = addMemberId();
+            if (!memberId.equals("FULL")) {
+                String memberName = addMemberName();
+                String memberAge = addMemberAge();
+                String isActive = addPassiveOrActive();
+                String isCompetitive = addCompetitiveMember();
 
-            memberData.add(new String[] {memberName, memberAge, isActive, isCompetitive});
-            boolean success = fileHandler.writeToCSV("Members.csv", memberData);
-            updateSubscriptions();
-            ui.addMember(success);
+                newMemberData.add(new String[] { memberId, memberName, memberAge, isActive, isCompetitive });
+                boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
+                updateSubscriptions();
+                ui.addMember(success);
+            } else {
+                ui.displayMemberListFull();
+            }
         } else {
             ui.loggedInUserNoPrivilege();
         }
     }
 
+    private String addMemberId() {
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        String returnValue = "FULL";
+        int memberIdInt = 0;
+        int lastIndex = memberData.size() - 1;
+        if (lastIndex != -1) {
+            String[] memberArray = memberData.get(lastIndex);
+            if (tryParseInt(memberArray[0])) {
+                memberIdInt = Integer.parseInt(memberArray[0]);
+            }
+        }
+        if (memberIdInt + 1 < 10000) {
+            memberIdInt += 1;
+            returnValue = String.format("%04d", memberIdInt);
+        } else {
+            boolean foundNewMemberId = false;
+            for (int i = 1; i < 10000; i++) {
+                for (String[] memberArray : memberData) {
+                    int thisMemberIdInt = Integer.parseInt(memberArray[0]);
+                    if (thisMemberIdInt != i) {
+                        foundNewMemberId = true;
+                        break;
+                    }
+                }
+                if (foundNewMemberId) {
+                    returnValue = String.format("%04d", i);
+                    break;
+                }
+            }
+        }
+        return returnValue;
+    }
 
 
     public void editMember() {
@@ -318,21 +346,24 @@ public class Controller {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
             ArrayList <String[]> subData = fileHandler.readCSV("Subscriptions.csv");
-            ui.displayPleaseEnterMemberName();
-            String removeName = sc.nextLine();
-
+            showMembers();
+            ui.displayPleaseEnterMemberId();
+            String memberId = sc.nextLine();
+            boolean removedMember = false;
             for(int i = 0; i < memberData.size(); i++){
                 String[] array = memberData.get(i);
-                if (array[0].equals(removeName)) {
+                if (array[0].equals(memberId)) {
                     memberData.remove(i);
                     subData.remove(i);
                     fileHandler.overwriteCSV("Members.csv", memberData);
                     fileHandler.overwriteCSV("Subscriptions.csv", subData);
                     ui.removeMember(true);
+                    removedMember = true;
                     break;
-                } else {
-                    ui.removeMember(false);
                 }
+            }
+            if (!removedMember) {
+                ui.removeMember(false);
             }
         } else {
             ui.loggedInUserNoPrivilege();
@@ -346,16 +377,15 @@ public class Controller {
             teamNumber += 1;
             ui.displayTeamInformation(teamNumber, team);
 
-            for (int i = 0; i < memberData.size(); i++) {
-                String[] strArray = memberData.get(i);
-                int age = Integer.parseInt(strArray[1]);
+            for (String[] strArray : memberData) {
+                int age = Integer.parseInt(strArray[2]);
                 if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
-                    if (((strArray[3].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
-                        ui.displayMemberInformation(strArray, i);
+                    if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                        ui.displayMemberInformation(strArray);
                     }
                 } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
-                    if (((strArray[3].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
-                        ui.displayMemberInformation(strArray, i);
+                    if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                        ui.displayMemberInformation(strArray);
                     }
                 }
             }
@@ -483,9 +513,9 @@ public class Controller {
         ui.displayPleaseTypeMemberName();
         String name = sc.nextLine();
         for(Team team : teamArray){
-                  if(team.findCompetitiveMemberByName(name)){
-                      return name;
-                  }
+            if(team.findCompetitiveMemberByName(name)){
+                return name;
+            }
         }
         ui.memberNotFound();
         return null;
@@ -506,20 +536,20 @@ public class Controller {
     }
 
     public String recordTypeChoice(String memberName){
-       String recordType = null;
-       for(Team team : teamArray){
-           ui.DisplayRecordTypeChoice();
-           while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
-               recordType = sc.next();
-           }
-       }
-       if(recordType.equals("1")){
-           recordType="regular";
-       }
-       if(recordType.equals("2")){
-           recordType="competitive";
-       }
-       return recordType;
+        String recordType = null;
+        for(Team team : teamArray){
+            ui.DisplayRecordTypeChoice();
+            while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
+                recordType = sc.next();
+            }
+        }
+        if(recordType.equals("1")){
+            recordType="regular";
+        }
+        if(recordType.equals("2")){
+            recordType="competitive";
+        }
+        return recordType;
     }
 
     public String addRecordInSeconds(){
@@ -560,15 +590,15 @@ public class Controller {
     }
 
     public boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord){
-       boolean previousRecordFound = false;
-       for(String[] record : recordList){
-           if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])){
-               record = newRecord;
-               previousRecordFound = true;
-               fileHandler.overwriteCSV("Records",recordList);
-           }
-       }
-       return previousRecordFound;
+        boolean previousRecordFound = false;
+        for(String[] record : recordList){
+            if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])){
+                record = newRecord;
+                previousRecordFound = true;
+                fileHandler.overwriteCSV("Records",recordList);
+            }
+        }
+        return previousRecordFound;
     }
 
     private void addRecordToMember(){
@@ -585,11 +615,11 @@ public class Controller {
                 data.add(newRecord);
                 boolean updateStatus = updateRecord(recordList,newRecord);
                 if(!updateStatus){
-                fileHandler.writeToCSV("Records",data);
+                    fileHandler.writeToCSV("Records",data);
                 }
             }
             if(recordType.equals("competitive")){
-               addCompetitiveRecordToMember(data,memberName,swimDiscipline,recordInSeconds,date);
+                addCompetitiveRecordToMember(data,memberName,swimDiscipline,recordInSeconds,date);
             }
         }
     }
