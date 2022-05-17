@@ -447,4 +447,8 @@ public class UI {
     public void typeMemberIdPlease() {
         System.out.println("Indtast medlemsid");
     }
+
+    public void nameChanged() {
+        System.out.println("Navnet er nu ændret");
+    }
 }
