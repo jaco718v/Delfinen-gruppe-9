@@ -341,7 +341,18 @@ public class UI {
     }
 
     public void displaySubscription(String[] strArray) {
-        System.out.println(strArray[0] + ". Name: " + strArray[1] + " - Age: " + strArray[2] + " - Active: " + strArray[3] + " - Has paid: " + strArray[4]);
+        System.out.print("MemberID: " + strArray[0] + " - Name: " + strArray[1] + " - Age: " + strArray[2]);
+        if (strArray[3].equals("true")) {
+            System.out.print(" - Active");
+        } else if (strArray[3].equals("false")) {
+            System.out.print(" - Passive");
+        }
+        if (strArray[4].equals("true")) {
+            System.out.print(" - Has paid");
+        } else if (strArray[4].equals("false")) {
+            System.out.print(" - Is in arrears");
+        }
+        System.out.println();
     }
 
     public void displaySubscriptionsInArrears() {
@@ -385,5 +396,10 @@ public class UI {
 
     public void displayMemberListFull() {
         System.out.println("Can't add new member, member list is full!");
+    }
+
+    public void displayUpdatedMemberSubscription(String[] strArray) {
+        System.out.println("Updated member subscription:");
+        displaySubscription(strArray);
     }
 }
