@@ -438,4 +438,13 @@ public class UI {
         System.out.println("Updated member subscription:");
         displaySubscription(strArray);
     }
+
+    public void whatToChange() {
+        System.out.println("Hvad vil du ændre?");
+        System.out.println("1 = Navn"+"\n2 = fødselsår"+"\n3 = Aktive eller Passiv"+ "\n4 = Regulær eller konkurrerende medlem");
+    }
+
+    public void typeMemberIdPlease() {
+        System.out.println("Indtast medlemsid");
+    }
 }
