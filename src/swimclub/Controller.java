@@ -1,6 +1,7 @@
 package swimclub;
 
 import database.FileHandler;
+import database.RecordComparator;
 import membership.Enum;
 import membership.Team;
 import membership.*;
@@ -426,12 +427,19 @@ public class Controller {
     public String addSwimDisciplineToRecordViaInput(){
         ui.displayEnterSwimDiscipline();
         String swimDiscipline = null;
-        sc.nextLine();
         while(swimDiscipline==null){
             try {
-                swimDiscipline = String.valueOf(Enum.SwimDiscipline.valueOf(sc.nextLine().toUpperCase()));
+                int choice = sc.nextInt();
+                sc.nextLine();
+                switch(choice){
+                    case 1 -> swimDiscipline = "butterfly";
+                    case 2 -> swimDiscipline = "crawl";
+                    case 3 -> swimDiscipline = "backcrawl";
+                    case 4 -> swimDiscipline = "breast";
+                    default -> swimDiscipline = null;
+                }
             }
-            catch (IllegalArgumentException iae){
+            catch (InputMismatchException ime){
                 ui.displayEnterSwimDisciplineException();
             }
         }
@@ -443,6 +451,7 @@ public class Controller {
            ui.DisplayRecordTypeChoice();
            while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
                recordType = sc.next();
+               sc.nextLine();
            }
        if(recordType.equals("1")){
            recordType="regular";
@@ -514,7 +523,8 @@ public class Controller {
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
                 String recordType = recordTypeChoice(memberName);
-                String swimDiscipline = addSwimDisciplineToRecord(memberName); // Der er en alternativ metode der tager input
+                //String swimDiscipline = addSwimDisciplineToRecord(memberName);
+                String swimDiscipline = addSwimDisciplineToRecordViaInput();// En alternativ metode der tager input
                 String recordInSeconds = addRecordInSeconds();
                 String date = addDate();
                 if(recordType.equals("regular")){
@@ -561,6 +571,80 @@ public class Controller {
         fileHandler.writeToCSV("Records.csv",data);
     }
 
+    public Enum.AgeGroup decideAgeGroup(){
+        ui.displayDecideAgeGroupTopFive();
+        int choice = 0;
+        while(choice!=1 && choice!=2){
+            try {
+                choice = sc.nextInt();
+                sc.nextLine();
+                }
+            catch (InputMismatchException ime){
+            ui.displayDecideAgeGroupTopFiveError();
+            }
+        }
+            if(choice == 1){
+                return Enum.AgeGroup.U18;
+            }
+        return  Enum.AgeGroup.O18;
+    }
+
+
+    private ArrayList<String[]> removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline){
+        int counter1 = 0;
+        int counter2 = 0;
+        for(int i = 0 ; recordData.size()>i ; i++){
+            counter1 = i-counter2;
+            if(!recordData.get(counter1)[1].equals(swimDiscipline) ||!recordData.get(counter1)[4].equals(" ") ){
+                recordData.remove(counter1);
+                counter2++;
+
+            }
+        }
+        counter1 = 0;
+        counter2 = 0;
+        for(int i = 0 ; recordData.size()>i ; i++){
+            boolean irrelevant =true;
+            for(String[] strArray : memberData){
+                counter1 = i-counter2;
+                if(strArray[0].equalsIgnoreCase(recordData.get(counter1)[0])) {
+                    irrelevant = false;
+
+                    break;
+                }
+            }
+            if(irrelevant){
+                recordData.remove(counter1);
+                counter2++;
+            }
+        }
+        return recordData;
+    }
+
+    private ArrayList<String[]> findCompetitiveTeam(Enum.AgeGroup ageGroup){
+    if(ageGroup == Enum.AgeGroup.U18){
+        return teamArray.get(2).getMembers();
+    }
+    return teamArray.get(3).getMembers();
+    }
+
+
+
+    public void findTopFiveSwimmers(){
+        String swimDiscipline = addSwimDisciplineToRecordViaInput();
+        Enum.AgeGroup ageGroupEnum = decideAgeGroup();
+        ArrayList<String[]> ageGroup = findCompetitiveTeam(ageGroupEnum);
+        RecordComparator rc = new RecordComparator();
+        ArrayList<String[]> recordData = fileHandler.readCSV("Records.csv");
+        recordData = removeIrrelevantRecords(recordData,ageGroup,swimDiscipline);
+        recordData.sort(rc);
+        if(recordData.size()>=5){
+            ui.displayTopFive(recordData);
+        }
+        else{
+            ui.displayTopFiveError();
+        }
+    }
 
     private boolean tryParseInt(String str) {
         try {

@@ -67,7 +67,7 @@ public class Commands {
         ui.listCommandsSwimmerMenu();
         String command = sc.nextLine();
         switch (command) {
-            case "1" -> con.showTopSwimmers();
+            case "1" -> con.findTopFiveSwimmers();
             case "2" -> con.showAllSwimmers();
             case "3" -> con.addRecordToMember();
             case "0" -> ui.displayReturningToMainMenu();
