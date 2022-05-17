@@ -297,6 +297,7 @@ public class Controller {
 
             memberData.add(new String[] {memberName, memberAge, isActive, isCompetitive});
             boolean success = fileHandler.writeToCSV("Members.csv", memberData);
+            updateSubscriptions();
             ui.addMember(success);
         } else {
             ui.loggedInUserNoPrivilege();
@@ -316,13 +317,17 @@ public class Controller {
     public void removeMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
+            ArrayList <String[]> subData = fileHandler.readCSV("Subscriptions.csv");
+            ui.displayPleaseEnterMemberName();
             String removeName = sc.nextLine();
 
             for(int i = 0; i < memberData.size(); i++){
                 String[] array = memberData.get(i);
                 if (array[0].equals(removeName)) {
                     memberData.remove(i);
+                    subData.remove(i);
                     fileHandler.overwriteCSV("Members.csv", memberData);
+                    fileHandler.overwriteCSV("Subscriptions.csv", subData);
                     ui.removeMember(true);
                     break;
                 } else {
@@ -358,11 +363,79 @@ public class Controller {
     }
 
     public void setPaymentStatus() {
+        showSubscriptions();
+        ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
 
+        ui.displayPleaseEnterUserId();
+        String userIdInput = sc.nextLine();
+        String foundId = "-1";
+        for (int i = 0; i < subscriptionData.size(); i++) {
+            String[] strArray = subscriptionData.get(i);
+            if (strArray[0].equals(userIdInput)) {
+                foundId = Integer.toString(i);
+            }
+        }
+        if (!foundId.equals("-1")) {
+            int foundIdInt = -1;
+            if (tryParseInt(foundId)) {
+                foundIdInt = Integer.parseInt(foundId);
+            }
+            String[] strArray = subscriptionData.get(foundIdInt);
+            String[] newArray = new String[5];
+            ui.displayPleaseEnterPaymentStatus();
+            String userPaymentStatusInput = sc.nextLine();
+            newArray[0] = strArray[0];
+            newArray[1] = strArray[1];
+            newArray[2] = strArray[2];
+            newArray[3] = strArray[3];
+            if (userPaymentStatusInput.equals("1")) {
+                newArray[4] = "true";
+                System.out.println("Set to paid");
+            } else if (userPaymentStatusInput.equals("2")) {
+                newArray[4] = "false";
+                System.out.println("Set to in arrears");
+            }
+            subscriptionData.remove(foundIdInt);
+            subscriptionData.add(foundIdInt, newArray);
+            String[] printArray = subscriptionData.get(foundIdInt);
+            System.out.println("Updated member subscription: " + printArray[0] + " " + printArray[1] + " " + printArray[2] + " " + printArray[3] + " " + printArray[4]);
+            fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
+        }
+    }
+
+    public void updateSubscriptions() {
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
+        for (int i = 0; i < memberData.size(); i++) {
+            String[] strArray = memberData.get(i);
+
+            String memberId = Integer.toString(i);
+            String memberName = strArray[0];
+            String memberAge = strArray[1];
+            String isActive = strArray[2];
+            String hasPaid = "false";
+
+            boolean isRegistered = false;
+            for (String[] subArray : subscriptionData) {
+                if (subArray[0].equals(memberId)) {
+                    isRegistered = true;
+                    break;
+                }
+            }
+            if (!isRegistered) {
+                subscriptionData.add(new String[] { memberId, memberName, memberAge, isActive, hasPaid });
+                fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
+                System.out.println("Registered member subscription.");
+            }
+        }
     }
 
     public void showSubscriptions() {
-
+        updateSubscriptions();
+        ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
+        for (String[] strArray : subscriptionData) {
+            ui.displaySubscription(strArray);
+        }
     }
 
     public void showExpectedSubscriptionFees() {
@@ -388,7 +461,14 @@ public class Controller {
     }
 
     public void showSubscriptionsInArrears() {
-
+        ui.displaySubscriptionsInArrears();
+        updateSubscriptions();
+        ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
+        for (String[] strArray : subscriptionData) {
+            if (strArray[4].equals("false")) {
+                ui.displaySubscription(strArray);
+            }
+        }
     }
 
     public void showTopSwimmers() {

@@ -330,4 +330,27 @@ public class UI {
             System.out.println("Name: " + strArray[0] + " - Password: " + password + " - User Type: " + strArray[2]);
         }
     }
+
+    public void displaySubscription(String[] strArray) {
+        System.out.println(strArray[0] + ". Name: " + strArray[1] + " - Age: " + strArray[2] + " - Active: " + strArray[3] + " - Has paid: " + strArray[4]);
+    }
+
+    public void displaySubscriptionsInArrears() {
+        System.out.println("Subscriptions in arrears:");
+    }
+
+    public void displayPleaseEnterUserId() {
+        System.out.print("Please enter the ID of the member: ");
+    }
+
+    public void displayPleaseEnterPaymentStatus() {
+        System.out.println("Set new payment status:");
+        System.out.println("1. Has paid");
+        System.out.println("2. In arrears");
+        System.out.print("Select command: ");
+    }
+
+    public void displayPleaseEnterMemberName() {
+        System.out.print("Please enter member name: ");
+    }
 }
