@@ -342,26 +342,23 @@ public class Controller {
             showMembers();
             ui.typeMemberIdPlease();
             String editMember = sc.nextLine(); // indtast memberid
-            for(int i = 0; i < memberData.size(); i++) {
+            for (int i = 0; i < memberData.size(); i++) {
                 String[] array = memberData.get(i);
                 if (array[0].equals(editMember)) {
                     ui.whatToChange();
                     String command = sc.nextLine();
                     switch (command) {
-                        case "1" ->  array[1] = addMemberName();
-                        case "2" ->  array[2] = addMemberAge();
-                        case "3" ->  array[3] = addPassiveOrActive();
-                        case "4" ->  array[4] = addCompetitiveMember();
-
-                    } // Vi
+                        case "1" -> array[1] = addMemberName();
+                        case "2" -> array[2] = addMemberAge();
+                        case "3" -> array[3] = addPassiveOrActive();
+                        case "4" -> array[4] = addCompetitiveMember();
+                    }
                     memberData.remove(i);
-                    memberData.add(i,array); // we add into a given placen in the array
-                    fileHandler.writeToCSV("Members,csv", memberData);
+                    memberData.add(i, array);
+                    fileHandler.overwriteCSV("Members.csv", memberData);
                     break;
                 }
             }
-
-
         } else {
             ui.loggedInUserNoPrivilege();
         }
