@@ -50,9 +50,10 @@ public class Team {
         return returnData;
     }
 
+
     public int getActiveMembers() {
         int activeMembers = 0;
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
             if (strArray[2].equals("true")) {
                 activeMembers++;
@@ -63,13 +64,33 @@ public class Team {
 
     public int getActiveMembersAboveAge(int ageThreshold) {
         int membersAboveAge = 0;
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
             if (Integer.parseInt(strArray[1]) > ageThreshold && strArray[2].equals("true")) {
                 membersAboveAge++;
             }
         }
         return membersAboveAge;
+    }
+
+    public boolean findCompetitiveMemberByName(String name){
+        ArrayList<String[]> memberData = getMembers();
+        for (String[] strArray : memberData) {
+            if (strArray[0].equalsIgnoreCase(name) && strArray[3].equals("true")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean findMemberCompetitiveStatus(String name){
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        for (String[] strArray : memberData) {
+            if (strArray[0].equalsIgnoreCase(name)) {
+                return Boolean.parseBoolean(strArray[3]);
+            }
+        }
+        return false;
     }
 
     public void setMemberList(ArrayList<Member> memberList) {
