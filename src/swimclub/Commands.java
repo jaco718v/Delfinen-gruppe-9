@@ -72,6 +72,7 @@ public class Commands {
             switch (command) {
                 case "1" -> con.showTopSwimmers();
                 case "2" -> con.showAllSwimmers();
+                case "3" -> con.addRecordToMember();
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;

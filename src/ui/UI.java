@@ -4,6 +4,8 @@ import membership.Enum;
 import membership.Team;
 import membership.User;
 
+import java.util.ArrayList;
+
 public class UI {
 
     public void loginUser(boolean success) {
@@ -69,15 +71,21 @@ public class UI {
     }
 
     public void DisplayRecordTypeChoice(){
-        System.out.println("Choose the record-type:\n1. Practice record \n 2. Competition placing");
+        System.out.println("Choose the record-type:");
+        System.out.println("1. Practice record");
+        System.out.println("2. Competition placing");
     }
 
     public void displayEnterSwimDiscipline(){
-        System.out.println("Enter the relevant swim discipline");
+        System.out.println("Choose swim-discipline: enter 1-4");
+        System.out.println("1. Butterfly");
+        System.out.println("2. Crawl");
+        System.out.println("3. Back crawl");
+        System.out.println("4. Breaststroke");
     }
 
     public void displayEnterSwimDisciplineException(){
-        System.out.println("Swim Discipline not found, please enter one of the following: Butterfly,Crawl,BackCrawl or Breast");
+        System.out.println("Error in input, please enter an integer between 1-4");
     }
 
     public void displayEnterRecordInSeconds(){
@@ -106,6 +114,33 @@ public class UI {
 
     public void displayEnterPlacingException(){
         System.out.println("Error in input, enter a valid number");
+    }
+
+    public void displayRecordAddSucces(String recordType){
+        System.out.println("Successfully added "+recordType+ " record to swimmer");
+    }
+
+    public void displayDecideAgeGroupTopFive(){
+        System.out.println("Choose age group");
+        System.out.println("1. Junior");
+        System.out.println("2. Senior");
+    }
+
+    public void displayDecideAgeGroupTopFiveError(){
+        System.out.println("Error in input, choose 1-2F");
+    }
+
+    public void displayTopFive(ArrayList<String[]> topFive){
+        System.out.println("Top 5 "+topFive.get(0)[1]+" swimmers");
+        System.out.println("1. "+topFive.get(0)[0]+"\t\t"+topFive.get(0)[2]+" seconds");
+        System.out.println("2. "+topFive.get(1)[0]+"\t\t"+topFive.get(1)[2]+" seconds");
+        System.out.println("3. "+topFive.get(2)[0]+"\t\t"+topFive.get(2)[2]+" seconds");
+        System.out.println("4. "+topFive.get(3)[0]+"\t\t"+topFive.get(3)[2]+" seconds");
+        System.out.println("5. "+topFive.get(4)[0]+"\t\t"+topFive.get(4)[2]+" seconds");
+    }
+
+    public void displayTopFiveError(){
+        System.out.println("There are fewer than 5 swimmers in that swim discipline");
     }
 
     public void displayPleaseTypeLoginName() {
@@ -296,6 +331,7 @@ public class UI {
         System.out.println("Swimmer Commands:");
         System.out.println("1. Show top swimmers");
         System.out.println("2. Show all swimmers");
+        System.out.println("3. Update swimmer records");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }

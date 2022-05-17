@@ -84,13 +84,23 @@ public class Team {
     }
 
     public boolean findMemberCompetitiveStatus(String name){
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
             if (strArray[0].equalsIgnoreCase(name)) {
                 return Boolean.parseBoolean(strArray[3]);
             }
         }
         return false;
+    }
+
+    public String findMemberSwimDiscipline(String name){
+        ArrayList<String[]> memberData = getMembers();
+        for (String[] strArray : memberData) {
+            if (strArray[0].equalsIgnoreCase(name)) {
+                return strArray[4];
+            }
+        }
+        return null;
     }
 
     public void setMemberList(ArrayList<Member> memberList) {
