@@ -127,16 +127,16 @@ public class UI {
     }
 
     public void displayDecideAgeGroupTopFiveError(){
-        System.out.println("Error in input, choose 1-2");
+        System.out.println("Error in input, choose 1-2F");
     }
 
     public void displayTopFive(ArrayList<String[]> topFive){
         System.out.println("Top 5 "+topFive.get(0)[1]+" swimmers");
-        System.out.println("1. "+topFive.get(0)[0]+"\t\t"+topFive.get(0)[2]);
-        System.out.println("2. "+topFive.get(1)[0]+"\t\t"+topFive.get(1)[2]);
-        System.out.println("3. "+topFive.get(2)[0]+"\t\t"+topFive.get(2)[2]);
-        System.out.println("4. "+topFive.get(3)[0]+"\t\t"+topFive.get(3)[2]);
-        System.out.println("5. "+topFive.get(4)[0]+"\t\t"+topFive.get(4)[2]);
+        System.out.println("1. "+topFive.get(0)[0]+"\t\t"+topFive.get(0)[2]+" seconds");
+        System.out.println("2. "+topFive.get(1)[0]+"\t\t"+topFive.get(1)[2]+" seconds");
+        System.out.println("3. "+topFive.get(2)[0]+"\t\t"+topFive.get(2)[2]+" seconds");
+        System.out.println("4. "+topFive.get(3)[0]+"\t\t"+topFive.get(3)[2]+" seconds");
+        System.out.println("5. "+topFive.get(4)[0]+"\t\t"+topFive.get(4)[2]+" seconds");
     }
 
     public void displayTopFiveError(){

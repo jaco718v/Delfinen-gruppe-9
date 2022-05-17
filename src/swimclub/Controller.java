@@ -502,9 +502,6 @@ public class Controller {
         }
     }
 
-    public void showTopSwimmers() {
-
-    }
 
     public void showAllSwimmers() {
 
@@ -740,7 +737,7 @@ public class Controller {
 
 
 
-    public void findTopFiveSwimmers(){
+    public void showTopSwimmers(){
         String swimDiscipline = addSwimDisciplineToRecordViaInput();
         Enum.AgeGroup ageGroupEnum = decideAgeGroup();
         ArrayList<String[]> ageGroup = findCompetitiveTeam(ageGroupEnum);
