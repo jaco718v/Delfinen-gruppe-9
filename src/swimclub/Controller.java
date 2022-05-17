@@ -339,22 +339,25 @@ public class Controller {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             // edit member kode her
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+            showMembers();
             ui.typeMemberIdPlease();
-            int editMember = sc.nextInt(); // indtast memberid
+            String editMember = sc.nextLine(); // indtast memberid
             for(int i = 0; i < memberData.size(); i++) {
                 String[] array = memberData.get(i);
                 if (array[0].equals(editMember)) {
                     ui.whatToChange();
                     String command = sc.nextLine();
                     switch (command) {
-                        case "1" -> array[1] = addMemberName();
+                        case "1" ->  array[1] = addMemberName();
+                        case "2" ->  array[2] = addMemberAge();
+                        case "3" ->  array[3] = addPassiveOrActive();
+                        case "4" ->  array[4] = addCompetitiveMember();
 
-                        case "2" -> editAge();
-                        case "3" -> editPassiveActive();
-                        case "4" -> editCompetitiveRegular();
-
-                    }
-
+                    } // Vi
+                    memberData.remove(i);
+                    memberData.add(i,array); // we add into a given placen in the array
+                    fileHandler.writeToCSV("Members,csv", memberData);
+                    break;
                 }
             }
 
@@ -363,28 +366,10 @@ public class Controller {
             ui.loggedInUserNoPrivilege();
         }
     }
-    // Indtast ID nr - Søg i CSv fil efter medlem
-    // Når medlem er fundet, spørg hvad bruger vil ændre.
-    // Lad metode for at ændre Navn, alder, passiv/aktiv, regular/competitive
-    //
-
-    public void editName(String[] memberArray){
-        ui.displayPleaseEnterMemberName();
-        String newName = sc.nextLine();
 
 
 
 
-
-
-
-
-
-
-    }
-    public void editAge(){}
-    public void editPassiveActive(){}
-    public void editCompetitiveRegular(){}
 
 
 
