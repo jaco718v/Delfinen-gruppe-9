@@ -147,19 +147,16 @@ public class UI {
         System.out.print("Please type user login name: ");
     }
 
-    public void displayMemberName(){
-        System.out.print("Please type member name: ");
-    }
     public void displayPleaseEnterValidName(String memberName) {
         System.out.println("Please enter a valid name. You entered: " + memberName);
     }
 
-    public void displayMemberAge(int memberAgee){
+    public void displayPleaseEnterMemberAge(){
         System.out.print("Please enter member age: ");
     }
 
-    public void displayPleaseEnterValidAge(int memberAgee) {
-        System.out.println("Please enter a valid name. You entered: " + memberAgee);
+    public void displayPleaseEnterValidAge(int memberAge) {
+        System.out.println("Please enter a valid name. You entered: " + memberAge);
     }
 
 
@@ -244,7 +241,7 @@ public class UI {
 
     public void listCommandsNotLoggedIn() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Login Commands:");
         System.out.println("1. Login user");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
@@ -252,7 +249,7 @@ public class UI {
 
     public void listCommandsAdmin() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Admin Commands:");
         System.out.println("1. User menu");
         System.out.println("2. Member menu");
         System.out.println("3. Subscription menu");
@@ -263,7 +260,7 @@ public class UI {
 
     public void listCommandsChairman() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Chairman Commands:");
         System.out.println("1. User menu");
         System.out.println("2. Member menu");
         System.out.println("0. Exit program");
@@ -272,7 +269,7 @@ public class UI {
 
     public void listCommandsCashier() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Cashier Commands:");
         System.out.println("1. User menu");
         System.out.println("3. Subscription menu");
         System.out.println("0. Exit program");
@@ -281,7 +278,7 @@ public class UI {
 
     public void listCommandsCoach() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Coach Commands:");
         System.out.println("1. User menu");
         System.out.println("9. Swimmer menu");
         System.out.println("0. Exit program");
@@ -290,7 +287,7 @@ public class UI {
 
     public void listCommandsUserMenu() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("User Commands:");
         System.out.println("1. Login user");
         System.out.println("2. Add user");
         System.out.println("3. Remove user");
@@ -301,7 +298,7 @@ public class UI {
 
     public void listCommandsUserMenuLoginOnly() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("User Commands:");
         System.out.println("1. Login user");
         System.out.println("0. Back");
         System.out.print("Select command: ");
@@ -309,7 +306,7 @@ public class UI {
 
     public void listCommandsMemberMenu() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Member Commands:");
         System.out.println("1. Add member");
         System.out.println("2. Edit member");
         System.out.println("3. Remove member");
@@ -320,7 +317,7 @@ public class UI {
 
     public void listCommandsSubscriptionMenu() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Subscription Commands:");
         System.out.println("1. Set payment status");
         System.out.println("2. Show subscriptions");
         System.out.println("3. Show expected subscription fees");
@@ -331,7 +328,7 @@ public class UI {
 
     public void listCommandsSwimmerMenu() {
         System.out.println();
-        System.out.println("Commands:");
+        System.out.println("Swimmer Commands:");
         System.out.println("1. Show top swimmers");
         System.out.println("2. Show all swimmers");
         System.out.println("3. Update swimmer records");
@@ -339,8 +336,20 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void displayMemberInformation(String[] strArray, int index) {
-        System.out.println(index + ". Name: " + strArray[0] + " - Age: " + strArray[1] + " - Active: " + strArray[2] + " - Competitive: " + strArray[3]);
+    public void displayMemberInformation(String[] strArray) {
+        System.out.print("MemberID: " + strArray[0]);
+        System.out.print(" - Name: " + strArray[1] + " - Age: " + strArray[2]);
+        if (strArray[3].equals("true")) {
+            System.out.print(" - Active");
+        } else if (strArray[3].equals("false")) {
+            System.out.print(" - Passive");
+        }
+        if (strArray[4].equals("true")) {
+            System.out.print(" - Competitive");
+        } else if (strArray[4].equals("false")) {
+            System.out.print(" - Regular");
+        }
+        System.out.println();
     }
 
     public void displayTeamInformation(int teamNumber, Team team) {
@@ -365,5 +374,52 @@ public class UI {
             }
             System.out.println("Name: " + strArray[0] + " - Password: " + password + " - User Type: " + strArray[2]);
         }
+    }
+
+    public void displaySubscription(String[] strArray) {
+        System.out.println(strArray[0] + ". Name: " + strArray[1] + " - Age: " + strArray[2] + " - Active: " + strArray[3] + " - Has paid: " + strArray[4]);
+    }
+
+    public void displaySubscriptionsInArrears() {
+        System.out.println("Subscriptions in arrears:");
+    }
+
+    public void displayPleaseEnterUserId() {
+        System.out.print("Please enter the ID of the User: ");
+    }
+
+    public void displayPleaseEnterPaymentStatus() {
+        System.out.println("Set new payment status:");
+        System.out.println("1. Has paid");
+        System.out.println("2. In arrears");
+        System.out.print("Select command: ");
+    }
+
+    public void displayPleaseEnterMemberName() {
+        System.out.print("Please enter Member Name: ");
+    }
+
+    public void displaySelectedSwimmerMenu() {
+        System.out.println("Selected Swimmer Menu.");
+    }
+
+    public void displaySelectedUserMenu() {
+        System.out.println("Selected User Menu.");
+    }
+
+    public void displaySelectedMemberMenu() {
+        System.out.println("Selected Member Menu.");
+    }
+
+    public void displaySelectedSubscriptionMenu() {
+        System.out.println("Selected Subscription Menu.");
+    }
+
+    public void displayPleaseEnterMemberId() {
+        System.out.print("Please enter Member ID: ");
+    }
+
+    public void displayMemberListFull() {
+        System.out.println("Can't add new member, member list is full!");
     }
 }
