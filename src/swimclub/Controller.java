@@ -36,10 +36,11 @@ public class Controller {
     }
 
     private void createTeams() {
-        teamArray.add(new Team(Enum.TeamType.REGULAR, Enum.AgeGroup.U18));
-        teamArray.add(new Team(Enum.TeamType.REGULAR, Enum.AgeGroup.O18));
-        teamArray.add(new Team(Enum.TeamType.COMPETITIVE, Enum.AgeGroup.U18));
-        teamArray.add(new Team(Enum.TeamType.COMPETITIVE, Enum.AgeGroup.O18));
+        for (int i = 0; i < Enum.TeamType.values().length; i++) {
+            for (int j = 0; j < Enum.AgeGroup.values().length; j++) {
+                teamArray.add(new Team(Enum.TeamType.values()[i], Enum.AgeGroup.values()[j]));
+            }
+        }
     }
 
     public void exit() {
@@ -458,7 +459,7 @@ public class Controller {
         int teamNumber = 0;
         for (Team team : teamArray) {
             teamNumber += 1;
-            ui.displayTeamInformation(teamNumber, team);
+            ui.displayTeamInformation(this, teamNumber, team);
 
             for (String[] strArray : memberData) {
                 int age = convertDateToAge(strArray[2]);
@@ -792,7 +793,7 @@ public class Controller {
         return teamArray.get(3).getMembers();
     }
 
-    private void showTopSwimmers() {
+    public void showTopSwimmers() {
         String swimDiscipline = addSwimDisciplineToRecordViaInput();
         Enum.AgeGroup ageGroupEnum = decideAgeGroup();
         ArrayList<String[]> ageGroup = findCompetitiveTeam(ageGroupEnum);

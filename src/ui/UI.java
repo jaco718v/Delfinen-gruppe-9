@@ -378,8 +378,8 @@ public class UI {
         System.out.println();
     }
 
-    public void displayTeamInformation(int teamNumber, Team team) {
-        System.out.println("Team " + teamNumber + " - Team type: " + team.getTeamType().name() + " - Age group: " + team.getAgeGroup().name());
+    public void displayTeamInformation(Controller con, int teamNumber, Team team) {
+        System.out.println("Team " + teamNumber + " - Team type: " + con.capitalizeString(team.getTeamType().name()) + " - Age group: " + team.getAgeGroup().name());
     }
 
     public void displayReturningToMainMenu() {
@@ -466,28 +466,28 @@ public class UI {
     }
 
     public void whatToChange() {
-        System.out.println("Hvad vil du ændre?");
-        System.out.println("1 = Navn"+"\n2 = fødselsår"+"\n3 = Aktive eller Passiv"+ "\n4 = Regulær eller konkurrerende medlem");
+        System.out.println("What do you want to change?");
+        System.out.println("1. Name"+"\n2. Birth date"+"\n3. Active or passive"+ "\n4. Regular or competitive");
     }
 
     public void typeMemberIdPlease() {
-        System.out.println("Indtast medlemsid");
+        System.out.println("Please enter MemberID: ");
     }
 
     public void nameChanged() {
-        System.out.println("Navnet er nu ændret");
+        System.out.println("Name has been changed.");
     }
 
     public void displayPleaseEnterMemberBirthDay() {
-        System.out.print("Please enter birth day:" );
+        System.out.print("Please enter birth day: ");
     }
 
     public void displayPleaseEnterMemberBirthMonth() {
-        System.out.print("Please enter birth month:" );
+        System.out.print("Please enter birth month: ");
     }
 
     public void displayPleaseEnterMemberYear() {
-        System.out.print("Please enter birth year:" );
+        System.out.print("Please enter birth year: ");
     }
 
     public void displayPleaseEnterValidBirthDay() {
