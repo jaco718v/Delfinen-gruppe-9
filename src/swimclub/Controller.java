@@ -372,15 +372,6 @@ public class Controller {
 
 
 
-
-
-
-
-
-
-
-
-
     public void removeMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
@@ -567,13 +558,12 @@ public class Controller {
         String swimDiscipline = null;
         while(swimDiscipline==null){
             try {
-                int choice = sc.nextInt();
-                sc.nextLine();
+                String choice = sc.nextLine();
                 switch(choice){
-                    case 1 -> swimDiscipline = "butterfly";
-                    case 2 -> swimDiscipline = "crawl";
-                    case 3 -> swimDiscipline = "backcrawl";
-                    case 4 -> swimDiscipline = "breast";
+                    case "1" -> swimDiscipline = "butterfly";
+                    case "2" -> swimDiscipline = "crawl";
+                    case "3" -> swimDiscipline = "backcrawl";
+                    case "4" -> swimDiscipline = "breast";
                     default -> swimDiscipline = null;
                 }
             }
@@ -588,8 +578,7 @@ public class Controller {
        String recordType = null;
            ui.DisplayRecordTypeChoice();
            while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
-               recordType = sc.next();
-               sc.nextLine();
+               recordType = sc.nextLine();
            }
        if(recordType.equals("1")){
            recordType="regular";
@@ -602,18 +591,19 @@ public class Controller {
 
     public String addRecordInSeconds(){
         ui.displayEnterRecordInSeconds();
-        double recordInSeconds = 0;
-        while(recordInSeconds==0){
+        double recordDouble = 0;
+        String recordInSeconds = null;
+        while(recordInSeconds==null || recordDouble<=0){
             try {
-                recordInSeconds = sc.nextDouble();
+                recordInSeconds = sc.nextLine();
+                recordDouble = Double.parseDouble(recordInSeconds);
             }
-            catch (InputMismatchException ime){
+            catch (NumberFormatException | NoSuchElementException nfe){
                 ui.displayEnterRecordInSecondsException();
-                sc.nextLine();
+
             }
         }
-        String recordInSecondsString = String.valueOf(recordInSeconds);
-        return recordInSecondsString;
+        return recordInSeconds;
     }
 
     public String addDate(){
@@ -689,16 +679,17 @@ public class Controller {
 
     public String addPlacing(){
         ui.displayEnterPlacing();
-        int place = 0;
-        while(place==0){
+        int placeInt = 0;
+        String place = null;
+        while(place==null || placeInt<=0){
             try {
-                place = sc.nextInt();
-                sc.nextLine();
-            }catch (InputMismatchException ime){
+                place = sc.nextLine();
+                placeInt = Integer.parseInt(place);
+            }catch (NumberFormatException | NoSuchElementException nfe){
                 ui.displayEnterPlacingException();
             }
         }
-        return String.valueOf(place);
+        return place;
     }
 
     private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberName, String swimDiscipline, String recordInSeconds,String date){
@@ -726,8 +717,7 @@ public class Controller {
             }
         return  Enum.AgeGroup.O18;
     }
-
-
+    
     private ArrayList<String[]> removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline){
         int counter1 = 0;
         int counter2 = 0;
@@ -765,8 +755,6 @@ public class Controller {
     }
     return teamArray.get(3).getMembers();
     }
-
-
 
     public void showTopSwimmers(){
         String swimDiscipline = addSwimDisciplineToRecordViaInput();
