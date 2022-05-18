@@ -611,7 +611,6 @@ public class Controller {
         int day = 0;
         int month = 0;
         int year = 0;
-        sc.nextLine();
         String dateInput = null;
         int[] date = {day,month,year};
         while (year == 0  || day > 31 || month > 12) {
@@ -636,9 +635,9 @@ public class Controller {
        boolean previousRecordFound = false;
        for(String[] record : recordList){
            if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])){
-               record = newRecord;
+               recordList.set(recordList.indexOf(record),newRecord);
                previousRecordFound = true;
-               fileHandler.overwriteCSV("Records",recordList);
+               fileHandler.overwriteCSV("Records.csv",recordList);
            }
        }
        return previousRecordFound;
@@ -717,7 +716,7 @@ public class Controller {
             }
         return  Enum.AgeGroup.O18;
     }
-    
+
     private ArrayList<String[]> removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline){
         int counter1 = 0;
         int counter2 = 0;
