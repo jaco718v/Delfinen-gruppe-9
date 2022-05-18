@@ -501,4 +501,8 @@ public class UI {
     public void displayPleaseEnterValidBirthYear() {
         System.out.println("Please enter a valid birth year.");
     }
+
+    public void displayNoSuchMemberFound() {
+        System.out.println("No such member found.");
+    }
 }

@@ -505,6 +505,8 @@ public class Controller {
             String[] printArray = subscriptionData.get(foundIdInt);
             ui.displayUpdatedMemberSubscription(printArray);
             fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
+        } else {
+            ui.displayNoSuchMemberFound();
         }
     }
 
