@@ -3,8 +3,11 @@ package ui;
 import membership.Enum;
 import membership.Team;
 import membership.User;
+import swimclub.Controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class UI {
 
@@ -357,9 +360,11 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void displayMemberInformation(String[] strArray) {
+    public void displayMemberInformation(Controller con, String[] strArray) {
         System.out.print("MemberID: " + strArray[0]);
-        System.out.print(" - Name: " + strArray[1] + " - Age: " + strArray[2]);
+        System.out.print(" - Name: " + strArray[1]);
+        System.out.print(" - Birth date: " + strArray[2]);
+        System.out.print(" - Age: " + con.convertDateToAge(strArray[2]));
         if (strArray[3].equals("true")) {
             System.out.print(" - Active");
         } else if (strArray[3].equals("false")) {
@@ -471,5 +476,29 @@ public class UI {
 
     public void nameChanged() {
         System.out.println("Navnet er nu ændret");
+    }
+
+    public void displayPleaseEnterMemberBirthDay() {
+        System.out.print("Please enter birth day:" );
+    }
+
+    public void displayPleaseEnterMemberBirthMonth() {
+        System.out.print("Please enter birth month:" );
+    }
+
+    public void displayPleaseEnterMemberYear() {
+        System.out.print("Please enter birth year:" );
+    }
+
+    public void displayPleaseEnterValidBirthDay() {
+        System.out.println("Please enter a valid birth day.");
+    }
+
+    public void displayPleaseEnterValidBirthMonth() {
+        System.out.println("Please enter a valid birth month.");
+    }
+
+    public void displayPleaseEnterValidBirthYear() {
+        System.out.println("Please enter a valid birth year.");
     }
 }

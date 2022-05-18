@@ -8,6 +8,7 @@ import membership.*;
 
 import ui.UI;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
@@ -269,17 +270,67 @@ public class Controller {
         return writeNameParts(memberName);
     }
 
-    private String addMemberAge() {
-        String memberAge = "";
-        boolean enteredMemberAge = false;
-        while (!enteredMemberAge) {
-            ui.displayPleaseEnterMemberAge();
-            memberAge = sc.nextLine();
-            if (tryParseInt(memberAge)) {
-                enteredMemberAge = true;
+    private String addMemberBirthDay() {
+        String memberBirthDay = "";
+        int birthDay = 0;
+        boolean enteredMemberBirthDay = false;
+        while (!enteredMemberBirthDay) {
+            ui.displayPleaseEnterMemberBirthDay();
+            memberBirthDay = sc.nextLine();
+            if ((tryParseInt(memberBirthDay)) && (Integer.parseInt(memberBirthDay) >= 1) && (Integer.parseInt(memberBirthDay) <= 31)) {
+                enteredMemberBirthDay = true;
+                birthDay = Integer.parseInt(memberBirthDay);
+            } else {
+                ui.displayPleaseEnterValidBirthDay();
             }
         }
-        return memberAge;
+        if (birthDay != 0) {
+            return String.format("%02d", birthDay);
+        } else {
+            return null;
+        }
+    }
+
+    private String addMemberBirthMonth() {
+        String memberBirthMonth = "";
+        int birthMonth = 0;
+        boolean enteredMemberBirthMonth = false;
+        while (!enteredMemberBirthMonth) {
+            ui.displayPleaseEnterMemberBirthMonth();
+            memberBirthMonth = sc.nextLine();
+            if ((tryParseInt(memberBirthMonth)) && (Integer.parseInt(memberBirthMonth) >= 1) && (Integer.parseInt(memberBirthMonth) <= 12)) {
+                enteredMemberBirthMonth = true;
+                birthMonth = Integer.parseInt(memberBirthMonth);
+            } else {
+                ui.displayPleaseEnterValidBirthMonth();
+            }
+        }
+        if (birthMonth != 0) {
+            return String.format("%02d", birthMonth);
+        } else {
+            return null;
+        }
+    }
+
+    private String addMemberBirthYear() {
+        String memberBirthYear = "";
+        int birthYear = 0;
+        boolean enteredMemberBirthYear = false;
+        while (!enteredMemberBirthYear) {
+            ui.displayPleaseEnterMemberYear();
+            memberBirthYear = sc.nextLine();
+            if ((tryParseInt(memberBirthYear)) && (Integer.parseInt(memberBirthYear) >= LocalDateTime.now().getYear()-120) && (Integer.parseInt(memberBirthYear) <= LocalDateTime.now().getYear())) {
+                enteredMemberBirthYear = true;
+                birthYear = Integer.parseInt(memberBirthYear);
+            } else {
+                ui.displayPleaseEnterValidBirthYear();
+            }
+        }
+        if (birthYear != 0) {
+            return String.format("%04d", birthYear);
+        } else {
+            return null;
+        }
     }
 
     private String addPassiveOrActive(){
@@ -317,7 +368,7 @@ public class Controller {
             String memberId = addMemberId();
             if (!memberId.equals("FULL")) {
                 String memberName = addMemberName();
-                String memberAge = addMemberAge();
+                String memberBirthDate = addMemberBirthDay() + "/" + addMemberBirthMonth() + "/" + addMemberBirthYear();
                 String isActive = addPassiveOrActive();
                 String isCompetitive = addCompetitiveMember();
                 String swimDiscipline = " ";
@@ -325,7 +376,7 @@ public class Controller {
                     swimDiscipline = addSwimDisciplineToRecordViaInput();
                 }
 
-                newMemberData.add(new String[] { memberId, memberName, memberAge, isActive, isCompetitive,swimDiscipline });
+                newMemberData.add(new String[] { memberId, memberName, memberBirthDate, isActive, isCompetitive,swimDiscipline });
                 boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
                 updateSubscriptions();
                 ui.addMember(success);
@@ -352,7 +403,7 @@ public class Controller {
                     String command = sc.nextLine();
                     switch (command) {
                         case "1" -> array[1] = addMemberName();
-                        case "2" -> array[2] = addMemberAge();
+                        case "2" -> array[2] = addMemberBirthDay() + "/" + addMemberBirthMonth() + "/" + addMemberBirthYear();
                         case "3" -> array[3] = addPassiveOrActive();
                         case "4" -> array[4] = addCompetitiveMember();
                     }
@@ -409,14 +460,14 @@ public class Controller {
             ui.displayTeamInformation(teamNumber, team);
 
             for (String[] strArray : memberData) {
-                int age = Integer.parseInt(strArray[2]);
+                int age = convertDateToAge(strArray[2]);
                 if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
                     if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
-                        ui.displayMemberInformation(strArray);
+                        ui.displayMemberInformation(this, strArray);
                     }
                 } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
                     if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
-                        ui.displayMemberInformation(strArray);
+                        ui.displayMemberInformation(this, strArray);
                     }
                 }
             }
@@ -538,10 +589,10 @@ public class Controller {
 
     private String addSwimDisciplineToRecord(String name){
         String swimDiscipline = null;
-        for (Team team : teamArray){
+        for (Team team : teamArray) {
             swimDiscipline = team.findMemberSwimDiscipline(name);
-            if(swimDiscipline!=null){
-                return  swimDiscipline;
+            if (swimDiscipline != null) {
+                return swimDiscipline;
             }
         }
 
@@ -551,7 +602,7 @@ public class Controller {
     private String addSwimDisciplineToRecordViaInput(){
         ui.displayEnterSwimDiscipline();
         String swimDiscipline = null;
-        while(swimDiscipline==null){
+        while (swimDiscipline == null) {
             try {
                 String choice = sc.nextLine();
                 switch(choice){
@@ -561,12 +612,11 @@ public class Controller {
                     case "4" -> swimDiscipline = "breast";
                     default -> swimDiscipline = null;
                 }
-            }
-            catch (InputMismatchException ime){
+            } catch (InputMismatchException ime) {
                 ui.displayEnterSwimDisciplineException();
             }
         }
-        return  swimDiscipline;
+        return swimDiscipline;
     }
 
     private String recordTypeChoice(String memberName){
@@ -595,7 +645,6 @@ public class Controller {
             }
             catch (NumberFormatException | NoSuchElementException nfe){
                 ui.displayEnterRecordInSecondsException();
-
             }
         }
         return recordInSeconds;
@@ -607,8 +656,8 @@ public class Controller {
         int month = 0;
         int year = 0;
         String dateInput = null;
-        int[] date = {day,month,year};
-        while (year == 0  || day > 31 || month > 12) {
+        int[] date = {day, month, year};
+        while (year == 0 || day > 31 || month > 12) {
             try {
                 dateInput = sc.nextLine();
                 Scanner dateInputScanner = new Scanner(dateInput);
@@ -616,7 +665,7 @@ public class Controller {
                 day = Integer.parseInt(dateInputScanner.next());
                 month = Integer.parseInt(dateInputScanner.next());
                 year = Integer.parseInt(dateInputScanner.next());
-                if (day > 31 || month > 12){
+                if (day > 31 || month > 12) {
                     ui.displayEnterDateException();
                 }
             } catch (NoSuchElementException | NumberFormatException nsee) {
@@ -626,10 +675,10 @@ public class Controller {
         return dateInput;
     }
 
-    private boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord){
+    private boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord) {
        boolean previousRecordFound = false;
-       for(String[] record : recordList){
-           if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])){
+       for (String[] record : recordList) {
+           if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])) {
                recordList.set(recordList.indexOf(record),newRecord);
                previousRecordFound = true;
                fileHandler.overwriteCSV("Records.csv",recordList);
@@ -638,10 +687,10 @@ public class Controller {
        return previousRecordFound;
     }
 
-    public void addRecordToMember(){
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)){
+    public void addRecordToMember() {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             String memberName = findCompetitiveMemberNameByID();     //Change to id?
-            if(memberName!=null){
+            if (memberName != null) {
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
                 String recordType = recordTypeChoice(memberName);
@@ -649,91 +698,86 @@ public class Controller {
                 //String swimDiscipline = addSwimDisciplineToRecordViaInput();// En alternativ metode der tager input
                 String recordInSeconds = addRecordInSeconds();
                 String date = addDate();
-                if(recordType.equals("regular")){
-                    String[] newRecord = {memberName,swimDiscipline,recordInSeconds,date," "," "};
+                if (recordType.equals("regular")) {
+                    String[] newRecord = {memberName, swimDiscipline, recordInSeconds, date, " ", " "};
                     data.add(newRecord);
-                    boolean updateStatus = updateRecord(recordList,newRecord);
-                    if(!updateStatus){
-                        fileHandler.writeToCSV("Records.csv",data);
+                    boolean updateStatus = updateRecord(recordList, newRecord);
+                    if (!updateStatus) {
+                        fileHandler.writeToCSV("Records.csv", data);
                     }
                 }
-                if(recordType.equals("competitive")){
-                    addCompetitiveRecordToMember(data,memberName,swimDiscipline,recordInSeconds,date);
+                if (recordType.equals("competitive")) {
+                    addCompetitiveRecordToMember(data, memberName, swimDiscipline, recordInSeconds, date);
                 }
                 ui.displayRecordAddSucces(recordType);
             }
-        else {
+        } else {
             ui.loggedInUserNoPrivilege();
         }
     }
-    else {
-        ui.noRegisteredUsers();
-    }
-    }
 
-    private String addPlacing(){
+    private String addPlacing() {
         ui.displayEnterPlacing();
         int placeInt = 0;
         String place = null;
-        while(place==null || placeInt<=0){
+        while (place==null || placeInt<=0) {
             try {
                 place = sc.nextLine();
                 placeInt = Integer.parseInt(place);
-            }catch (NumberFormatException | NoSuchElementException nfe){
+            } catch (NumberFormatException | NoSuchElementException nfe) {
                 ui.displayEnterPlacingException();
             }
         }
         return place;
     }
 
-    private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberName, String swimDiscipline, String recordInSeconds,String date){
+    private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberName, String swimDiscipline, String recordInSeconds,String date) {
         ui.displayEnterConventionName();
         String convention = sc.nextLine();
         String placing = addPlacing();
-        data.add(new String[]{memberName,swimDiscipline,recordInSeconds,date,convention,placing});
-        fileHandler.writeToCSV("Records.csv",data);
+        data.add(new String[]{memberName, swimDiscipline, recordInSeconds, date, convention, placing});
+        fileHandler.writeToCSV("Records.csv", data);
     }
 
-    private Enum.AgeGroup decideAgeGroup(){
+    private Enum.AgeGroup decideAgeGroup() {
         ui.displayDecideAgeGroupTopFive();
         int choice = 0;
-        while(choice!=1 && choice!=2){
+        while (choice != 1 && choice != 2) {
             try {
                 choice = sc.nextInt();
                 sc.nextLine();
-                }
-            catch (InputMismatchException ime){
-            ui.displayDecideAgeGroupTopFiveError();
+            } catch (InputMismatchException ime) {
+                ui.displayDecideAgeGroupTopFiveError();
             }
         }
-            if(choice == 1){
-                return Enum.AgeGroup.U18;
-            }
-        return  Enum.AgeGroup.O18;
+        if (choice == 1) {
+            return Enum.AgeGroup.U18;
+        }
+        return Enum.AgeGroup.O18;
     }
 
-    private ArrayList<String[]> removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline){
+    private ArrayList<String[]> removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline) {
         int counter1 = 0;
         int counter2 = 0;
-        for(int i = 0 ; recordData.size()>i ; i++){
-            counter1 = i-counter2;
-            if(!recordData.get(counter1)[1].equals(swimDiscipline) ||!recordData.get(counter1)[4].equals(" ") ){
+        for (int i = 0; recordData.size() > i; i++) {
+            counter1 = i - counter2;
+            if (!recordData.get(counter1)[1].equals(swimDiscipline) || !recordData.get(counter1)[4].equals(" ")) {
                 recordData.remove(counter1);
                 counter2++;
             }
         }
         counter1 = 0;
         counter2 = 0;
-        for(int i = 0 ; recordData.size()>i ; i++){
+        for (int i = 0 ; recordData.size()>i ; i++) {
             boolean irrelevant =true;
-            for(String[] strArray : memberData){
+            for(String[] strArray : memberData) {
                 counter1 = i-counter2;
                 if(strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
                     irrelevant = false;
                     break;
                 }
             }
-            if(irrelevant){
+            if (irrelevant) {
                 recordData.remove(counter1);
                 counter2++;
             }
@@ -741,40 +785,40 @@ public class Controller {
         return recordData;
     }
 
-    private ArrayList<String[]> findCompetitiveTeam(Enum.AgeGroup ageGroup){
-    if(ageGroup == Enum.AgeGroup.U18){
-        return teamArray.get(2).getMembers();
-    }
-    return teamArray.get(3).getMembers();
+    private ArrayList<String[]> findCompetitiveTeam(Enum.AgeGroup ageGroup) {
+        if (ageGroup == Enum.AgeGroup.U18) {
+            return teamArray.get(2).getMembers();
+        }
+        return teamArray.get(3).getMembers();
     }
 
-    public void showTopSwimmers(){
+    private void showTopSwimmers() {
         String swimDiscipline = addSwimDisciplineToRecordViaInput();
         Enum.AgeGroup ageGroupEnum = decideAgeGroup();
         ArrayList<String[]> ageGroup = findCompetitiveTeam(ageGroupEnum);
         RecordComparator rc = new RecordComparator();
         ArrayList<String[]> recordData = fileHandler.readCSV("Records.csv");
-        recordData = removeIrrelevantRecords(recordData,ageGroup,swimDiscipline);
+        recordData = removeIrrelevantRecords(recordData, ageGroup, swimDiscipline);
         recordData.sort(rc);
-        if(recordData.size()>0){
+        if (recordData.size() >= 5) {
             ui.displayTopFive(recordData);
         } else {
             ui.displayTopFiveError();
         }
     }
 
-    public void showMemberRecords(){
+    public void showMemberRecords() {
         String memberName = findCompetitiveMemberNameByID();
-            if(memberName!=null){
-                ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
-                ArrayList<String[]> memberRecords = new ArrayList<>();
-                for (String[] records : recordList){
-                    if(records[0].equals(memberName)){
-                        memberRecords.add(records);
-                    }
+        if (memberName != null) {
+            ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
+            ArrayList<String[]> memberRecords = new ArrayList<>();
+            for (String[] records : recordList) {
+                if(records[0].equals(memberName)) {
+                    memberRecords.add(records);
                 }
-                ui.displayMemberRecords(memberRecords);
             }
+            ui.displayMemberRecords(memberRecords);
+        }
     }
 
     private boolean tryParseInt(String str) {
@@ -791,6 +835,7 @@ public class Controller {
         capitalizeWord = capitalizeWord.substring(0, 1).toUpperCase() + capitalizeWord.substring(1).toLowerCase();
         return capitalizeWord;
     }
+
     public String writeNameParts(String myName)
     {
         String firstName;
@@ -857,6 +902,21 @@ public class Controller {
             lastName = capitalizeString(lastName);
             return new String[] { firstName, lastName };
         }
+    }
+
+    public int convertDateToAge(String string) {
+        Scanner dateInputScanner = new Scanner(string);
+        dateInputScanner.useDelimiter("/");
+        int birthDay = Integer.parseInt(dateInputScanner.next());
+        int birthMonth = Integer.parseInt(dateInputScanner.next());
+        int birthYear = Integer.parseInt(dateInputScanner.next());
+        int age;
+        if ((birthDay < LocalDateTime.now().getDayOfMonth()) && (birthMonth < LocalDateTime.now().getMonth().getValue())) {
+            age = LocalDateTime.now().getYear() - birthYear - 1;
+        } else {
+            age = LocalDateTime.now().getYear() - birthYear;
+        }
+        return age;
     }
 
     public User getLoggedInUser() {
