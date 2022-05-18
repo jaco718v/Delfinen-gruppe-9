@@ -22,7 +22,6 @@ public class Controller {
     private User loggedInUser;
     private ArrayList<Team> teamArray = new ArrayList<>();
 
-
     public static void main(String[] args) {
         Controller con = new Controller();
         con.run();
@@ -147,7 +146,7 @@ public class Controller {
                 ui.displayPleaseEnterValidUser(userName);
             }
         }
-        return userName;
+        return writeNameParts(userName);
     }
 
     private String addUserPassword() {
@@ -234,7 +233,7 @@ public class Controller {
                 ui.displayPleaseEnterValidName(memberName);
             }
         }
-        return memberName;
+        return writeNameParts(memberName);
     }
 
     private String addMemberAge() {
@@ -367,6 +366,15 @@ public class Controller {
             ui.loggedInUserNoPrivilege();
         }
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -725,7 +733,6 @@ public class Controller {
             if(!recordData.get(counter1)[1].equals(swimDiscipline) ||!recordData.get(counter1)[4].equals(" ") ){
                 recordData.remove(counter1);
                 counter2++;
-
             }
         }
         counter1 = 0;
@@ -736,7 +743,6 @@ public class Controller {
                 counter1 = i-counter2;
                 if(strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
                     irrelevant = false;
-
                     break;
                 }
             }
@@ -765,8 +771,7 @@ public class Controller {
         recordData.sort(rc);
         if(recordData.size()>=5){
             ui.displayTopFive(recordData);
-        }
-        else{
+        } else {
             ui.displayTopFiveError();
         }
     }
@@ -778,6 +783,78 @@ public class Controller {
             return false;
         }
         return true;
+    }
+    public String capitalizeString(String capitalizeWord)
+    {
+        capitalizeWord = capitalizeWord.substring(0, 1).toUpperCase() + capitalizeWord.substring(1).toLowerCase();
+        return capitalizeWord;
+    }
+    public String writeNameParts(String myName)
+    {
+        String firstName;
+        String middleName;
+        String lastName;
+
+        int firstWordStartIndex = 0;
+        int firstWordEndIndex = myName.indexOf(" ");
+        int secondWordStartIndex = myName.indexOf(" ")+1;
+        int secondWordEndIndex = myName.lastIndexOf(" ");
+        int thirdWordStartIndex = myName.lastIndexOf(" ")+1;
+
+        if (secondWordStartIndex != thirdWordStartIndex)
+        {
+                middleName = myName.substring(secondWordStartIndex, secondWordEndIndex);
+                middleName = capitalizeString(middleName);
+
+                lastName = myName.substring(thirdWordStartIndex);
+                lastName = capitalizeString(lastName);
+        }
+        else
+        {
+                middleName = "";
+                lastName = myName.substring(secondWordStartIndex);
+                lastName = capitalizeString(lastName);
+        }
+        if (firstWordEndIndex != -1)
+        {
+            firstName = myName.substring(firstWordStartIndex, firstWordEndIndex);
+            firstName = capitalizeString(firstName);
+            String[] fullNameArray;
+            if (middleName.equals("")) {
+                fullNameArray = writeFullName(firstName, null, lastName);
+            } else {
+                fullNameArray = writeFullName(firstName, middleName, lastName);
+            }
+            StringBuilder fullName = new StringBuilder();
+            for (int i = 0; i < fullNameArray.length; i++) {
+                fullName.append(fullNameArray[i]);
+                if (i < fullNameArray.length-1) {
+                    fullName.append(" ");
+                }
+            }
+            return fullName.toString();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public String[] writeFullName(String firstName, String middleName, String lastName)
+    {
+        if (middleName != null)
+        {
+            firstName = capitalizeString(firstName);
+            middleName = capitalizeString(middleName);
+            lastName = capitalizeString(lastName);
+            return new String[] { firstName, middleName, lastName };
+        }
+        else
+        {
+            firstName = capitalizeString(firstName);
+            lastName = capitalizeString(lastName);
+            return new String[] { firstName, lastName };
+        }
     }
 
     public User getLoggedInUser() {
