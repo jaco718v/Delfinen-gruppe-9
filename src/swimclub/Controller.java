@@ -146,7 +146,7 @@ public class Controller {
                 ui.displayPleaseEnterValidUser(userName);
             }
         }
-        return writeNameParts(userName);
+        return userName;
     }
 
     private String addUserPassword() {
@@ -187,21 +187,21 @@ public class Controller {
             ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
             if (userData.size() > 0) {
                 String userName = "";
-                boolean enteredUserId = false;
-                while (!enteredUserId) {
+                boolean enteredUserName = false;
+                while (!enteredUserName) {
                     ui.displayPleaseTypeLoginName();
                     userName = sc.nextLine();
                     for (int i = 0; i < userData.size(); i++) {
                         String[] strArray = userData.get(i);
                         if (userName.equals(strArray[0])) {
-                            enteredUserId = true;
+                            enteredUserName = true;
                             userData.remove(i);
                             fileHandler.overwriteCSV("Users.csv", userData);
                             break;
                         }
                     }
-                    ui.removeUser(enteredUserId);
-                    if (!enteredUserId) {
+                    ui.removeUser(enteredUserName);
+                    if (!enteredUserName) {
                         ui.displayPleaseEnterValidUser(userName);
                     }
                 }
@@ -220,8 +220,8 @@ public class Controller {
         }
     }
 
-    private String addMemberName() {
-        String memberName = "";
+    private String addMemberName(){
+        String memberName  = "";
         boolean enteredMemberName = false;
         while (!enteredMemberName) {
             ui.displayPleaseEnterMemberName();
@@ -233,7 +233,7 @@ public class Controller {
                 ui.displayPleaseEnterValidName(memberName);
             }
         }
-        return writeNameParts(memberName);
+        return memberName;
     }
 
     private String addMemberAge() {
@@ -249,7 +249,7 @@ public class Controller {
         return memberAge;
     }
 
-    private String addPassiveOrActive() {
+    private String addPassiveOrActive(){
         String value = "false";
         ui.displayActiveOrPassiveOptions();
         String input = sc.nextLine();
@@ -262,12 +262,11 @@ public class Controller {
                 value = "false";
                 ui.displayActiveOrPassiveOutcome(false);
             }
-            default -> ui.displayDefaultOption();
-        }
-        return value;
+            default ->  ui.displayDefaultOption();
+        }  return value;
     }
 
-    private String addCompetitiveMember() {
+    private String addCompetitiveMember(){
         ui.displayCompOrRegOptions();
         String competitive = "false";
         String input = sc.nextLine();
@@ -275,8 +274,7 @@ public class Controller {
             case "1" -> competitive = "true";
             case "2" -> competitive = "false";
             default -> ui.displayCompOrReg();
-        }
-        return competitive;
+        }  return competitive;
     }
 
     public void addMember() {
@@ -290,7 +288,7 @@ public class Controller {
                 String isActive = addPassiveOrActive();
                 String isCompetitive = addCompetitiveMember();
 
-                newMemberData.add(new String[]{memberId, memberName, memberAge, isActive, isCompetitive});
+                newMemberData.add(new String[] { memberId, memberName, memberAge, isActive, isCompetitive });
                 boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
                 updateSubscriptions();
                 ui.addMember(success);
@@ -336,7 +334,7 @@ public class Controller {
     }
 
 
-    public void editMember() {
+   public void editMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             // edit member kode her
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
@@ -366,15 +364,27 @@ public class Controller {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     public void removeMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-            ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
-            ArrayList<String[]> subData = fileHandler.readCSV("Subscriptions.csv");
+            ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
+            ArrayList <String[]> subData = fileHandler.readCSV("Subscriptions.csv");
             showMembers();
             ui.displayPleaseEnterMemberId();
             String memberId = sc.nextLine();
             boolean removedMember = false;
-            for (int i = 0; i < memberData.size(); i++) {
+            for(int i = 0; i < memberData.size(); i++){
                 String[] memberArray = memberData.get(i);
                 if (memberArray[0].equals(memberId)) {
                     memberData.remove(i);
@@ -468,7 +478,7 @@ public class Controller {
                 }
             }
             if (!isRegistered) {
-                subscriptionData.add(new String[]{strArray[0], strArray[1], strArray[2], strArray[3], "false"});
+                subscriptionData.add(new String[] { strArray[0], strArray[1], strArray[2], strArray[3], "false" });
                 fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
                 System.out.println("Registered member subscription.");
             }
@@ -516,19 +526,22 @@ public class Controller {
         }
     }
 
+
     public void showAllSwimmers() {
 
     }
 
-    private String FindCompetitiveMemberByName() {
-        ui.displayPleaseTypeMemberName();
-        String name = sc.nextLine();
-        for (Team team : teamArray) {
-            if (team.findCompetitiveMemberByName(name)) {
-                return name;
-            }
+    private String FindCompetitiveMemberNameByID(){
+        showMembers();
+        ui.displayPleaseTypeMemberID();
+        String memberID = sc.nextLine();
+        for(Team team : teamArray){
+            String memberName = team.findCompetitiveMemberNameWithID(memberID);
+                  if(memberName!=null){
+                      return memberName;
+                  }
         }
-        ui.memberNotFound();
+        ui.memberIDNotFound();
         return null;
     }
 
@@ -636,13 +649,13 @@ public class Controller {
 
     public void addRecordToMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
-            String memberName = FindCompetitiveMemberByName();     //Change to id?
+            String memberName = FindCompetitiveMemberNameByID();
             if (memberName != null) {
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
                 String recordType = recordTypeChoice(memberName);
-                //String swimDiscipline = addSwimDisciplineToRecord(memberName);
-                String swimDiscipline = addSwimDisciplineToRecordViaInput();// En alternativ metode der tager input
+                String swimDiscipline = addSwimDisciplineToRecord(memberName);
+                //String swimDiscipline = addSwimDisciplineToRecordViaInput();// En alternativ metode der tager input
                 String recordInSeconds = addRecordInSeconds();
                 String date = addDate();
                 if (recordType.equals("regular")) {
@@ -711,18 +724,16 @@ public class Controller {
             if (!recordData.get(counter1)[1].equals(swimDiscipline) || !recordData.get(counter1)[4].equals(" ")) {
                 recordData.remove(counter1);
                 counter2++;
-
             }
         }
         counter1 = 0;
         counter2 = 0;
-        for (int i = 0; recordData.size() > i; i++) {
-            boolean irrelevant = true;
-            for (String[] strArray : memberData) {
-                counter1 = i - counter2;
-                if (strArray[0].equalsIgnoreCase(recordData.get(counter1)[0])) {
+        for (int i = 0 ; recordData.size()>i ; i++) {
+            boolean irrelevant =true;
+            for(String[] strArray : memberData) {
+                counter1 = i-counter2;
+                if(strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
                     irrelevant = false;
-
                     break;
                 }
             }
@@ -740,7 +751,6 @@ public class Controller {
         }
         return teamArray.get(3).getMembers();
     }
-
 
     public void showTopSwimmers() {
         String swimDiscipline = addSwimDisciplineToRecordViaInput();

@@ -36,13 +36,13 @@ public class Team {
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         ArrayList<String[]> returnData = new ArrayList<>();
         for (String[] strArray : memberData) {
-            int age = Integer.parseInt(strArray[1]);
+            int age = Integer.parseInt(strArray[2]);
             if ((ageGroup == Enum.AgeGroup.U18) && (age < 18)) {
-                if (((strArray[3].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
+                if (((strArray[4].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
                     returnData.add(strArray);
                 }
             } else if ((ageGroup == Enum.AgeGroup.O18) && (age >= 18)) {
-                if (((strArray[3].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[3].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
+                if (((strArray[4].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
                     returnData.add(strArray);
                 }
             }
@@ -55,7 +55,7 @@ public class Team {
         int activeMembers = 0;
         ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
-            if (strArray[2].equals("true")) {
+            if (strArray[3].equals("true")) {
                 activeMembers++;
             }
         }
@@ -66,27 +66,27 @@ public class Team {
         int membersAboveAge = 0;
         ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
-            if (Integer.parseInt(strArray[1]) > ageThreshold && strArray[2].equals("true")) {
+            if (Integer.parseInt(strArray[2]) > ageThreshold && strArray[3].equals("true")) {
                 membersAboveAge++;
             }
         }
         return membersAboveAge;
     }
 
-    public boolean findCompetitiveMemberByName(String name){
+    public String findCompetitiveMemberNameWithID(String memberID){
         ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
-            if (strArray[0].equalsIgnoreCase(name) && strArray[3].equals("true")) {
-                return true;
+            if (strArray[0].equalsIgnoreCase(memberID) && strArray[4].equals("true")) {
+                return strArray[1];
             }
         }
-        return false;
+        return null;
     }
 
     public boolean findMemberCompetitiveStatus(String name){
         ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
-            if (strArray[0].equalsIgnoreCase(name)) {
+            if (strArray[1].equalsIgnoreCase(name)) {
                 return Boolean.parseBoolean(strArray[3]);
             }
         }
@@ -96,8 +96,8 @@ public class Team {
     public String findMemberSwimDiscipline(String name){
         ArrayList<String[]> memberData = getMembers();
         for (String[] strArray : memberData) {
-            if (strArray[0].equalsIgnoreCase(name)) {
-                return strArray[4];
+            if (strArray[1].equalsIgnoreCase(name)) {
+                return strArray[5];
             }
         }
         return null;
