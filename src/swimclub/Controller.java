@@ -146,7 +146,7 @@ public class Controller {
                 ui.displayPleaseEnterValidUser(userName);
             }
         }
-        return userName;
+        return writeNameParts(userName);
     }
 
     private String addUserPassword() {
@@ -233,7 +233,7 @@ public class Controller {
                 ui.displayPleaseEnterValidName(memberName);
             }
         }
-        return memberName;
+        return writeNameParts(memberName);
     }
 
     private String addMemberAge() {
