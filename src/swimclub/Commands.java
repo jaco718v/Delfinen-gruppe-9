@@ -73,6 +73,7 @@ public class Commands {
                 case "1" -> con.showTopSwimmers();
                 case "2" -> con.showAllSwimmers();
                 case "3" -> con.addRecordToMember();
+                case "4" -> con.showMemberRecords();
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;

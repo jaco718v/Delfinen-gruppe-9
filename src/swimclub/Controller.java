@@ -522,7 +522,7 @@ public class Controller {
 
     }
 
-    private String FindCompetitiveMemberNameByID(){
+    private String findCompetitiveMemberNameByID(){
         showMembers();
         ui.displayPleaseTypeMemberID();
         String memberID = sc.nextLine();
@@ -536,7 +536,7 @@ public class Controller {
         return null;
     }
 
-    public String addSwimDisciplineToRecord(String name){
+    private String addSwimDisciplineToRecord(String name){
         String swimDiscipline = null;
         for (Team team : teamArray){
             swimDiscipline = team.findMemberSwimDiscipline(name);
@@ -548,7 +548,7 @@ public class Controller {
         return null;
     }
 
-    public String addSwimDisciplineToRecordViaInput(){
+    private String addSwimDisciplineToRecordViaInput(){
         ui.displayEnterSwimDiscipline();
         String swimDiscipline = null;
         while(swimDiscipline==null){
@@ -569,7 +569,7 @@ public class Controller {
         return  swimDiscipline;
     }
 
-    public String recordTypeChoice(String memberName){
+    private String recordTypeChoice(String memberName){
        String recordType = null;
            ui.DisplayRecordTypeChoice();
            while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
@@ -584,7 +584,7 @@ public class Controller {
        return recordType;
     }
 
-    public String addRecordInSeconds(){
+    private String addRecordInSeconds(){
         ui.displayEnterRecordInSeconds();
         double recordDouble = 0;
         String recordInSeconds = null;
@@ -601,7 +601,7 @@ public class Controller {
         return recordInSeconds;
     }
 
-    public String addDate(){
+    private String addDate(){
         ui.displayEnterDate();
         int day = 0;
         int month = 0;
@@ -626,7 +626,7 @@ public class Controller {
         return dateInput;
     }
 
-    public boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord){
+    private boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord){
        boolean previousRecordFound = false;
        for(String[] record : recordList){
            if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])){
@@ -640,7 +640,7 @@ public class Controller {
 
     public void addRecordToMember(){
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)){
-            String memberName = FindCompetitiveMemberNameByID();     //Change to id?
+            String memberName = findCompetitiveMemberNameByID();     //Change to id?
             if(memberName!=null){
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
@@ -671,7 +671,7 @@ public class Controller {
     }
     }
 
-    public String addPlacing(){
+    private String addPlacing(){
         ui.displayEnterPlacing();
         int placeInt = 0;
         String place = null;
@@ -694,7 +694,7 @@ public class Controller {
         fileHandler.writeToCSV("Records.csv",data);
     }
 
-    public Enum.AgeGroup decideAgeGroup(){
+    private Enum.AgeGroup decideAgeGroup(){
         ui.displayDecideAgeGroupTopFive();
         int choice = 0;
         while(choice!=1 && choice!=2){
@@ -756,11 +756,25 @@ public class Controller {
         ArrayList<String[]> recordData = fileHandler.readCSV("Records.csv");
         recordData = removeIrrelevantRecords(recordData,ageGroup,swimDiscipline);
         recordData.sort(rc);
-        if(recordData.size()>=5){
+        if(recordData.size()>0){
             ui.displayTopFive(recordData);
         } else {
             ui.displayTopFiveError();
         }
+    }
+
+    public void showMemberRecords(){
+        String memberName = findCompetitiveMemberNameByID();
+            if(memberName!=null){
+                ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
+                ArrayList<String[]> memberRecords = new ArrayList<>();
+                for (String[] records : recordList){
+                    if(records[0].equals(memberName)){
+                        memberRecords.add(records);
+                    }
+                }
+                ui.displayMemberRecords(memberRecords);
+            }
     }
 
     private boolean tryParseInt(String str) {
@@ -771,6 +785,7 @@ public class Controller {
         }
         return true;
     }
+
     public String capitalizeString(String capitalizeWord)
     {
         capitalizeWord = capitalizeWord.substring(0, 1).toUpperCase() + capitalizeWord.substring(1).toLowerCase();

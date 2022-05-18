@@ -133,14 +133,34 @@ public class UI {
     public void displayTopFive(ArrayList<String[]> topFive){
         System.out.println("Top 5 "+topFive.get(0)[1]+" swimmers");
         System.out.println("1. "+topFive.get(0)[2]+"s\t\t"+topFive.get(0)[0]);
-        System.out.println("2. "+topFive.get(1)[2]+"s\t\t"+topFive.get(1)[0]);
-        System.out.println("3. "+topFive.get(2)[2]+"s\t\t"+topFive.get(2)[0]);
-        System.out.println("4. "+topFive.get(3)[2]+"s\t\t"+topFive.get(3)[0]);
-        System.out.println("5. "+topFive.get(4)[2]+"s\t\t"+topFive.get(4)[0]);
+        if(topFive.size()>1){
+        System.out.println("2. "+topFive.get(1)[2]+"s\t\t"+topFive.get(1)[0]);}
+        if(topFive.size()>2){
+        System.out.println("3. "+topFive.get(2)[2]+"s\t\t"+topFive.get(2)[0]);}
+        if(topFive.size()>3){
+        System.out.println("4. "+topFive.get(3)[2]+"s\t\t"+topFive.get(3)[0]);}
+        if(topFive.size()>4){
+        System.out.println("5. "+topFive.get(4)[2]+"s\t\t"+topFive.get(4)[0]);}
     }
 
     public void displayTopFiveError(){
         System.out.println("There are fewer than 5 swimmers in that swim discipline");
+    }
+
+    public void displayMemberRecords(ArrayList<String[]> playerRecords){
+        System.out.println("Member: "+playerRecords.get(0)[0]+"\t Swim discipline: "+playerRecords.get(0)[1]);
+        System.out.print("Personal best training record: ");
+        for(String[] record : playerRecords){
+            if(record[4].equals(" ")){
+                System.out.println(record[2]+"s\t "+record[3]);
+            }
+        }
+        System.out.println("Competition placings:");
+        for(String[] record : playerRecords){
+            if(!record[4].equals(" ")){
+                System.out.println(record[4]+"\t placing nr: "+record[5]+"\t Time: "+record[2]+"s\t"+record[3]);
+            }
+        }
     }
 
     public void displayPleaseTypeLoginName() {
@@ -331,7 +351,8 @@ public class UI {
         System.out.println("Swimmer Commands:");
         System.out.println("1. Show top swimmers");
         System.out.println("2. Show all swimmers");
-        System.out.println("3. Update swimmer records");
+        System.out.println("3. Add swimmer record");
+        System.out.println("4. View swimmer records");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }
