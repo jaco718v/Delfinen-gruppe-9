@@ -255,7 +255,7 @@ public class Controller {
     }
 
     private String addMemberName() {
-        String memberName  = "";
+        String memberName = "";
         boolean enteredMemberName = false;
         while (!enteredMemberName) {
             ui.displayPleaseEnterMemberName();
@@ -319,7 +319,7 @@ public class Controller {
         while (!enteredMemberBirthYear) {
             ui.displayPleaseEnterMemberYear();
             memberBirthYear = sc.nextLine();
-            if ((tryParseInt(memberBirthYear)) && (Integer.parseInt(memberBirthYear) >= LocalDateTime.now().getYear()-120) && (Integer.parseInt(memberBirthYear) <= LocalDateTime.now().getYear())) {
+            if ((tryParseInt(memberBirthYear)) && (Integer.parseInt(memberBirthYear) >= LocalDateTime.now().getYear() - 120) && (Integer.parseInt(memberBirthYear) <= LocalDateTime.now().getYear())) {
                 enteredMemberBirthYear = true;
                 birthYear = Integer.parseInt(memberBirthYear);
             } else {
@@ -346,8 +346,9 @@ public class Controller {
                 value = "false";
                 ui.displayActiveOrPassiveOutcome(false);
             }
-            default ->  ui.displayDefaultOption();
-        }  return value;
+            default -> ui.displayDefaultOption();
+        }
+        return value;
     }
 
     private String addCompetitiveMember() {
@@ -358,7 +359,8 @@ public class Controller {
             case "1" -> competitive = "true";
             case "2" -> competitive = "false";
             default -> ui.displayCompOrReg();
-        }  return competitive;
+        }
+        return competitive;
     }
 
     public void addMember() {
@@ -372,11 +374,11 @@ public class Controller {
                 String isActive = addPassiveOrActive();
                 String isCompetitive = addCompetitiveMember();
                 String swimDiscipline = " ";
-                if(isCompetitive.equals("true")){
+                if (isCompetitive.equals("true")) {
                     swimDiscipline = addSwimDisciplineToRecordViaInput();
                 }
 
-                newMemberData.add(new String[] { memberId, memberName, memberBirthDate, isActive, isCompetitive,swimDiscipline });
+                newMemberData.add(new String[]{memberId, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline});
                 boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
                 updateSubscriptions();
                 ui.addMember(success);
@@ -388,8 +390,7 @@ public class Controller {
         }
     }
 
-
-   public void editMember() {
+    public void editMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             // edit member kode her
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
@@ -420,13 +421,13 @@ public class Controller {
 
     public void removeMember() {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-            ArrayList <String[]> memberData = fileHandler.readCSV("Members.csv");
-            ArrayList <String[]> subData = fileHandler.readCSV("Subscriptions.csv");
+            ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+            ArrayList<String[]> subData = fileHandler.readCSV("Subscriptions.csv");
             showMembers();
             ui.displayPleaseEnterMemberId();
             String memberId = sc.nextLine();
             boolean removedMember = false;
-            for(int i = 0; i < memberData.size(); i++){
+            for (int i = 0; i < memberData.size(); i++) {
                 String[] memberArray = memberData.get(i);
                 if (memberArray[0].equals(memberId)) {
                     memberData.remove(i);
@@ -522,7 +523,7 @@ public class Controller {
                 }
             }
             if (!isRegistered) {
-                subscriptionData.add(new String[] { strArray[0], strArray[1], strArray[2], strArray[3], "false" });
+                subscriptionData.add(new String[]{strArray[0], strArray[1], strArray[2], strArray[3], "false"});
                 fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
                 System.out.println("Registered member subscription.");
             }
@@ -570,7 +571,6 @@ public class Controller {
         }
     }
 
-
     public void showAllSwimmers() {
 
     }
@@ -579,11 +579,11 @@ public class Controller {
         showMembers();
         ui.displayPleaseTypeMemberID();
         String memberID = sc.nextLine();
-        for(Team team : teamArray){
+        for (Team team : teamArray) {
             String memberName = team.findCompetitiveMemberNameWithID(memberID);
-                  if(memberName!=null){
-                      return memberName;
-                  }
+            if (memberName != null) {
+                return memberName;
+            }
         }
         ui.memberIDNotFound();
         return null;
@@ -621,30 +621,29 @@ public class Controller {
     }
 
     private String recordTypeChoice(String memberName) {
-       String recordType = null;
-           ui.DisplayRecordTypeChoice();
-           while (recordType == null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")) {
-               recordType = sc.nextLine();
-           }
-       if(recordType.equals("1")) {
-           recordType="regular";
-       }
-       if(recordType.equals("2")) {
-           recordType="competitive";
-       }
-       return recordType;
+        String recordType = null;
+        ui.DisplayRecordTypeChoice();
+        while (recordType == null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")) {
+            recordType = sc.nextLine();
+        }
+        if (recordType.equals("1")) {
+            recordType = "regular";
+        }
+        if (recordType.equals("2")) {
+            recordType = "competitive";
+        }
+        return recordType;
     }
 
     private String addRecordInSeconds() {
         ui.displayEnterRecordInSeconds();
         double recordDouble = 0;
         String recordInSeconds = null;
-        while(recordInSeconds==null || recordDouble<=0) {
+        while (recordInSeconds == null || recordDouble <= 0) {
             try {
                 recordInSeconds = sc.nextLine();
                 recordDouble = Double.parseDouble(recordInSeconds);
-            }
-            catch (NumberFormatException | NoSuchElementException nfe) {
+            } catch (NumberFormatException | NoSuchElementException nfe) {
                 ui.displayEnterRecordInSecondsException();
             }
         }
@@ -677,15 +676,15 @@ public class Controller {
     }
 
     private boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord) {
-       boolean previousRecordFound = false;
-       for (String[] record : recordList) {
-           if(record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])) {
-               recordList.set(recordList.indexOf(record),newRecord);
-               previousRecordFound = true;
-               fileHandler.overwriteCSV("Records.csv",recordList);
-           }
-       }
-       return previousRecordFound;
+        boolean previousRecordFound = false;
+        for (String[] record : recordList) {
+            if (record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])) {
+                recordList.set(recordList.indexOf(record), newRecord);
+                previousRecordFound = true;
+                fileHandler.overwriteCSV("Records.csv", recordList);
+            }
+        }
+        return previousRecordFound;
     }
 
     public void addRecordToMember() {
@@ -721,7 +720,7 @@ public class Controller {
         ui.displayEnterPlacing();
         int placeInt = 0;
         String place = null;
-        while (place==null || placeInt<=0) {
+        while (place == null || placeInt <= 0) {
             try {
                 place = sc.nextLine();
                 placeInt = Integer.parseInt(place);
@@ -732,11 +731,11 @@ public class Controller {
         return place;
     }
 
-    private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberName, String swimDiscipline, String recordInSeconds,String date) {
+    private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberName, String swimDiscipline, String recordInSeconds, String date) {
         ui.displayEnterConventionName();
         String convention = sc.nextLine();
         String placing = addPlacing();
-        data.add(new String[] { memberName, swimDiscipline, recordInSeconds, date, convention, placing });
+        data.add(new String[]{memberName, swimDiscipline, recordInSeconds, date, convention, placing});
         fileHandler.writeToCSV("Records.csv", data);
     }
 
@@ -769,11 +768,11 @@ public class Controller {
         }
         counter1 = 0;
         counter2 = 0;
-        for (int i = 0 ; recordData.size()>i ; i++) {
-            boolean irrelevant =true;
-            for(String[] strArray : memberData) {
-                counter1 = i-counter2;
-                if(strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
+        for (int i = 0; recordData.size() > i; i++) {
+            boolean irrelevant = true;
+            for (String[] strArray : memberData) {
+                counter1 = i - counter2;
+                if (strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
                     irrelevant = false;
                     break;
                 }
@@ -814,7 +813,7 @@ public class Controller {
             ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
             ArrayList<String[]> memberRecords = new ArrayList<>();
             for (String[] records : recordList) {
-                if(records[0].equals(memberName)) {
+                if (records[0].equals(memberName)) {
                     memberRecords.add(records);
                 }
             }
@@ -843,9 +842,9 @@ public class Controller {
 
         int firstWordStartIndex = 0;
         int firstWordEndIndex = myName.indexOf(" ");
-        int secondWordStartIndex = myName.indexOf(" ")+1;
+        int secondWordStartIndex = myName.indexOf(" ") + 1;
         int secondWordEndIndex = myName.lastIndexOf(" ");
-        int thirdWordStartIndex = myName.lastIndexOf(" ")+1;
+        int thirdWordStartIndex = myName.lastIndexOf(" ") + 1;
 
         if (secondWordStartIndex != thirdWordStartIndex) {
             middleName = myName.substring(secondWordStartIndex, secondWordEndIndex);
@@ -870,7 +869,7 @@ public class Controller {
             StringBuilder fullName = new StringBuilder();
             for (int i = 0; i < fullNameArray.length; i++) {
                 fullName.append(fullNameArray[i]);
-                if (i < fullNameArray.length-1) {
+                if (i < fullNameArray.length - 1) {
                     fullName.append(" ");
                 }
             }
@@ -885,11 +884,11 @@ public class Controller {
             firstName = capitalizeString(firstName);
             middleName = capitalizeString(middleName);
             lastName = capitalizeString(lastName);
-            return new String[] { firstName, middleName, lastName };
+            return new String[]{firstName, middleName, lastName};
         } else {
             firstName = capitalizeString(firstName);
             lastName = capitalizeString(lastName);
-            return new String[] { firstName, lastName };
+            return new String[]{firstName, lastName};
         }
     }
 
