@@ -62,12 +62,12 @@ public class UI {
         System.out.println("Top swimmers:");
     }
 
-    public void displayPleaseTypeMemberName(){
-        System.out.println("Please enter the name of the member whose record needs updating");
+    public void displayPleaseTypeMemberID(){
+        System.out.println("Please enter the ID of the member whose record needs updating");
     }
 
-    public void memberNotFound(){
-        System.out.println("Member not found in database of competitive members");
+    public void memberIDNotFound(){
+        System.out.println("MemberID not found in database of competitive members");
     }
 
     public void DisplayRecordTypeChoice(){
@@ -77,7 +77,7 @@ public class UI {
     }
 
     public void displayEnterSwimDiscipline(){
-        System.out.println("Choose swim-discipline: enter 1-4");
+        System.out.println("Choose swim discipline the swimmer specialises in:");
         System.out.println("1. Butterfly");
         System.out.println("2. Crawl");
         System.out.println("3. Back crawl");
@@ -132,11 +132,11 @@ public class UI {
 
     public void displayTopFive(ArrayList<String[]> topFive){
         System.out.println("Top 5 "+topFive.get(0)[1]+" swimmers");
-        System.out.println("1. "+topFive.get(0)[0]+"\t\t"+topFive.get(0)[2]+" seconds");
-        System.out.println("2. "+topFive.get(1)[0]+"\t\t"+topFive.get(1)[2]+" seconds");
-        System.out.println("3. "+topFive.get(2)[0]+"\t\t"+topFive.get(2)[2]+" seconds");
-        System.out.println("4. "+topFive.get(3)[0]+"\t\t"+topFive.get(3)[2]+" seconds");
-        System.out.println("5. "+topFive.get(4)[0]+"\t\t"+topFive.get(4)[2]+" seconds");
+        System.out.println("1. "+topFive.get(0)[2]+"s\t\t"+topFive.get(0)[0]);
+        System.out.println("2. "+topFive.get(1)[2]+"s\t\t"+topFive.get(1)[0]);
+        System.out.println("3. "+topFive.get(2)[2]+"s\t\t"+topFive.get(2)[0]);
+        System.out.println("4. "+topFive.get(3)[2]+"s\t\t"+topFive.get(3)[0]);
+        System.out.println("5. "+topFive.get(4)[2]+"s\t\t"+topFive.get(4)[0]);
     }
 
     public void displayTopFiveError(){

@@ -288,8 +288,12 @@ public class Controller {
                 String memberAge = addMemberAge();
                 String isActive = addPassiveOrActive();
                 String isCompetitive = addCompetitiveMember();
+                String swimDiscipline = " ";
+                if(isCompetitive.equals("true")){
+                    swimDiscipline = addSwimDisciplineToRecordViaInput();
+                }
 
-                newMemberData.add(new String[] { memberId, memberName, memberAge, isActive, isCompetitive });
+                newMemberData.add(new String[] { memberId, memberName, memberAge, isActive, isCompetitive,swimDiscipline });
                 boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
                 updateSubscriptions();
                 ui.addMember(success);
@@ -532,15 +536,17 @@ public class Controller {
 
     }
 
-    private String FindCompetitiveMemberByName(){
-        ui.displayPleaseTypeMemberName();
-        String name = sc.nextLine();
+    private String FindCompetitiveMemberNameByID(){
+        showMembers();
+        ui.displayPleaseTypeMemberID();
+        String memberID = sc.nextLine();
         for(Team team : teamArray){
-                  if(team.findCompetitiveMemberByName(name)){
-                      return name;
+            String memberName = team.findCompetitiveMemberNameWithID(memberID);
+                  if(memberName!=null){
+                      return memberName;
                   }
         }
-        ui.memberNotFound();
+        ui.memberIDNotFound();
         return null;
     }
 
@@ -650,13 +656,13 @@ public class Controller {
 
     public void addRecordToMember(){
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)){
-            String memberName = FindCompetitiveMemberByName();     //Change to id?
+            String memberName = FindCompetitiveMemberNameByID();     //Change to id?
             if(memberName!=null){
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
                 String recordType = recordTypeChoice(memberName);
-                //String swimDiscipline = addSwimDisciplineToRecord(memberName);
-                String swimDiscipline = addSwimDisciplineToRecordViaInput();// En alternativ metode der tager input
+                String swimDiscipline = addSwimDisciplineToRecord(memberName);
+                //String swimDiscipline = addSwimDisciplineToRecordViaInput();// En alternativ metode der tager input
                 String recordInSeconds = addRecordInSeconds();
                 String date = addDate();
                 if(recordType.equals("regular")){
@@ -739,7 +745,7 @@ public class Controller {
             boolean irrelevant =true;
             for(String[] strArray : memberData){
                 counter1 = i-counter2;
-                if(strArray[0].equalsIgnoreCase(recordData.get(counter1)[0])) {
+                if(strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
                     irrelevant = false;
 
                     break;
