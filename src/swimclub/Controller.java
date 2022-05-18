@@ -254,7 +254,7 @@ public class Controller {
         return returnValue;
     }
 
-    private String addMemberName(){
+    private String addMemberName() {
         String memberName  = "";
         boolean enteredMemberName = false;
         while (!enteredMemberName) {
@@ -333,7 +333,7 @@ public class Controller {
         }
     }
 
-    private String addPassiveOrActive(){
+    private String addPassiveOrActive() {
         String value = "false";
         ui.displayActiveOrPassiveOptions();
         String input = sc.nextLine();
@@ -350,7 +350,7 @@ public class Controller {
         }  return value;
     }
 
-    private String addCompetitiveMember(){
+    private String addCompetitiveMember() {
         ui.displayCompOrRegOptions();
         String competitive = "false";
         String input = sc.nextLine();
@@ -575,7 +575,7 @@ public class Controller {
 
     }
 
-    private String findCompetitiveMemberNameByID(){
+    private String findCompetitiveMemberNameByID() {
         showMembers();
         ui.displayPleaseTypeMemberID();
         String memberID = sc.nextLine();
@@ -589,7 +589,7 @@ public class Controller {
         return null;
     }
 
-    private String addSwimDisciplineToRecord(String name){
+    private String addSwimDisciplineToRecord(String name) {
         String swimDiscipline = null;
         for (Team team : teamArray) {
             swimDiscipline = team.findMemberSwimDiscipline(name);
@@ -601,18 +601,17 @@ public class Controller {
         return null;
     }
 
-    private String addSwimDisciplineToRecordViaInput(){
+    private String addSwimDisciplineToRecordViaInput() {
         ui.displayEnterSwimDiscipline();
         String swimDiscipline = null;
         while (swimDiscipline == null) {
             try {
                 String choice = sc.nextLine();
-                switch(choice){
+                switch (choice) {
                     case "1" -> swimDiscipline = "butterfly";
                     case "2" -> swimDiscipline = "crawl";
                     case "3" -> swimDiscipline = "backcrawl";
                     case "4" -> swimDiscipline = "breast";
-                    default -> swimDiscipline = null;
                 }
             } catch (InputMismatchException ime) {
                 ui.displayEnterSwimDisciplineException();
@@ -621,38 +620,38 @@ public class Controller {
         return swimDiscipline;
     }
 
-    private String recordTypeChoice(String memberName){
+    private String recordTypeChoice(String memberName) {
        String recordType = null;
            ui.DisplayRecordTypeChoice();
-           while(recordType==null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")){
+           while (recordType == null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")) {
                recordType = sc.nextLine();
            }
-       if(recordType.equals("1")){
+       if(recordType.equals("1")) {
            recordType="regular";
        }
-       if(recordType.equals("2")){
+       if(recordType.equals("2")) {
            recordType="competitive";
        }
        return recordType;
     }
 
-    private String addRecordInSeconds(){
+    private String addRecordInSeconds() {
         ui.displayEnterRecordInSeconds();
         double recordDouble = 0;
         String recordInSeconds = null;
-        while(recordInSeconds==null || recordDouble<=0){
+        while(recordInSeconds==null || recordDouble<=0) {
             try {
                 recordInSeconds = sc.nextLine();
                 recordDouble = Double.parseDouble(recordInSeconds);
             }
-            catch (NumberFormatException | NoSuchElementException nfe){
+            catch (NumberFormatException | NoSuchElementException nfe) {
                 ui.displayEnterRecordInSecondsException();
             }
         }
         return recordInSeconds;
     }
 
-    private String addDate(){
+    private String addDate() {
         ui.displayEnterDate();
         int day = 0;
         int month = 0;
@@ -737,7 +736,7 @@ public class Controller {
         ui.displayEnterConventionName();
         String convention = sc.nextLine();
         String placing = addPlacing();
-        data.add(new String[]{memberName, swimDiscipline, recordInSeconds, date, convention, placing});
+        data.add(new String[] { memberName, swimDiscipline, recordInSeconds, date, convention, placing });
         fileHandler.writeToCSV("Records.csv", data);
     }
 
@@ -832,14 +831,12 @@ public class Controller {
         return true;
     }
 
-    public String capitalizeString(String capitalizeWord)
-    {
+    public String capitalizeString(String capitalizeWord) {
         capitalizeWord = capitalizeWord.substring(0, 1).toUpperCase() + capitalizeWord.substring(1).toLowerCase();
         return capitalizeWord;
     }
 
-    public String writeNameParts(String myName)
-    {
+    public String writeNameParts(String myName) {
         String firstName;
         String middleName;
         String lastName;
@@ -850,22 +847,18 @@ public class Controller {
         int secondWordEndIndex = myName.lastIndexOf(" ");
         int thirdWordStartIndex = myName.lastIndexOf(" ")+1;
 
-        if (secondWordStartIndex != thirdWordStartIndex)
-        {
-                middleName = myName.substring(secondWordStartIndex, secondWordEndIndex);
-                middleName = capitalizeString(middleName);
+        if (secondWordStartIndex != thirdWordStartIndex) {
+            middleName = myName.substring(secondWordStartIndex, secondWordEndIndex);
+            middleName = capitalizeString(middleName);
 
-                lastName = myName.substring(thirdWordStartIndex);
-                lastName = capitalizeString(lastName);
+            lastName = myName.substring(thirdWordStartIndex);
+            lastName = capitalizeString(lastName);
+        } else {
+            middleName = "";
+            lastName = myName.substring(secondWordStartIndex);
+            lastName = capitalizeString(lastName);
         }
-        else
-        {
-                middleName = "";
-                lastName = myName.substring(secondWordStartIndex);
-                lastName = capitalizeString(lastName);
-        }
-        if (firstWordEndIndex != -1)
-        {
+        if (firstWordEndIndex != -1) {
             firstName = myName.substring(firstWordStartIndex, firstWordEndIndex);
             firstName = capitalizeString(firstName);
             String[] fullNameArray;
@@ -882,24 +875,18 @@ public class Controller {
                 }
             }
             return fullName.toString();
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
-    public String[] writeFullName(String firstName, String middleName, String lastName)
-    {
-        if (middleName != null)
-        {
+    public String[] writeFullName(String firstName, String middleName, String lastName) {
+        if (middleName != null) {
             firstName = capitalizeString(firstName);
             middleName = capitalizeString(middleName);
             lastName = capitalizeString(lastName);
             return new String[] { firstName, middleName, lastName };
-        }
-        else
-        {
+        } else {
             firstName = capitalizeString(firstName);
             lastName = capitalizeString(lastName);
             return new String[] { firstName, lastName };
