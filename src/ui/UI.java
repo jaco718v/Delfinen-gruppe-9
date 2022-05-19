@@ -80,7 +80,7 @@ public class UI {
     }
 
     public void displayEnterSwimDiscipline(){
-        System.out.println("Choose swim discipline the swimmer specialises in:");
+        System.out.println("Choose swim discipline:");
         System.out.println("1. Butterfly");
         System.out.println("2. Crawl");
         System.out.println("3. Back crawl");

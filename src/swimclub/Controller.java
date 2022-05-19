@@ -621,7 +621,7 @@ public class Controller {
         return swimDiscipline;
     }
 
-    private String recordTypeChoice(String memberName) {
+    private String recordTypeChoice() {
         String recordType = null;
         ui.DisplayRecordTypeChoice();
         while (recordType == null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")) {
@@ -648,7 +648,7 @@ public class Controller {
                 ui.displayEnterRecordInSecondsException();
             }
         }
-        return recordInSeconds;
+        return String.format("%.2f",recordDouble);
     }
 
     private String addDate() {
@@ -694,9 +694,8 @@ public class Controller {
             if (memberName != null) {
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
-                String recordType = recordTypeChoice(memberName);
+                String recordType = recordTypeChoice();
                 String swimDiscipline = addSwimDisciplineToRecord(memberName);
-                //String swimDiscipline = addSwimDisciplineToRecordViaInput();// En alternativ metode der tager input
                 String recordInSeconds = addRecordInSeconds();
                 String date = addDate();
                 if (recordType.equals("regular")) {
@@ -757,51 +756,48 @@ public class Controller {
         return Enum.AgeGroup.O18;
     }
 
-    private ArrayList<String[]> removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline) {
-        int counter1 = 0;
-        int counter2 = 0;
+
+    private void removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline) {
         for (int i = 0; recordData.size() > i; i++) {
-            counter1 = i - counter2;
-            if (!recordData.get(counter1)[1].equals(swimDiscipline) || !recordData.get(counter1)[4].equals(" ")) {
-                recordData.remove(counter1);
-                counter2++;
+            if (!recordData.get(i)[1].equals(swimDiscipline) || !recordData.get(i)[4].equals(" ")) {
+                recordData.remove(i);
+                i--;
             }
         }
-        counter1 = 0;
-        counter2 = 0;
         for (int i = 0; recordData.size() > i; i++) {
             boolean irrelevant = true;
             for (String[] strArray : memberData) {
-                counter1 = i - counter2;
-                if (strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
+                if (strArray[1].equalsIgnoreCase(recordData.get(i)[0])) {
                     irrelevant = false;
                     break;
                 }
             }
             if (irrelevant) {
-                recordData.remove(counter1);
-                counter2++;
+                recordData.remove(i);
+                i--;
             }
         }
-        return recordData;
     }
 
     private ArrayList<String[]> findCompetitiveTeam(Enum.AgeGroup ageGroup) {
-        if (ageGroup == Enum.AgeGroup.U18) {
-            return teamArray.get(2).getMembers();
-        }
-        return teamArray.get(3).getMembers();
+            for(Team team : teamArray){
+                if(team.getTeamType().equals(Enum.TeamType.COMPETITIVE) && team.getAgeGroup().equals(Enum.AgeGroup.U18) && ageGroup.equals(Enum.AgeGroup.U18)) {
+                    return team.getMembers();}
+                if(team.getTeamType().equals(Enum.TeamType.COMPETITIVE) && team.getAgeGroup().equals(Enum.AgeGroup.O18) && ageGroup.equals(Enum.AgeGroup.O18)) {
+                    return team.getMembers();}
+                }
+      return null;
     }
 
     public void showTopSwimmers() {
         String swimDiscipline = addSwimDisciplineToRecordViaInput();
         Enum.AgeGroup ageGroupEnum = decideAgeGroup();
         ArrayList<String[]> ageGroup = findCompetitiveTeam(ageGroupEnum);
-        RecordComparator rc = new RecordComparator();
         ArrayList<String[]> recordData = fileHandler.readCSV("Records.csv");
-        recordData = removeIrrelevantRecords(recordData, ageGroup, swimDiscipline);
+        RecordComparator rc = new RecordComparator();
+        removeIrrelevantRecords(recordData, ageGroup, swimDiscipline);
         recordData.sort(rc);
-        if (recordData.size() >= 5) {
+        if (recordData.size() >= 1) {
             ui.displayTopFive(recordData);
         } else {
             ui.displayTopFiveError();
