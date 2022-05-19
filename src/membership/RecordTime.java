@@ -3,37 +3,13 @@ package membership;
 import utilities.Enum;
 
 public abstract class RecordTime {
-    private final Enum.SwimDiscipline swimDiscipline;
-    private final double recordInSeconds;
-    private final int dayOfMonth;
-    private final int month;
-    private final int year;
+    private final Enum.SwimDiscipline SWIM_DISCIPLINE;
+    private final double RECORD_IN_SECONDS;
+    private final String DATE_OF_RECORD;
 
-    public RecordTime(Enum.SwimDiscipline swimDiscipline, double recordInSeconds, int dayOfMonth, int month, int year) {
-        this.swimDiscipline = swimDiscipline;
-        this.recordInSeconds = recordInSeconds;
-        this.dayOfMonth = dayOfMonth;
-        this.month = month;
-        this.year = year;
-    }
-
-    public Enum.SwimDiscipline getSwimDiscipline() {
-        return swimDiscipline;
-    }
-
-    public double getRecordInSeconds() {
-        return recordInSeconds;
-    }
-
-    public int getDayOfMonth() {
-        return dayOfMonth;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getYear() {
-        return year;
+    public RecordTime(Enum.SwimDiscipline SWIM_DISCIPLINE, double RECORD_IN_SECONDS, String DATE_OF_RECORD) {
+        this.SWIM_DISCIPLINE = SWIM_DISCIPLINE;
+        this.RECORD_IN_SECONDS = RECORD_IN_SECONDS;
+        this.DATE_OF_RECORD = DATE_OF_RECORD;
     }
 }
