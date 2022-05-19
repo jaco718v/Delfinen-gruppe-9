@@ -17,7 +17,7 @@ public class SwimmerController {
     private final Utility util = new Utility();
 
     public void addCouchToTeam() {
-        // TODO: Add coach (User) to Team and save to Teams.csv
+        // TODO: Add coach (User) to Team and save to Teams.csv (AgeGroup, isCompetitive, CoachName)
     }
 
     public void showAllSwimmers() {
