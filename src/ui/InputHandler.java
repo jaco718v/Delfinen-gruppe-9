@@ -1,4 +1,4 @@
-package swimclub;
+package ui;
 
 import database.FileHandler;
 import membership.Enum;
@@ -65,39 +65,6 @@ public class InputHandler {
             }
         }
         return userType;
-    }
-
-    public String addMemberId() {
-        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
-        String returnValue = "FULL";
-        int memberIdInt = 0;
-        int lastIndex = memberData.size() - 1;
-        if (lastIndex != -1) {
-            String[] memberArray = memberData.get(lastIndex);
-            if (util.tryParseInt(memberArray[0])) {
-                memberIdInt = Integer.parseInt(memberArray[0]);
-            }
-        }
-        if (memberIdInt + 1 < 10000) {
-            memberIdInt += 1;
-            returnValue = String.format("%04d", memberIdInt);
-        } else {
-            boolean foundNewMemberId = false;
-            for (int i = 1; i < 10000; i++) {
-                for (String[] memberArray : memberData) {
-                    int thisMemberIdInt = Integer.parseInt(memberArray[0]);
-                    if (thisMemberIdInt != i) {
-                        foundNewMemberId = true;
-                        break;
-                    }
-                }
-                if (foundNewMemberId) {
-                    returnValue = String.format("%04d", i);
-                    break;
-                }
-            }
-        }
-        return returnValue;
     }
 
     public String addMemberName() {

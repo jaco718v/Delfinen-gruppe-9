@@ -5,6 +5,7 @@ import database.RecordComparator;
 import membership.Enum;
 import membership.Team;
 import membership.*;
+import ui.InputHandler;
 import ui.UI;
 import utilities.Utility;
 import java.util.ArrayList;
@@ -175,7 +176,7 @@ public class Controller {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> newMemberData = new ArrayList<>();
 
-            String memberId = input.addMemberId();
+            String memberId = util.addMemberId();
             if (!memberId.equals("FULL")) {
                 String memberName = input.addMemberName();
                 String memberBirthDate = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
