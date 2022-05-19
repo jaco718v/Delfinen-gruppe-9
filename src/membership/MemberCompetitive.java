@@ -5,23 +5,30 @@ import utilities.Enum;
 import java.util.ArrayList;
 
 public class MemberCompetitive extends Member {
-    private ArrayList<Enum.SwimDiscipline> swimDiscipliner = new ArrayList<>();
-    private ArrayList<RecordTimeCompetitive> competitions = new ArrayList<>();
-    private ArrayList<RecordTimeRegular> bestPracticeRecords;
+    private Enum.SwimDiscipline swimDiscipline;
+    private ArrayList<RecordTimeCompetition> competitions = new ArrayList<>();
+    private ArrayList<RecordTimePractice> bestPracticeRecords = new ArrayList<>();
 
-    public MemberCompetitive(String name, int age, boolean active) {
-        super(name, age, active);
+    public MemberCompetitive(String memberID, String name, String birthDate, boolean isActive, boolean isCompetitive) {
+        super(memberID, name, birthDate, isActive, isCompetitive);
     }
 
-    public ArrayList<RecordTimeRegular> getBestPracticeRecords() {
+
+
+    public Enum.SwimDiscipline getSwimDiscipline() {
+        return swimDiscipline;
+    }
+
+    public ArrayList<RecordTimePractice> getBestPracticeRecords() {
         return bestPracticeRecords;
     }
 
-    public ArrayList<RecordTimeCompetitive> getCompetitions() {
+    public ArrayList<RecordTimeCompetition> getCompetitions() {
         return competitions;
     }
 
-    public void setCompetitions(ArrayList<RecordTimeCompetitive> competitions) {
+    public void setCompetitions(ArrayList<RecordTimeCompetition> competitions) {
         this.competitions = competitions;
     }
+
 }
