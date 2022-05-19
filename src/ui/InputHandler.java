@@ -15,7 +15,6 @@ public class InputHandler {
     private final Scanner sc = new Scanner(System.in);
     private final UI ui = new UI();
     private final Utility util = new Utility();
-    private final FileHandler fileHandler = new FileHandler();
 
     public Scanner getSc() {
         return sc;

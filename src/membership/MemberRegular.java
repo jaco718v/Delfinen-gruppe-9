@@ -3,7 +3,6 @@ package membership;
 import java.util.ArrayList;
 
 public class MemberRegular extends Member {
-
     private RecordTimeRegular butterflyRecord;
     private RecordTimeRegular crawlRecord;
     private RecordTimeRegular backCrawlRecord;

@@ -14,6 +14,7 @@ public class MemberController {
     private final InputHandler input = new InputHandler();
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
+
     public void addMember(Controller con, User loggedInUser) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> newMemberData = new ArrayList<>();

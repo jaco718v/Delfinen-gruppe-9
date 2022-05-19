@@ -22,7 +22,6 @@ public abstract class Member {
     }
   }
 
-
   public ArrayList<RecordTimeRegular> getBestPracticeRecords() {
     return bestPracticeRecords;
   }

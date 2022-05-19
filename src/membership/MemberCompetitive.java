@@ -9,7 +9,6 @@ public class MemberCompetitive extends Member {
     private ArrayList<RecordTimeCompetitive> competitions = new ArrayList<>();
     private ArrayList<RecordTimeRegular> bestPracticeRecords;
 
-
     public MemberCompetitive(String name, int age, boolean active) {
         super(name, age, active);
     }

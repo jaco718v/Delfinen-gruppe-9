@@ -16,7 +16,7 @@ public class SwimmerController {
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
 
-    public void addCouchToTeam() {
+    public void addCoachToTeam() {
         // TODO: Add coach (User) to Team and save to Teams.csv (AgeGroup, isCompetitive, CoachName)
     }
 

@@ -4,7 +4,6 @@ import database.FileHandler;
 import swimclub.User;
 import utilities.Enum;
 import utilities.Utility;
-
 import java.util.ArrayList;
 
 public class Team {
@@ -53,7 +52,6 @@ public class Team {
         }
         return returnData;
     }
-
 
     public int getActiveMembers() {
         int activeMembers = 0;
@@ -114,6 +112,4 @@ public class Team {
     public ArrayList<Member> getMemberList() {
         return memberList;
     }
-
-
 }

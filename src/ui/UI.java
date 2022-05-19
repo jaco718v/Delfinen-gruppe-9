@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class UI {
     private final Utility util = new Utility();
+
     public String addDotsToStringToFillXCharacters(String string, int takeUpCharacters) {
         if (!string.equals("")) {
             for (int i = 0; i < takeUpCharacters; i++) {
@@ -22,6 +23,7 @@ public class UI {
             return null;
         }
     }
+
     public String addSpacesToStringToFillXCharacters(String string, int takeUpCharacters) {
         if (!string.equals("")) {
             for (int i = 0; i < takeUpCharacters; i++) {
@@ -34,6 +36,7 @@ public class UI {
             return null;
         }
     }
+
     public void loginUser(boolean success) {
         if (success) {
             System.out.println("Login successful.");
@@ -143,7 +146,7 @@ public class UI {
     }
 
     public void displayRecordAddSucces(String recordType){
-        System.out.println("Successfully added "+recordType+ " record to swimmer");
+        System.out.println("Successfully added " + recordType + " record to swimmer");
     }
 
     public void displayDecideAgeGroupTopFive(){
@@ -170,7 +173,7 @@ public class UI {
     }
 
     public void displayTopFiveError(){
-        System.out.println("There are fewer than 5 swimmers in that swim discipline");
+        System.out.println("There are no swimmers in that swim discipline");
     }
 
     public void displayMemberRecords(ArrayList<String[]> playerRecords){
@@ -205,7 +208,6 @@ public class UI {
         System.out.println("Please enter a valid name. You entered: " + memberAge);
     }
 
-
     public void displayActiveOrPassiveOptions(){
         System.out.println("""                               
                                Is this an active or passive member?
@@ -226,13 +228,9 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-
-
     public void displayCompOrReg(){
         System.out.println("No such option.");
     }
-
-
 
     public void displayPleaseTypeLoginPassword() {
         System.out.print("Please type user login password: ");
