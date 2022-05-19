@@ -1,5 +1,6 @@
 package swimclub;
 
+import membership.RecordTime;
 import utilities.Enum;
 import membership.Team;
 import ui.InputHandler;
@@ -15,6 +16,7 @@ public class Controller {
     private final SubscriptionController subscriptionController = new SubscriptionController();
     private final SwimmerController swimmerController = new SwimmerController();
     private final ArrayList<Team> teamArray = new ArrayList<>();
+    private final ArrayList<RecordTime> recordTimes = new ArrayList<>();
     private User loggedInUser;
     private boolean isRunning = true;
 
@@ -71,5 +73,9 @@ public class Controller {
 
     public ArrayList<Team> getTeamArray() {
         return teamArray;
+    }
+
+    public ArrayList<RecordTime> getRecordTimes() {
+        return recordTimes;
     }
 }
