@@ -4,13 +4,36 @@ import membership.Enum;
 import membership.Team;
 import membership.User;
 import swimclub.Controller;
+import utilities.Utility;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class UI {
-
+    private final Utility util = new Utility();
+    public String addDotsToStringToFillXCharacters(String string, int takeUpCharacters) {
+        if (!string.equals("")) {
+            for (int i = 0; i < takeUpCharacters; i++) {
+                if (i >= string.length()) {
+                    string += ".";
+                }
+            }
+            return string;
+        } else {
+            return null;
+        }
+    }
+    public String addSpacesToStringToFillXCharacters(String string, int takeUpCharacters) {
+        if (!string.equals("")) {
+            for (int i = 0; i < takeUpCharacters; i++) {
+                if (i >= string.length()) {
+                    string += " ";
+                }
+            }
+            return string;
+        } else {
+            return null;
+        }
+    }
     public void loginUser(boolean success) {
         if (success) {
             System.out.println("Login successful.");
@@ -360,26 +383,30 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void displayMemberInformation(Controller con, String[] strArray) {
+    public void displayMemberInformation(String[] strArray) {
         System.out.print("MemberID: " + strArray[0]);
-        System.out.print(" - Name: " + strArray[1]);
+        System.out.print(" - Name: " + addDotsToStringToFillXCharacters(strArray[1], 30));
         System.out.print(" - Birth date: " + strArray[2]);
-        System.out.print(" - Age: " + con.convertDateToAge(strArray[2]));
+        int age = util.convertDateToAge(strArray[2]);
+        System.out.print(" - Age: " + age);
+        if (age < 100) {
+            System.out.print(" ");
+        }
         if (strArray[3].equals("true")) {
-            System.out.print(" - Active");
+            System.out.print(" - Active ");
         } else if (strArray[3].equals("false")) {
             System.out.print(" - Passive");
         }
         if (strArray[4].equals("true")) {
             System.out.print(" - Competitive");
         } else if (strArray[4].equals("false")) {
-            System.out.print(" - Regular");
+            System.out.print(" - Regular    ");
         }
         System.out.println();
     }
 
-    public void displayTeamInformation(Controller con, int teamNumber, Team team) {
-        System.out.println("Team " + teamNumber + " - Team type: " + con.capitalizeString(team.getTeamType().name()) + " - Age group: " + team.getAgeGroup().name());
+    public void displayTeamInformation(int teamNumber, Team team) {
+        System.out.println("Team " + teamNumber + " - Team type: " + addSpacesToStringToFillXCharacters(util.capitalizeString(team.getTeamType().name()), 11) + " - Age group: " + team.getAgeGroup().name());
     }
 
     public void displayReturningToMainMenu() {
@@ -393,19 +420,20 @@ public class UI {
     public void displayUserInformation(String[] strArray, User user) {
         String password = "";
         if (user.getUserType() == Enum.UserType.ADMIN) {
-            System.out.println("Name: " + strArray[0] + " - Password: " + strArray[1] + " - User Type: " + strArray[2]);
+            System.out.println("Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(strArray[1], 20) + " - User Type: " + strArray[2]);
         } else {
             for (int i = 0; i < strArray[1].length(); i++) {
                 password += "*";
             }
-            System.out.println("Name: " + strArray[0] + " - Password: " + password + " - User Type: " + strArray[2]);
+            System.out.println("Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(password, 20) + " - User Type: " + strArray[2]);
         }
     }
 
     public void displaySubscription(String[] strArray) {
-        System.out.print("MemberID: " + strArray[0] + " - Name: " + strArray[1] + " - Age: " + strArray[2]);
+        Controller con = new Controller();
+        System.out.print("MemberID: " + strArray[0] + " - Name: " + addDotsToStringToFillXCharacters(strArray[1], 30) + " - Age: " + util.convertDateToAge(strArray[2]));
         if (strArray[3].equals("true")) {
-            System.out.print(" - Active");
+            System.out.print(" - Active ");
         } else if (strArray[3].equals("false")) {
             System.out.print(" - Passive");
         }

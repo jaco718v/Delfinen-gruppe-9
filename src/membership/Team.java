@@ -2,11 +2,13 @@ package membership;
 
 import database.FileHandler;
 import swimclub.Controller;
+import utilities.Utility;
 
 import java.util.ArrayList;
 
 public class Team {
     private FileHandler fileHandler = new FileHandler();
+    private final Utility util = new Utility();
     private ArrayList<Member> memberList = new ArrayList<>();
     private User coach;
     private final Enum.TeamType teamType;
@@ -37,8 +39,7 @@ public class Team {
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         ArrayList<String[]> returnData = new ArrayList<>();
         for (String[] strArray : memberData) {
-            Controller con = new Controller();
-            int age = con.convertDateToAge(strArray[2]);
+            int age = util.convertDateToAge(strArray[2]);
             if ((ageGroup == Enum.AgeGroup.U18) && (age < 18)) {
                 if (((strArray[4].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
                     returnData.add(strArray);
