@@ -1,5 +1,5 @@
-package swimclub;
-import ui.UI;
+package ui;
+import swimclub.Controller;
 
 import java.util.Scanner;
 
