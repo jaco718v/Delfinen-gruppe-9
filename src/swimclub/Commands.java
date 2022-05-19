@@ -69,10 +69,10 @@ public class Commands {
             ui.listCommandsSwimmerMenu();
             String command = sc.nextLine();
             switch (command) {
-                case "1" -> con.showTopSwimmers();
-                case "2" -> con.showAllSwimmers();
-                case "3" -> con.addRecordToMember();
-                case "4" -> con.showMemberRecords();
+                case "1" -> con.getSwimmerController().showTopSwimmers(con.getLoggedInUser(), con.getTeamArray());
+                case "2" -> con.getSwimmerController().showAllSwimmers();
+                case "3" -> con.getSwimmerController().addRecordToMember(con.getLoggedInUser(), con.getTeamArray(), con.getMemberController());
+                case "4" -> con.getSwimmerController().showMemberRecords(con.getLoggedInUser(), con.getTeamArray());
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;
@@ -89,10 +89,10 @@ public class Commands {
             ui.listCommandsSubscriptionMenu();
             String command = sc.nextLine();
             switch (command) {
-                case "1" -> con.setPaymentStatus();
-                case "2" -> con.showSubscriptions();
-                case "3" -> con.showExpectedSubscriptionFees();
-                case "4" -> con.showSubscriptionsInArrears();
+                case "1" -> con.getSubscriptionController().setPaymentStatus(con.getLoggedInUser());
+                case "2" -> con.getSubscriptionController().showSubscriptions(con.getLoggedInUser());
+                case "3" -> con.getSubscriptionController().showExpectedSubscriptionFees(con.getLoggedInUser(), con.getTeamArray());
+                case "4" -> con.getSubscriptionController().showSubscriptionsInArrears(con.getLoggedInUser());
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;
@@ -109,10 +109,10 @@ public class Commands {
             ui.listCommandsMemberMenu();
             String command = sc.nextLine();
             switch (command) {
-                case "1" -> con.addMember();
-                case "2" -> con.editMember();
-                case "3" -> con.removeMember();
-                case "4" -> con.showMembers();
+                case "1" -> con.getMemberController().addMember(con, con.getLoggedInUser());
+                case "2" -> con.getMemberController().editMember(con.getLoggedInUser(), con.getTeamArray());
+                case "3" -> con.getMemberController().removeMember(con.getLoggedInUser(), con.getTeamArray());
+                case "4" -> con.getMemberController().showMembers(con.getLoggedInUser(), con.getTeamArray());
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;
