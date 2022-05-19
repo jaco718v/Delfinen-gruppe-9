@@ -1,7 +1,7 @@
 package membership;
 
 import database.FileHandler;
-import swimclub.Controller;
+import swimclub.User;
 import utilities.Utility;
 
 import java.util.ArrayList;

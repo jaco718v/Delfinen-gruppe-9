@@ -2,7 +2,7 @@ package ui;
 
 import membership.Enum;
 import membership.Team;
-import membership.User;
+import swimclub.User;
 import swimclub.Controller;
 import utilities.Utility;
 
@@ -189,7 +189,7 @@ public class UI {
         }
     }
 
-    public void displayPleaseTypeLoginName() {
+    public void displayPleaseTypeUserLoginName() {
         System.out.print("Please type user login name: ");
     }
 
@@ -238,8 +238,8 @@ public class UI {
         System.out.print("Please type user login password: ");
     }
 
-    public void displayPleaseEnterValidUser(String userName) {
-        System.out.println("Please enter a valid user. You entered: " + userName);
+    public void displayPleaseEnterValidUserName(String userName) {
+        System.out.println("Please enter a valid user name. You entered: " + userName);
     }
 
     public void displayWrongPassword() {
@@ -532,5 +532,17 @@ public class UI {
 
     public void displayNoSuchMemberFound() {
         System.out.println("No such member found.");
+    }
+
+    public void enterMemberId(boolean success) {
+        if (success) {
+            System.out.println("Login successful.");
+        } else {
+            System.out.println("Login failed.");
+        }
+    }
+
+    public void displayMemberIdOutOfRange() {
+        System.out.println("MemberID out of range.");
     }
 }

@@ -1,4 +1,6 @@
-package membership;
+package swimclub;
+
+import membership.Enum;
 
 public class User {
     private String name;

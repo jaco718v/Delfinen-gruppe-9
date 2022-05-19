@@ -3,7 +3,6 @@ package ui;
 import database.FileHandler;
 import membership.Enum;
 import membership.Team;
-import ui.UI;
 import utilities.Utility;
 
 import java.time.LocalDateTime;
@@ -18,17 +17,21 @@ public class InputHandler {
     private final Utility util = new Utility();
     private final FileHandler fileHandler = new FileHandler();
 
+    public Scanner getSc() {
+        return sc;
+    }
+
     public String addUserName() {
         String userName = "";
         boolean enteredUserName = false;
         while (!enteredUserName) {
-            ui.displayPleaseTypeLoginName();
+            ui.displayPleaseTypeUserLoginName();
             userName = sc.nextLine();
             if ((!userName.equals("")) && (!userName.equals(" "))) {
                 enteredUserName = true;
             }
             if (!enteredUserName) {
-                ui.displayPleaseEnterValidUser(userName);
+                ui.displayPleaseEnterValidUserName(userName);
             }
         }
         return util.writeNameParts(userName);
@@ -305,5 +308,137 @@ public class InputHandler {
             return Enum.AgeGroup.U18;
         }
         return Enum.AgeGroup.O18;
+    }
+
+    public String[] enterUserName(ArrayList<String[]> userData) {
+        String[] returnStrings = new String[2];
+        boolean enteredUserName = false;
+        while (!enteredUserName) {
+            ui.displayPleaseTypeUserLoginName();
+            returnStrings[0] = sc.nextLine();
+            for (int i = 0; i < userData.size(); i++) {
+                String[] strArray = userData.get(i);
+                if (strArray[0].equals(returnStrings[0])) {
+                    returnStrings[1] = Integer.toString(i);
+                    enteredUserName = true;
+                }
+            }
+            if (!enteredUserName) {
+                ui.displayPleaseEnterValidUserName(returnStrings[0]);
+            }
+        }
+        return returnStrings;
+    }
+
+    public String enterUserPassword(ArrayList<String[]> userData, int userIndex) {
+        String userPassword = "";
+
+        boolean enteredUserPassword = false;
+        while (!enteredUserPassword) {
+            ui.displayPleaseTypeLoginPassword();
+            userPassword = sc.nextLine();
+            if (userData.get(userIndex) != null) {
+                String[] strArray = userData.get(userIndex);
+                if (strArray[1].equals(userPassword)) {
+                    enteredUserPassword = true;
+                }
+            }
+            ui.loginUser(enteredUserPassword);
+            if (!enteredUserPassword) {
+                ui.displayWrongPassword();
+            }
+        }
+        return userPassword;
+    }
+
+    public String enterMemberId() {
+        String memberId = "";
+
+        boolean enteredUserId = false;
+        while (!enteredUserId) {
+            ui.displayPleaseEnterMemberId();
+            memberId = sc.nextLine();
+            if ((util.tryParseInt(memberId)) && (Integer.parseInt(memberId) < 10000) && (Integer.parseInt(memberId) > 0)) {
+                enteredUserId = true;
+            }
+            if (!enteredUserId) {
+                ui.displayMemberIdOutOfRange();
+            }
+        }
+        return memberId;
+    }
+
+    public int enterUserNameGetId(ArrayList<String[]> userData) {
+        String userName = "";
+        int userID = -1;
+        boolean enteredUserName = false;
+        while (!enteredUserName) {
+            ui.displayPleaseTypeUserLoginName();
+            userName = sc.nextLine();
+            for (int i = 0; i < userData.size(); i++) {
+                String[] strArray = userData.get(i);
+                if (userName.equals(strArray[0])) {
+                    enteredUserName = true;
+                    userID = i;
+                    break;
+                }
+            }
+            ui.removeUser(enteredUserName);
+            if (!enteredUserName) {
+                ui.displayPleaseEnterValidUserName(userName);
+            }
+        }
+        return userID;
+    }
+
+    public String enterUserId(ArrayList<String[]> subscriptionData) {
+        String foundId = "-1";
+        boolean enteredUserId = false;
+        while (!enteredUserId) {
+
+            ui.displayPleaseEnterUserId();
+            String userIdInput = sc.nextLine();
+            for (int i = 0; i < subscriptionData.size(); i++) {
+                String[] strArray = subscriptionData.get(i);
+                if (strArray[0].equals(userIdInput)) {
+                    foundId = Integer.toString(i);
+                }
+            }
+            if (foundId.equals("-1")) {
+                ui.displayNoSuchMemberFound();
+            }
+        }
+        return foundId;
+    }
+
+    public String enterUserPaymentStatus() {
+        String paymentStatusSelection = "";
+        boolean enteredPaymentStatus = false;
+        while (!enteredPaymentStatus) {
+            ui.displayPleaseEnterPaymentStatus();
+            paymentStatusSelection = sc.nextLine();
+            if ((paymentStatusSelection.equals("1")) || (paymentStatusSelection.equals("2"))) {
+                enteredPaymentStatus = true;
+            } else {
+                ui.displayNoSuchCommand(paymentStatusSelection);
+            }
+        }
+        return paymentStatusSelection;
+    }
+
+    public String enterString() {
+        return sc.nextLine();
+    }
+
+    public String enterMemberEditType() {
+        String input = "";
+        boolean enteredType = false;
+        while (!enteredType) {
+            input = sc.nextLine();
+            if ((!input.equals("1")) && (!input.equals("2")) && (!input.equals("3")) && (!input.equals("4"))) {
+                enteredType = true;
+            }
+        }
+        return input;
     }
 }

@@ -4,20 +4,18 @@ import database.FileHandler;
 import database.RecordComparator;
 import membership.Enum;
 import membership.Team;
-import membership.*;
 import ui.InputHandler;
 import ui.UI;
 import utilities.Utility;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Controller {
-    private final Scanner sc = new Scanner(System.in);
     private final FileHandler fileHandler = new FileHandler();
     private final UI ui = new UI();
     private final Commands cmds = new Commands();
     private final Utility util = new Utility();
     private final InputHandler input = new InputHandler();
+    private final UserController userController = new UserController();
     private boolean isRunning = true;
     private User loggedInUser;
     private ArrayList<Team> teamArray = new ArrayList<>();
@@ -30,7 +28,7 @@ public class Controller {
     private void run() {
         createTeams();
         while (isRunning) {
-            cmds.commands(this, sc);
+            cmds.commands(this, input.getSc());
         }
     }
 
@@ -45,131 +43,6 @@ public class Controller {
     public void exit() {
         ui.displayShuttingDown();
         isRunning = false;
-    }
-
-    public void loginUser() {
-        ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
-        if (userData.size() > 0) {
-            int userIndex = -1;
-            String userName = "";
-            String userPassword = "";
-
-            boolean enteredUserName = false;
-            while (!enteredUserName) {
-                ui.displayPleaseTypeLoginName();
-                userName = sc.nextLine();
-                for (int i = 0; i < userData.size(); i++) {
-                    String[] strArray = userData.get(i);
-                    if (strArray[0].equals(userName)) {
-                        userIndex = i;
-                        enteredUserName = true;
-                    }
-                }
-                if (!enteredUserName) {
-                    ui.displayPleaseEnterValidUser(userName);
-                }
-            }
-
-            boolean enteredUserPassword = false;
-            while (!enteredUserPassword) {
-                ui.displayPleaseTypeLoginPassword();
-                userPassword = sc.nextLine();
-                if (userData.get(userIndex) != null) {
-                    String[] strArray = userData.get(userIndex);
-                    if (strArray[1].equals(userPassword)) {
-                        enteredUserPassword = true;
-                    }
-                }
-                ui.loginUser(enteredUserPassword);
-                if (!enteredUserPassword) {
-                    ui.displayWrongPassword();
-                }
-            }
-            String[] strArray = userData.get(userIndex);
-            Enum.UserType userType = Enum.UserType.valueOf(strArray[2]);
-            loggedInUser = new User(userName, userPassword, userType);
-        } else {
-            ui.noRegisteredUsers();
-            addUser();
-        }
-    }
-
-    public void addUser() {
-        ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
-        if (userData.size() > 0) {
-            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-                String userName = input.addUserName();
-                String userPassword = input.addUserPassword();
-                String userType = input.addUserType();
-
-                switch (userType) {
-                    case "1" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.ADMIN.name()});
-                        fileHandler.writeToCSV("Users.csv", newData);
-                    }
-                    case "2" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.CHAIRMAN.name()});
-                        fileHandler.writeToCSV("Users.csv", newData);
-                    }
-                    case "3" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.CASHIER.name()});
-                        fileHandler.writeToCSV("Users.csv", newData);
-                    }
-                    case "4" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.COACH.name()});
-                        fileHandler.writeToCSV("Users.csv", newData);
-                    }
-                }
-            } else {
-                ui.loggedInUserNoPrivilege();
-            }
-        } else {
-            ui.noRegisteredUsersCreatingAdmin();
-            userData.add(new String[]{"admin", "admin", Enum.UserType.ADMIN.name()});
-            fileHandler.writeToCSV("Users.csv", userData);
-        }
-    }
-
-    public void removeUser() {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-            ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
-            if (userData.size() > 0) {
-                String userName = "";
-                boolean enteredUserName = false;
-                while (!enteredUserName) {
-                    ui.displayPleaseTypeLoginName();
-                    userName = sc.nextLine();
-                    for (int i = 0; i < userData.size(); i++) {
-                        String[] strArray = userData.get(i);
-                        if (userName.equals(strArray[0])) {
-                            enteredUserName = true;
-                            userData.remove(i);
-                            fileHandler.overwriteCSV("Users.csv", userData);
-                            break;
-                        }
-                    }
-                    ui.removeUser(enteredUserName);
-                    if (!enteredUserName) {
-                        ui.displayPleaseEnterValidUser(userName);
-                    }
-                }
-            } else {
-                ui.noRegisteredUsers();
-            }
-        } else {
-            ui.loggedInUserNoPrivilege();
-        }
-    }
-
-    public void showUsers() {
-        ArrayList<String[]> memberData = fileHandler.readCSV("Users.csv");
-        for (String[] strArray : memberData) {
-            ui.displayUserInformation(strArray, loggedInUser);
-        }
     }
 
     public void addMember() {
@@ -205,12 +78,12 @@ public class Controller {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
             showMembers();
             ui.typeMemberIdPlease();
-            String editMember = sc.nextLine(); // indtast memberid
+            String editMember = input.enterMemberId();
             for (int i = 0; i < memberData.size(); i++) {
                 String[] array = memberData.get(i);
                 if (array[0].equals(editMember)) {
                     ui.whatToChange();
-                    String command = sc.nextLine();
+                    String command = input.enterMemberEditType();
                     switch (command) {
                         case "1" -> array[1] = input.addMemberName();
                         case "2" -> array[2] = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
@@ -234,7 +107,7 @@ public class Controller {
             ArrayList<String[]> subData = fileHandler.readCSV("Subscriptions.csv");
             showMembers();
             ui.displayPleaseEnterMemberId();
-            String memberId = sc.nextLine();
+            String memberId = input.enterMemberId();
             boolean removedMember = false;
             for (int i = 0; i < memberData.size(); i++) {
                 String[] memberArray = memberData.get(i);
@@ -288,23 +161,14 @@ public class Controller {
         showSubscriptions();
         ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
 
-        ui.displayPleaseEnterUserId();
-        String userIdInput = sc.nextLine();
-        String foundId = "-1";
-        for (int i = 0; i < subscriptionData.size(); i++) {
-            String[] strArray = subscriptionData.get(i);
-            if (strArray[0].equals(userIdInput)) {
-                foundId = Integer.toString(i);
-            }
-        }
+        String foundId = input.enterUserId(subscriptionData);
         if (!foundId.equals("-1")) {
             int foundIdInt = -1;
             if (util.tryParseInt(foundId)) {
                 foundIdInt = Integer.parseInt(foundId);
             }
             String[] strArray = subscriptionData.get(foundIdInt);
-            ui.displayPleaseEnterPaymentStatus();
-            String userPaymentStatusInput = sc.nextLine();
+            String userPaymentStatusInput = input.enterUserPaymentStatus();
             if (userPaymentStatusInput.equals("1")) {
                 strArray[4] = "true";
             } else if (userPaymentStatusInput.equals("2")) {
@@ -315,8 +179,6 @@ public class Controller {
             String[] printArray = subscriptionData.get(foundIdInt);
             ui.displayUpdatedMemberSubscription(printArray);
             fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
-        } else {
-            ui.displayNoSuchMemberFound();
         }
     }
 
@@ -428,7 +290,7 @@ public class Controller {
 
     private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberName, String swimDiscipline, String recordInSeconds, String date) {
         ui.displayEnterConventionName();
-        String convention = sc.nextLine();
+        String convention = input.enterString();
         String placing = input.addPlacing();
         data.add(new String[]{memberName, swimDiscipline, recordInSeconds, date, convention, placing});
         fileHandler.writeToCSV("Records.csv", data);
@@ -465,5 +327,13 @@ public class Controller {
 
     public User getLoggedInUser() {
         return loggedInUser;
+    }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
+    public UserController getUserController() {
+        return userController;
     }
 }

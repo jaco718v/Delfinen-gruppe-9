@@ -1,5 +1,4 @@
 package swimclub;
-import membership.Enum;
 import ui.UI;
 
 import java.util.Scanner;
@@ -56,7 +55,7 @@ public class Commands {
             ui.listCommandsNotLoggedIn();
             String command = sc.nextLine();
             switch (command) {
-                case "1" -> con.loginUser();
+                case "1" -> con.getUserController().loginUser(con);
                 case "0" -> con.exit();
                 default -> ui.displayNoSuchCommand(command);
             }
@@ -130,10 +129,10 @@ public class Commands {
             ui.listCommandsUserMenu();
             String command = sc.nextLine();
             switch (command) {
-                case "1" -> con.loginUser();
-                case "2" -> con.addUser();
-                case "3" -> con.removeUser();
-                case "4" -> con.showUsers();
+                case "1" -> con.getUserController().loginUser(con);
+                case "2" -> con.getUserController().addUser(con.getLoggedInUser());
+                case "3" -> con.getUserController().removeUser(con.getLoggedInUser());
+                case "4" -> con.getUserController().showUsers(con.getLoggedInUser());
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;
@@ -149,7 +148,7 @@ public class Commands {
             ui.listCommandsUserMenuLoginOnly();
             String command = sc.nextLine();
             switch (command) {
-                case "1" -> con.loginUser();
+                case "1" -> con.getUserController().loginUser(con);
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;
