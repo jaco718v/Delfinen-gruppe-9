@@ -16,8 +16,12 @@ public class SwimmerController {
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
 
-    public void showAllSwimmers() {
+    public void addCouchToTeam() {
+        // TODO: Add coach (User) to Team and save to Teams.csv
+    }
 
+    public void showAllSwimmers() {
+        // TODO: Show all records from all swimmers
     }
 
     private boolean updateRecord(ArrayList<String[]> recordList, String[] newRecord) {
