@@ -1,4 +1,4 @@
-package membership;
+package utilities;
 
 public class Enum {
 

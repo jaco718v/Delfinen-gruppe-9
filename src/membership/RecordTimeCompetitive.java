@@ -1,5 +1,7 @@
 package membership;
 
+import utilities.Enum;
+
 public class RecordTimeCompetitive extends RecordTime {
     private final String convention;
     private final int placing;

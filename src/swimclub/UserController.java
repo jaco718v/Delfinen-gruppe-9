@@ -1,7 +1,7 @@
 package swimclub;
 
 import database.FileHandler;
-import membership.Enum;
+import utilities.Enum;
 import ui.InputHandler;
 import ui.UI;
 

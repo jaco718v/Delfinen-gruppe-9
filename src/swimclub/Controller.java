@@ -1,6 +1,6 @@
 package swimclub;
 
-import membership.Enum;
+import utilities.Enum;
 import membership.Team;
 import ui.InputHandler;
 import ui.UI;

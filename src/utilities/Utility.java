@@ -1,7 +1,6 @@
 package utilities;
 
 import database.FileHandler;
-import membership.Enum;
 import membership.Team;
 
 import java.time.LocalDateTime;

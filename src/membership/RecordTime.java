@@ -1,5 +1,7 @@
 package membership;
 
+import utilities.Enum;
+
 public abstract class RecordTime {
     private final Enum.SwimDiscipline swimDiscipline;
     private final double recordInSeconds;

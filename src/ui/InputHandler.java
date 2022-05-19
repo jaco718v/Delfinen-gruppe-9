@@ -1,7 +1,7 @@
 package ui;
 
 import database.FileHandler;
-import membership.Enum;
+import utilities.Enum;
 import membership.Team;
 import utilities.Utility;
 

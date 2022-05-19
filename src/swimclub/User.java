@@ -1,6 +1,6 @@
 package swimclub;
 
-import membership.Enum;
+import utilities.Enum;
 
 public class User {
     private String name;

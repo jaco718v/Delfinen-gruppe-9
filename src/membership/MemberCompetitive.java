@@ -1,5 +1,7 @@
 package membership;
 
+import utilities.Enum;
+
 import java.util.ArrayList;
 
 public class MemberCompetitive extends Member {

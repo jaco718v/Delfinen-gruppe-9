@@ -2,6 +2,7 @@ package membership;
 
 import database.FileHandler;
 import swimclub.User;
+import utilities.Enum;
 import utilities.Utility;
 
 import java.util.ArrayList;
