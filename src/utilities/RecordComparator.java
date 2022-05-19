@@ -1,4 +1,4 @@
-package database;
+package utilities;
 
 import java.util.Comparator;
 

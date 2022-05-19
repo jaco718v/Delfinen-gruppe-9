@@ -1,7 +1,7 @@
 package swimclub;
 
 import database.FileHandler;
-import database.RecordComparator;
+import utilities.RecordComparator;
 import utilities.Enum;
 import membership.Team;
 import ui.InputHandler;
