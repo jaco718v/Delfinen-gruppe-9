@@ -63,7 +63,7 @@ public class Team {
     public ArrayList<Member> getActiveMembers() {
         ArrayList<Member> activeMembers = new ArrayList<>();
         for(Member member : this.memberList){
-            if(member.isCompetitive()){
+            if(member instanceof MemberCompetitive){
                 activeMembers.add(member);
             }
         }
@@ -84,7 +84,7 @@ public class Team {
     public String findCompetitiveMemberNameWithID(String memberID){
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getMemberID().equals(memberID)){
+            if (member.getId().equals(memberID)){
                 return member.getName();
             }
         }
@@ -95,7 +95,7 @@ public class Team {
     public boolean confirmCompetitiveMemberID(String memberID){
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getMemberID().equals(memberID)){
+            if (member.getId().equals(memberID)){
                 return true;
             }
         }
@@ -105,7 +105,7 @@ public class Team {
     public MemberCompetitive findCompetitiveMemberWithID(String memberID){
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getMemberID().equals(memberID)){
+            if (member.getId().equals(memberID)){
                 return (MemberCompetitive)member;
             }
         }
@@ -115,7 +115,7 @@ public class Team {
     public Enum.SwimDiscipline findMemberSwimDiscipline(String memberID){
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getMemberID().equals(memberID) && member.isCompetitive()) {
+            if (member.getId().equals(memberID) && member instanceof MemberCompetitive) {
                 return ((MemberCompetitive)member).getSwimDiscipline();
             }
         }

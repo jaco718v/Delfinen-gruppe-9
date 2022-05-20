@@ -1,6 +1,9 @@
 package swimclub;
 
 import database.FileHandler;
+import membership.Member;
+import membership.MemberCompetitive;
+import membership.MemberRegular;
 import utilities.Enum;
 import membership.Team;
 import ui.InputHandler;
@@ -32,7 +35,18 @@ public class MemberController {
 
                 newMemberData.add(new String[]{ memberId, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline });
                 boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
-                // TODO: add Member to memberList in correct Team
+                boolean isActiveBool = isActive.equals("true");
+                for (Team team : con.getTeamArray()) {
+                    if ((team.getTeamType() == Enum.TeamType.COMPETITIVE) && (isCompetitive.equals("true")) && (team.getAgeGroup() == Enum.AgeGroup.U18) && (util.convertDateToAge(memberBirthDate) < 18)) {
+                        team.getMemberList().add(new MemberCompetitive(memberId, memberName, memberBirthDate, isActiveBool));
+                    } else if ((team.getTeamType() == Enum.TeamType.COMPETITIVE) && (isCompetitive.equals("true")) && (team.getAgeGroup() == Enum.AgeGroup.O18) && (util.convertDateToAge(memberBirthDate) >= 18)) {
+                        team.getMemberList().add(new MemberCompetitive(memberId, memberName, memberBirthDate, isActiveBool));
+                    } else if ((team.getTeamType() == Enum.TeamType.REGULAR) && (isCompetitive.equals("false")) && (team.getAgeGroup() == Enum.AgeGroup.U18) && (util.convertDateToAge(memberBirthDate) < 18)) {
+                        team.getMemberList().add(new MemberRegular(memberId, memberName, memberBirthDate, isActiveBool));
+                    } else if ((team.getTeamType() == Enum.TeamType.REGULAR) && (isCompetitive.equals("false")) && (team.getAgeGroup() == Enum.AgeGroup.O18) && (util.convertDateToAge(memberBirthDate) >= 18)) {
+                        team.getMemberList().add(new MemberRegular(memberId, memberName, memberBirthDate, isActiveBool));
+                    }
+                }
                 con.getSubscriptionController().updateSubscriptions();
                 ui.addMember(success);
             } else {
@@ -43,7 +57,7 @@ public class MemberController {
         }
     }
 
-    public void editMember(User loggedInUser, ArrayList<Team> teamArray) {
+    public void editMember(Controller con, User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             // edit member kode her
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
@@ -64,7 +78,43 @@ public class MemberController {
                     memberData.remove(i);
                     memberData.add(i, array);
                     fileHandler.overwriteCSV("Members.csv", memberData);
-                    // TODO: edit Member in memberList in correct Team
+                    boolean editedMember = false;
+                    for (Team team : con.getTeamArray()) {
+                        if (editedMember) {
+                            break;
+                        }
+                        for (int j = 0; j < team.getMemberList().size(); j++) {
+                            Member currentMember = team.getMemberList().get(j);
+                            if (editMember.equals(currentMember.getId())) {
+                                boolean isActive = array[3].equals("true");
+                                boolean isCompetitive = array[4].equals("true");
+                                switch (command) {
+                                    case "1" -> {
+                                        currentMember.setName(array[1]);
+                                        editedMember = true;
+                                    }
+                                    case "2" -> {
+                                        currentMember.setBirthDate(array[2]);
+                                        editedMember = true;
+                                    }
+                                    case "3" -> {
+                                        currentMember.setActive(isActive);
+                                        editedMember = true;
+                                    }
+                                    case "4" -> {
+                                        team.getMemberList().remove(j);
+                                        if (isCompetitive) {
+                                            team.getMemberList().add(j, new MemberCompetitive(currentMember.getId(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive()));
+                                        } else {
+                                            team.getMemberList().add(j, new MemberRegular(currentMember.getId(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive()));
+                                        }
+                                        editedMember = true;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
                     break;
                 }
             }
