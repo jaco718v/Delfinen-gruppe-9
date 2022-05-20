@@ -27,9 +27,9 @@ public class SwimmerController {
         for(Team team : teamArray){
             if(team.getTeamType().equals(Enum.TeamType.COMPETITIVE)){
                 for(int i = 0; i<team.getMembers().size(); i++){
-                    ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(team.getMembers().get(i).getMemberID());
+                    ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(team.getMembers().get(i).getId());
                     if(memberRecords.size()!=0){
-                        ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getMemberID());
+                        ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getId());
                     }
                 }
             }
