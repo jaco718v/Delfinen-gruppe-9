@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public class MemberCompetitive extends Member {
     private Enum.SwimDiscipline swimDiscipline;
     private ArrayList<RecordTimeCompetition> competitions = new ArrayList<>();
-    private ArrayList<RecordTimePractice> bestPracticeRecords = new ArrayList<>();
+    private ArrayList<RecordTimePractice> bestPracticeRecords;
 
-    public MemberCompetitive(String memberID, String name, String birthDate, boolean isActive, boolean isCompetitive) {
-        super(memberID, name, birthDate, isActive, isCompetitive);
+    public MemberCompetitive(String id, String name, String birthDate, boolean active) {
+        super(id, name, birthDate, active);
     }
 
     public void AddRecordCompetition(RecordTimeCompetition record){
@@ -36,5 +36,4 @@ public class MemberCompetitive extends Member {
     public void setCompetitions(ArrayList<RecordTimeCompetition> competitions) {
         this.competitions = competitions;
     }
-
 }
