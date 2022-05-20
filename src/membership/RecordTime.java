@@ -16,6 +16,10 @@ public abstract class RecordTime {
         DATE_OF_RECORD = date_of_record;
     }
 
+    public String getDATE_OF_RECORD() {
+        return DATE_OF_RECORD;
+    }
+
     public double getRECORD_IN_SECONDS() {
         return RECORD_IN_SECONDS;
     }

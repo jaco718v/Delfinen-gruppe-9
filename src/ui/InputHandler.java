@@ -177,17 +177,10 @@ public class InputHandler {
         return competitive;
     }
 
-    public String findCompetitiveMemberByID(ArrayList<Team> teamArray) {
+    public String enterCompetitiveMemberID() {
         ui.displayPleaseTypeMemberID();
         String memberID = sc.nextLine();
-        for (Team team : teamArray) {
-            team.confirmCompetitiveMemberID(memberID);
-            if (team.confirmCompetitiveMemberID(memberID)) {
-                return memberID;
-            }
-        }
-        ui.memberIDNotFound();
-        return null;
+        return memberID;
     }
 
     public Enum.SwimDiscipline addSwimDisciplineToRecord(ArrayList<Team> teamArray, String memberID) {

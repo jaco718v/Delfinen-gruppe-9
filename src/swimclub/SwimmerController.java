@@ -1,6 +1,7 @@
 package swimclub;
 
 import database.FileHandler;
+import membership.RecordTime;
 import membership.RecordTimeCompetition;
 import membership.RecordTimePractice;
 import utilities.RecordComparator;
@@ -22,8 +23,17 @@ public class SwimmerController {
         // TODO: Add coach (User) to Team and save to Teams.csv (AgeGroup, isCompetitive, CoachName)
     }
 
-    public void showAllSwimmers() {
-        // TODO: Show all records from all swimmers // Jeg tror ikke metoden er nødvendig mht. userStories - Jacob
+    public void showAllSwimmers(ArrayList<Team> teamArray) {
+        for(Team team : teamArray){
+            if(team.getTeamType().equals(Enum.TeamType.COMPETITIVE)){
+                for(int i = 0; i<team.getMembers().size(); i++){
+                    ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(team.getMembers().get(i).getMemberID());
+                    if(memberRecords.size()!=0){
+                        ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getMemberID());
+                    }
+                }
+            }
+        }
     }
 
     private boolean updateRecordInCSV(ArrayList<String[]> recordList, String[] newRecord) {
@@ -41,15 +51,16 @@ public class SwimmerController {
     public void addRecordToMember(User loggedInUser, ArrayList<Team> teamArray, MemberController memberController) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             memberController.showMembers(loggedInUser, teamArray);
-            String memberID = input.findCompetitiveMemberByID(teamArray);
-            if (memberID != null) {
+            String memberID = input.enterCompetitiveMemberID();
+            Team team = findCompetitiveTeamWithID(teamArray,memberID);
+            if (team != null) {
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
                 String recordType = input.recordTypeChoice(memberID);
                 Enum.SwimDiscipline swimDiscipline = input.addSwimDisciplineToRecord(teamArray, memberID);
                 double recordInSeconds = input.addRecordInSeconds();
                 String date = input.addDate();
-                Team team = findCompetitiveTeamWithID(teamArray,memberID);
+
                 if (recordType.equals("regular")) {
                     team.findCompetitiveMemberWithID(memberID).AddRecordPractice(new RecordTimePractice(memberID,swimDiscipline,recordInSeconds,date));
                     String[] newRecord = {memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, " ", " "};
@@ -76,6 +87,7 @@ public class SwimmerController {
                 return team;
             }
         }
+        ui.memberIDNotFound();
         return null;
     }
 
@@ -108,19 +120,16 @@ public class SwimmerController {
 
     public void showMemberRecords(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
-            String memberName = input.findCompetitiveMemberByID(teamArray);
-            if (memberName != null) {
-                ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
-                ArrayList<String[]> memberRecords = new ArrayList<>();
-                for (String[] records : recordList) {
-                    if (records[0].equals(memberName)) {
-                        memberRecords.add(records);
-                    }
+            String memberID = input.enterCompetitiveMemberID();
+            Team team = findCompetitiveTeamWithID(teamArray,memberID);
+            if (team != null) {
+                ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(memberID);
+                if(memberRecords.size()!=0){
+                ui.displayMemberRecords(memberRecords,memberID);
                 }
-                ui.displayMemberRecords(memberRecords);
-            }
         } else {
             ui.loggedInUserNoPrivilege();
         }
+    }
     }
 }

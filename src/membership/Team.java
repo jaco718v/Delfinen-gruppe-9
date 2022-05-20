@@ -122,6 +122,17 @@ public class Team {
         return null;
     }
 
+    public ArrayList<RecordTime> findRecordsOfSwimmer(String memberID) {
+        ArrayList<RecordTime> recordList = new ArrayList<>();
+        for (Member member : getMembers()) {
+            if(memberID.equals(member.getMemberID()))
+                recordList.addAll(((MemberCompetitive)member).getBestPracticeRecords());
+                recordList.addAll(((MemberCompetitive) member).getCompetitions());
+
+        }
+        return recordList;
+    }
+
     public ArrayList<RecordTimePractice> findRecordsOfSwimDiscipline(Enum.SwimDiscipline swimDiscipline) {
         ArrayList<RecordTimePractice> recordList = new ArrayList<>();
         for (Member member : getMembers()) {

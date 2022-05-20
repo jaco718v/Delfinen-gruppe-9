@@ -1,5 +1,7 @@
 package ui;
 
+import membership.RecordTime;
+import membership.RecordTimeCompetition;
 import membership.RecordTimePractice;
 import utilities.Enum;
 import membership.Team;
@@ -177,18 +179,18 @@ public class UI {
         System.out.println("There are no swimmers in that swim discipline");
     }
 
-    public void displayMemberRecords(ArrayList<String[]> playerRecords){
-        System.out.println("Member: "+playerRecords.get(0)[0]+"\t Swim discipline: "+playerRecords.get(0)[1]);
+    public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberName){
+        System.out.println("Member: "+memberName+"\t Swim discipline: "+playerRecords.get(0).getSWIM_DISCIPLINE());
         System.out.print("Personal best training record: ");
-        for(String[] record : playerRecords){
-            if(record[4].equals(" ")){
-                System.out.println(record[2]+"s\t "+record[3]);
+        for(RecordTime record : playerRecords){
+            if(record instanceof RecordTimePractice){
+                System.out.println(record.getRECORD_IN_SECONDS()+"s\t "+record.getDATE_OF_RECORD());
             }
         }
         System.out.println("Competition placings:");
-        for(String[] record : playerRecords){
-            if(!record[4].equals(" ")){
-                System.out.println(record[4]+"\t placing nr: "+record[5]+"\t Time: "+record[2]+"s\t"+record[3]);
+        for(RecordTime record : playerRecords){
+            if(record instanceof RecordTimeCompetition){
+                System.out.println(((RecordTimeCompetition) record).getConvention()+"\t placing nr: "+((RecordTimeCompetition) record).getPlacing()+"\t Time: "+record.getRECORD_IN_SECONDS()+"s\t"+record.getDATE_OF_RECORD());
             }
         }
     }
