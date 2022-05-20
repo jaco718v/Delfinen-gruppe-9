@@ -6,8 +6,8 @@ public class RecordTimeCompetition extends RecordTime {
     private final String convention;
     private final int placing;
 
-    public RecordTimeCompetition(Enum.SwimDiscipline SWIM_DISCIPLINE, double RECORD_IN_SECONDS, String DATE_OF_RECORD, String convention, int placing) {
-        super(SWIM_DISCIPLINE, RECORD_IN_SECONDS, DATE_OF_RECORD);
+    public RecordTimeCompetition(String memberID, String name, Enum.SwimDiscipline swim_discipline, double record_in_seconds, String date_of_record, String convention, int placing) {
+        super(memberID, name, swim_discipline, record_in_seconds, date_of_record);
         this.convention = convention;
         this.placing = placing;
     }

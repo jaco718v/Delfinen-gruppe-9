@@ -5,8 +5,8 @@ import utilities.Enum;
 public class RecordTimePractice extends RecordTime {
 
 
-  public RecordTimePractice(Enum.SwimDiscipline SWIM_DISCIPLINE, double RECORD_IN_SECONDS, String DATE_OF_RECORD) {
-    super(SWIM_DISCIPLINE, RECORD_IN_SECONDS, DATE_OF_RECORD);
+  public RecordTimePractice(String memberID, String name, Enum.SwimDiscipline swim_discipline, double record_in_seconds, String date_of_record) {
+    super(memberID, name, swim_discipline, record_in_seconds, date_of_record);
   }
 }
 

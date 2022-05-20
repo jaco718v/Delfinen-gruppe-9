@@ -36,5 +36,8 @@ public abstract class Member {
     return isActive;
   }
 
+  public boolean isCompetitive() {
+    return isCompetitive;
+  }
 }
 
