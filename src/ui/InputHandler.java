@@ -1,6 +1,5 @@
 package ui;
 
-import database.FileHandler;
 import utilities.Enum;
 import membership.Team;
 import utilities.Utility;
@@ -178,23 +177,23 @@ public class InputHandler {
         return competitive;
     }
 
-    public String findCompetitiveMemberNameByID(ArrayList<Team> teamArray) {
+    public String findCompetitiveMemberByID(ArrayList<Team> teamArray) {
         ui.displayPleaseTypeMemberID();
         String memberID = sc.nextLine();
         for (Team team : teamArray) {
-            String memberName = team.findCompetitiveMemberNameWithID(memberID);
-            if (memberName != null) {
-                return memberName;
+            team.confirmCompetitiveMemberID(memberID);
+            if (team.confirmCompetitiveMemberID(memberID)) {
+                return memberID;
             }
         }
         ui.memberIDNotFound();
         return null;
     }
 
-    public String addSwimDisciplineToRecord(ArrayList<Team> teamArray, String name) {
-        String swimDiscipline = null;
+    public Enum.SwimDiscipline addSwimDisciplineToRecord(ArrayList<Team> teamArray, String memberID) {
+        Enum.SwimDiscipline swimDiscipline = null;
         for (Team team : teamArray) {
-            swimDiscipline = team.findMemberSwimDiscipline(name);
+            swimDiscipline = team.findMemberSwimDiscipline(memberID);
             if (swimDiscipline != null) {
                 return swimDiscipline;
             }
@@ -203,17 +202,17 @@ public class InputHandler {
         return null;
     }
 
-    public String addSwimDisciplineToRecordViaInput() {
+    public Enum.SwimDiscipline addSwimDisciplineToRecordViaInput() {
         ui.displayEnterSwimDiscipline();
-        String swimDiscipline = null;
+        Enum.SwimDiscipline swimDiscipline = null;
         while (swimDiscipline == null) {
             try {
                 String choice = sc.nextLine();
                 switch (choice) {
-                    case "1" -> swimDiscipline = "butterfly";
-                    case "2" -> swimDiscipline = "crawl";
-                    case "3" -> swimDiscipline = "backcrawl";
-                    case "4" -> swimDiscipline = "breast";
+                    case "1" -> swimDiscipline = Enum.SwimDiscipline.valueOf("BUTTERFLY");
+                    case "2" -> swimDiscipline = Enum.SwimDiscipline.valueOf("CRAWL");
+                    case "3" -> swimDiscipline = Enum.SwimDiscipline.valueOf("BACKCRAWL");
+                    case "4" -> swimDiscipline = Enum.SwimDiscipline.valueOf("BREAST");
                 }
             } catch (InputMismatchException ime) {
                 ui.displayEnterSwimDisciplineException();
@@ -237,7 +236,7 @@ public class InputHandler {
         return recordType;
     }
 
-    public String addRecordInSeconds() {
+    public double addRecordInSeconds() {
         ui.displayEnterRecordInSeconds();
         double recordDouble = 0;
         String recordInSeconds = null;
@@ -249,7 +248,7 @@ public class InputHandler {
                 ui.displayEnterRecordInSecondsException();
             }
         }
-        return recordInSeconds;
+        return recordDouble;
     }
 
     public String addDate() {
@@ -277,7 +276,7 @@ public class InputHandler {
         return dateInput;
     }
 
-    public String addPlacing() {
+    public int addPlacing() {
         ui.displayEnterPlacing();
         int placeInt = 0;
         String place = null;
@@ -289,7 +288,7 @@ public class InputHandler {
                 ui.displayEnterPlacingException();
             }
         }
-        return place;
+        return placeInt;
     }
 
     public Enum.AgeGroup decideAgeGroup() {

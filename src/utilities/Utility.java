@@ -1,7 +1,7 @@
 package utilities;
 
 import database.FileHandler;
-import membership.Team;
+import membership.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -129,39 +129,10 @@ public class Utility {
         return returnValue;
     }
 
-    public ArrayList<String[]> removeIrrelevantRecords(ArrayList<String[]> recordData, ArrayList<String[]> memberData, String swimDiscipline) {
-        int counter1 = 0;
-        int counter2 = 0;
-        for (int i = 0; recordData.size() > i; i++) {
-            counter1 = i - counter2;
-            if (!recordData.get(counter1)[1].equals(swimDiscipline) || !recordData.get(counter1)[4].equals(" ")) {
-                recordData.remove(counter1);
-                counter2++;
-            }
-        }
-        counter1 = 0;
-        counter2 = 0;
-        for (int i = 0; recordData.size() > i; i++) {
-            boolean irrelevant = true;
-            for (String[] strArray : memberData) {
-                counter1 = i - counter2;
-                if (strArray[1].equalsIgnoreCase(recordData.get(counter1)[0])) {
-                    irrelevant = false;
-                    break;
-                }
-            }
-            if (irrelevant) {
-                recordData.remove(counter1);
-                counter2++;
-            }
-        }
-        return recordData;
-    }
-
-    public ArrayList<String[]> findCompetitiveTeam(ArrayList<Team> teamArray, Enum.AgeGroup ageGroup) {
+    public Team findCompetitiveTeam(ArrayList<Team> teamArray, Enum.AgeGroup ageGroup) {
         if (ageGroup == Enum.AgeGroup.U18) {
-            return teamArray.get(2).getMembers();
+            return teamArray.get(2);
         }
-        return teamArray.get(3).getMembers();
+        return teamArray.get(3);
     }
 }

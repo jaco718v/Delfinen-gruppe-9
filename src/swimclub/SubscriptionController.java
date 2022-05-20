@@ -87,9 +87,9 @@ public class SubscriptionController {
                 double subscription = subscriptionJunior;
                 if (team.getAgeGroup() == Enum.AgeGroup.O18) {
                     subscription = subscriptionSenior;
-                    subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold);
+                    subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold).size();
                 }
-                subscriptionSum += team.getActiveMembers() * subscription + (team.getMembers().size() - team.getActiveMembers()) * subscriptionPassive;
+                subscriptionSum += team.getActiveMembers().size() * subscription + (team.getMembers().size() - team.getActiveMembers().size()) * subscriptionPassive;
             }
             ui.showExpectedSubscriptionFees(subscriptionSum);
         } else {

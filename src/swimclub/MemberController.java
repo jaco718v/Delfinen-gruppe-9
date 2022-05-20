@@ -27,7 +27,7 @@ public class MemberController {
                 String isCompetitive = input.addCompetitiveMember();
                 String swimDiscipline = " ";
                 if (isCompetitive.equals("true")) {
-                    swimDiscipline = input.addSwimDisciplineToRecordViaInput();
+                    swimDiscipline = String.valueOf(input.addSwimDisciplineToRecordViaInput());
                 }
 
                 newMemberData.add(new String[]{ memberId, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline });

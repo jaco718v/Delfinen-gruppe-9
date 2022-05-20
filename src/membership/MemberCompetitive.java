@@ -13,7 +13,13 @@ public class MemberCompetitive extends Member {
         super(memberID, name, birthDate, isActive, isCompetitive);
     }
 
+    public void AddRecordCompetition(RecordTimeCompetition record){
+        this.competitions.add(record);
+    }
 
+    public void AddRecordPractice(RecordTimePractice record){
+        this.bestPracticeRecords.add(record);
+    }
 
     public Enum.SwimDiscipline getSwimDiscipline() {
         return swimDiscipline;

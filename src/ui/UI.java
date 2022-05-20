@@ -1,5 +1,6 @@
 package ui;
 
+import membership.RecordTimePractice;
 import utilities.Enum;
 import membership.Team;
 import swimclub.User;
@@ -159,17 +160,17 @@ public class UI {
         System.out.println("Error in input, choose 1-2F");
     }
 
-    public void displayTopFive(ArrayList<String[]> topFive){
-        System.out.println("Top 5 "+topFive.get(0)[1]+" swimmers");
-        System.out.println("1. "+topFive.get(0)[2]+"s\t\t"+topFive.get(0)[0]);
-        if(topFive.size()>1){
-        System.out.println("2. "+topFive.get(1)[2]+"s\t\t"+topFive.get(1)[0]);}
-        if(topFive.size()>2){
-        System.out.println("3. "+topFive.get(2)[2]+"s\t\t"+topFive.get(2)[0]);}
-        if(topFive.size()>3){
-        System.out.println("4. "+topFive.get(3)[2]+"s\t\t"+topFive.get(3)[0]);}
-        if(topFive.size()>4){
-        System.out.println("5. "+topFive.get(4)[2]+"s\t\t"+topFive.get(4)[0]);}
+    public void displayTopFive(ArrayList<RecordTimePractice> swimDisciplineRecords, Team team){
+        System.out.println("Top 5 "+swimDisciplineRecords.get(1).getSWIM_DISCIPLINE()+" swimmers");
+        System.out.println("1. "+swimDisciplineRecords.get(0).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(0).getMemberID()));
+        if(swimDisciplineRecords.size()>1){
+        System.out.println("2. "+swimDisciplineRecords.get(1).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(1).getMemberID()));}
+        if(swimDisciplineRecords.size()>2){
+        System.out.println("3. "+swimDisciplineRecords.get(2).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(2).getMemberID()));}
+        if(swimDisciplineRecords.size()>3){
+        System.out.println("4. "+swimDisciplineRecords.get(3).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(3).getMemberID()));}
+        if(swimDisciplineRecords.size()>4){
+        System.out.println("5. "+swimDisciplineRecords.get(4).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(4).getMemberID()));}
     }
 
     public void displayTopFiveError(){

@@ -91,6 +91,16 @@ public class Team {
         return null;
     }
 
+    public boolean confirmCompetitiveMemberID(String memberID){
+        ArrayList<Member> memberData = getMembers();
+        for (Member member : memberData) {
+            if (member.getMemberID().equals(memberID)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public Enum.SwimDiscipline findMemberSwimDiscipline(String memberID){
         ArrayList<Member> memberData = getMembers();
@@ -100,6 +110,18 @@ public class Team {
             }
         }
         return null;
+    }
+
+    public ArrayList<RecordTimePractice> findRecordsOfSwimDiscipline(Enum.SwimDiscipline swimDiscipline) {
+        ArrayList<RecordTimePractice> recordList = new ArrayList<>();
+        for (Member member : getMembers()) {
+            for(RecordTimePractice record : ((MemberCompetitive)member).getBestPracticeRecords()) {
+                if(record.getSWIM_DISCIPLINE().equals(swimDiscipline)){
+                    recordList.add(record);
+                }
+            }
+        }
+        return recordList;
     }
 
     public void setMemberList(ArrayList<Member> memberList) {
