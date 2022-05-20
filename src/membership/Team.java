@@ -91,6 +91,7 @@ public class Team {
         return null;
     }
 
+
     public boolean confirmCompetitiveMemberID(String memberID){
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
@@ -101,6 +102,15 @@ public class Team {
         return false;
     }
 
+    public MemberCompetitive findCompetitiveMemberWithID(String memberID){
+        ArrayList<Member> memberData = getMembers();
+        for (Member member : memberData) {
+            if (member.getMemberID().equals(memberID)){
+                return (MemberCompetitive)member;
+            }
+        }
+        return null;
+    }
 
     public Enum.SwimDiscipline findMemberSwimDiscipline(String memberID){
         ArrayList<Member> memberData = getMembers();

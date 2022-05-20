@@ -1,6 +1,7 @@
 package swimclub;
 
 import database.FileHandler;
+import membership.RecordTimeCompetition;
 import membership.RecordTimePractice;
 import utilities.RecordComparator;
 import utilities.Enum;
@@ -48,7 +49,9 @@ public class SwimmerController {
                 Enum.SwimDiscipline swimDiscipline = input.addSwimDisciplineToRecord(teamArray, memberID);
                 double recordInSeconds = input.addRecordInSeconds();
                 String date = input.addDate();
+                Team team = findCompetitiveTeamWithID(teamArray,memberID);
                 if (recordType.equals("regular")) {
+                    team.findCompetitiveMemberWithID(memberID).AddRecordPractice(new RecordTimePractice(memberID,swimDiscipline,recordInSeconds,date));
                     String[] newRecord = {memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, " ", " "};
                     data.add(newRecord);
                     boolean updateStatus = updateRecordInCSV(recordList, newRecord);
@@ -57,7 +60,7 @@ public class SwimmerController {
                     }
                 }
                 if (recordType.equals("competitive")) {
-                    addCompetitiveRecordToMember(data, memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date);
+                    addCompetitiveRecordToMember(team, data, memberID, swimDiscipline, recordInSeconds, date);
                 }
                 ui.displayRecordAddSucces(recordType);
             }
@@ -66,11 +69,22 @@ public class SwimmerController {
         }
     }
 
-    private void addCompetitiveRecordToMember(ArrayList<String[]> data, String memberID, String swimDiscipline, String recordInSeconds, String date) {
+
+    private Team findCompetitiveTeamWithID(ArrayList<Team> teamArray, String memberID){
+        for (Team team : teamArray){
+            if(team.confirmCompetitiveMemberID(memberID)){
+                return team;
+            }
+        }
+        return null;
+    }
+
+    private void addCompetitiveRecordToMember(Team team, ArrayList<String[]> data, String memberID, Enum.SwimDiscipline swimDiscipline, double recordInSeconds, String date) {
         ui.displayEnterConventionName();
         String convention = input.enterString();
         int placing = input.addPlacing();
-        data.add(new String[]{memberID, swimDiscipline, recordInSeconds, date, convention, String.valueOf(placing)});
+        team.findCompetitiveMemberWithID(memberID).AddRecordCompetition(new RecordTimeCompetition(memberID,swimDiscipline,recordInSeconds,date,convention,placing));
+        data.add(new String[]{memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, convention, String.valueOf(placing)});
         fileHandler.writeToCSV("Records.csv", data);
     }
 
