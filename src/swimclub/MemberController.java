@@ -131,12 +131,26 @@ public class MemberController {
             ui.displayPleaseEnterMemberId();
             String memberId = input.enterMemberId();
             boolean removedMember = false;
+            boolean removedMemberInList = false;
             for (int i = 0; i < memberData.size(); i++) {
                 String[] memberArray = memberData.get(i);
                 if (memberArray[0].equals(memberId)) {
                     memberData.remove(i);
                     fileHandler.overwriteCSV("Members.csv", memberData);
-                    // TODO: remove member from memberList in correct Team
+                    for (Team team : teamArray) {
+                        ArrayList<Member> memberList = team.getMemberList();
+                        for (int j = 0; j < memberList.size(); j++) {
+                            if (memberList.get(j).getId().equals(memberId)) {
+                                memberList.remove(j);
+                                team.setMemberList(memberList);
+                                removedMemberInList = true;
+                                break;
+                            }
+                        }
+                        if (removedMemberInList) {
+                            break;
+                        }
+                    }
                     for (int j = 0; j < subData.size(); j++) {
                         String[] subArray = subData.get(j);
                         if (subArray[0].equals(memberId)) {

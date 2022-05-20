@@ -110,7 +110,7 @@ public class Commands {
             String command = sc.nextLine();
             switch (command) {
                 case "1" -> con.getMemberController().addMember(con, con.getLoggedInUser());
-                case "2" -> con.getMemberController().editMember(con.getLoggedInUser(), con.getTeamArray());
+                case "2" -> con.getMemberController().editMember(con, con.getLoggedInUser(), con.getTeamArray());
                 case "3" -> con.getMemberController().removeMember(con.getLoggedInUser(), con.getTeamArray());
                 case "4" -> con.getMemberController().showMembers(con.getLoggedInUser(), con.getTeamArray());
                 case "0" -> {

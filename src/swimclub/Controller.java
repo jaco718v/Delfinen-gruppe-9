@@ -1,17 +1,21 @@
 package swimclub;
 
-import membership.RecordTime;
+import database.FileHandler;
+import membership.*;
 import ui.Commands;
 import utilities.Enum;
-import membership.Team;
 import ui.InputHandler;
 import ui.UI;
+import utilities.Utility;
+
 import java.util.ArrayList;
 
 public class Controller {
     private final UI ui = new UI();
     private final Commands cmds = new Commands();
     private final InputHandler input = new InputHandler();
+    private final FileHandler fileHandler = new FileHandler();
+    private final Utility util = new Utility();
     private final UserController userController = new UserController();
     private final MemberController memberController = new MemberController();
     private final SubscriptionController subscriptionController = new SubscriptionController();
@@ -40,7 +44,34 @@ public class Controller {
                 // TODO: add coach to team if they are saved in Teams.csv file
             }
         }
-        // TODO: add Member class members to each Team's memberList from Members.csv file
+        ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+        for (Team team : teamArray) {
+            for (String[] strArray : memberData) {
+                Enum.TeamType teamType;
+                Enum.AgeGroup ageGroup;
+                int age = util.convertDateToAge(strArray[2]);
+                if (strArray[4].equals("true")) {
+                    teamType = Enum.TeamType.COMPETITIVE;
+                } else {
+                    teamType = Enum.TeamType.REGULAR;
+                }
+                if (age < 18) {
+                    ageGroup = Enum.AgeGroup.U18;
+                } else {
+                    ageGroup = Enum.AgeGroup.O18;
+                }
+                boolean isActive = strArray[3].equals("true");
+                if ((team.getTeamType() == teamType) && (team.getAgeGroup() == ageGroup)) {
+                    ArrayList<Member> memberList = team.getMemberList();
+                    if (teamType == Enum.TeamType.COMPETITIVE) {
+                        memberList.add(new MemberCompetitive(strArray[0], strArray[1], strArray[2], isActive));
+                    } else {
+                        memberList.add(new MemberRegular(strArray[0], strArray[1], strArray[2], isActive));
+                    }
+                    team.setMemberList(memberList);
+                }
+            }
+        }
     }
 
     public void exit() {
