@@ -61,16 +61,16 @@ public class SwimmerController {
                 double recordInSeconds = input.addRecordInSeconds();
                 String date = input.addDate();
 
-                if (recordType.equals("regular")) {
+                if (recordType.equals("practice")) {
                     team.findCompetitiveMemberWithID(memberID).AddRecordPractice(new RecordTimePractice(memberID,swimDiscipline,recordInSeconds,date));
-                    String[] newRecord = {memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, " ", " "};
+                    String[] newRecord = {memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, "practice"};
                     data.add(newRecord);
                     boolean updateStatus = updateRecordInCSV(recordList, newRecord);
                     if (!updateStatus) {
                         fileHandler.writeToCSV("Records.csv", data);
                     }
                 }
-                if (recordType.equals("competitive")) {
+                if (recordType.equals("competition")) {
                     addCompetitiveRecordToMember(team, data, memberID, swimDiscipline, recordInSeconds, date);
                 }
                 ui.displayRecordAddSucces(recordType);
@@ -96,7 +96,7 @@ public class SwimmerController {
         String convention = input.enterString();
         int placing = input.addPlacing();
         team.findCompetitiveMemberWithID(memberID).AddRecordCompetition(new RecordTimeCompetition(memberID,swimDiscipline,recordInSeconds,date,convention,placing));
-        data.add(new String[]{memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, convention, String.valueOf(placing)});
+        data.add(new String[]{memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, convention, String.valueOf(placing),"competition"});
         fileHandler.writeToCSV("Records.csv", data);
     }
 

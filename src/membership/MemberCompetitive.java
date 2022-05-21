@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class MemberCompetitive extends Member {
     private Enum.SwimDiscipline swimDiscipline;
     private ArrayList<RecordTimeCompetition> competitions = new ArrayList<>();
-    private ArrayList<RecordTimePractice> bestPracticeRecords;
+    private ArrayList<RecordTimePractice> bestPracticeRecords = new ArrayList<>();
 
     public MemberCompetitive(String id, String name, String birthDate, boolean active) {
         super(id, name, birthDate, active);

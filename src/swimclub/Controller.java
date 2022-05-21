@@ -74,6 +74,27 @@ public class Controller {
         }
     }
 
+    public void loadRecords() {
+        ArrayList<String[]> memberRecords = fileHandler.readCSV("Records.csv");
+        for (Team team : teamArray) {
+            if (team.getTeamType().equals(Enum.TeamType.COMPETITIVE)) {
+                for (Member member : team.getMembers()) {
+                    for (String[] strArray : memberRecords) {
+                        if (member.getId().equals(strArray[0])) {
+                            if (strArray[4].equals("practice")) {
+                                ((MemberCompetitive) member).AddRecordPractice(new RecordTimePractice(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3]));
+                            }
+                            if (strArray[6].equals("competition")) {
+                                ((MemberCompetitive) member).AddRecordCompetition(new RecordTimeCompetition(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3], strArray[4], Integer.parseInt(strArray[5])));
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void exit() {
         ui.displayShuttingDown();
         isRunning = false;

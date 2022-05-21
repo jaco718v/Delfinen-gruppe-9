@@ -70,7 +70,7 @@ public class Commands {
             String command = sc.nextLine();
             switch (command) {
                 case "1" -> con.getSwimmerController().showTopSwimmers(con.getLoggedInUser(), con.getTeamArray());
-                case "2" -> con.getSwimmerController().showAllSwimmers();
+                case "2" -> con.getSwimmerController().showAllSwimmers(con.getTeamArray());
                 case "3" -> con.getSwimmerController().addRecordToMember(con.getLoggedInUser(), con.getTeamArray(), con.getMemberController());
                 case "4" -> con.getSwimmerController().showMemberRecords(con.getLoggedInUser(), con.getTeamArray());
                 case "0" -> {

@@ -125,7 +125,7 @@ public class Team {
     public ArrayList<RecordTime> findRecordsOfSwimmer(String memberID) {
         ArrayList<RecordTime> recordList = new ArrayList<>();
         for (Member member : getMembers()) {
-            if(memberID.equals(member.getMemberID()))
+            if(memberID.equals(member.getId()))
                 recordList.addAll(((MemberCompetitive)member).getBestPracticeRecords());
                 recordList.addAll(((MemberCompetitive) member).getCompetitions());
 

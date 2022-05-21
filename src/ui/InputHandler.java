@@ -221,10 +221,10 @@ public class InputHandler {
             recordType = sc.nextLine();
         }
         if (recordType.equals("1")) {
-            recordType = "regular";
+            recordType = "practice";
         }
         if (recordType.equals("2")) {
-            recordType = "competitive";
+            recordType = "competition";
         }
         return recordType;
     }
