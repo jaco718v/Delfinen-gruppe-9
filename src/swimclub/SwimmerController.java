@@ -19,49 +19,134 @@ public class SwimmerController {
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
 
-    public void addCoachToTeam(User loggedInUser, ArrayList<Team> teamArray) {
-        Enum.TeamType teamType = input.chooseTeamType();
-        Enum.AgeGroup ageGroup = input.chooseAgeGroup();
-        for (Team team : teamArray){
-            if(team.getTeamType().equals(teamType) && team.getAgeGroup().equals(ageGroup)){
-                team.setCoach(loggedInUser);
-                ArrayList<String[]> data = new ArrayList<>();
-                String[] teamCoach = {String.valueOf(ageGroup), String.valueOf(teamType), loggedInUser.getName()};
-                data.add(teamCoach);
-                if (!updateTeamCoachInCSV(teamCoach)){
-                fileHandler.writeToCSV("Teams.csv", data);
+    public void addCoachToTeam(User loggedInUser, ArrayList<Team> teamArray, MemberController memberController) {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
+            int amountOfCoaches = getAmountOfCoaches();
+            if (amountOfCoaches > 0) {
+                User selectedCoach;
+                if (loggedInUser.getUserType() == Enum.UserType.ADMIN) {
+                    showCoaches(loggedInUser);
+                    selectedCoach = input.enterCoachToAddToTeam();
+                } else {
+                    selectedCoach = loggedInUser;
                 }
-                ui.displaySuccessRegisteredCoach();
+                memberController.showMembers(loggedInUser, teamArray, true);
+                Team selectedTeam = input.enterTeamToAddCoachTo(teamArray);
+                selectedTeam.setCoach(selectedCoach);
+                ArrayList<String[]> teamData = fileHandler.readCSV("Teams.csv");
+                for (int i = 0; i < teamArray.size(); i++) {
+                    if (teamArray.get(i) == selectedTeam) {
+                        String[] teamDataArray = new String[5];
+                        teamDataArray[0] = selectedTeam.getTeamType().name();
+                        teamDataArray[1] = selectedTeam.getAgeGroup().name();
+                        teamDataArray[2] = selectedCoach.getName();
+                        teamDataArray[3] = selectedCoach.getPassword();
+                        teamDataArray[4] = selectedCoach.getUserType().name();
+                        if ((teamData.size() > 0) && (teamData.size()-1 >= i)) {
+                            teamData.remove(i);
+                            teamData.add(i, teamDataArray);
+                        } else {
+                            teamData.add(teamDataArray);
+                        }
+                        fileHandler.overwriteCSV("Teams.csv", teamData);
+                        ui.displayCoachAddedToTeam(selectedCoach.getName(), i+1);
+                        break;
+                    }
+                }
+            } else {
+                ui.displayNoCoachesRegistered();
             }
-            else {
-                ui.displayFailureRegisteredCoach();
+        } else {
+            ui.loggedInUserNoPrivilege();
+        }
+    }
+
+    public void removeCoachFromTeam(User loggedInUser, ArrayList<Team> teamArray, MemberController memberController) {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
+            int amountOfCoaches = getAmountOfTeamsWithCoaches();
+            if (amountOfCoaches > 0) {
+                memberController.showMembers(loggedInUser, teamArray, true);
+                Team selectedTeam = input.enterTeamToRemoveCoachFrom(teamArray);
+                User removedCoach = selectedTeam.getCoach();
+                selectedTeam.setCoach(null);
+                ArrayList<String[]> teamData = fileHandler.readCSV("Teams.csv");
+                for (int i = 0; i < teamData.size(); i++) {
+                    String[] teamDataArray = teamData.get(i);
+                    if (teamDataArray[0].equals(selectedTeam.getTeamType().name()) && (teamDataArray[1].equals(selectedTeam.getAgeGroup().name()))) {
+                        if ((teamData.size() > 0) && (teamData.size()-1 >= i)) {
+                            teamData.remove(i);
+                            teamData.add(i, new String[] { selectedTeam.getTeamType().name(), selectedTeam.getAgeGroup().name() });
+                        }
+                        fileHandler.overwriteCSV("Teams.csv", teamData);
+                        ui.displayCoachRemovedFromTeam(removedCoach.getName(), i+1);
+                        break;
+                    }
+                }
+            } else {
+                ui.displayNoCoachesRegistered();
+            }
+        } else {
+            ui.loggedInUserNoPrivilege();
+        }
+    }
+
+    private int getAmountOfTeamsWithCoaches() {
+        ArrayList<String[]> userData = fileHandler.readCSV("Teams.csv");
+        int amountOfCoaches = 0;
+        for (String[] strArray : userData) {
+            try {
+                if (strArray[4].equals("COACH")) {
+                    amountOfCoaches += 1;
+                }
+            } catch (Exception ignored) {
+
+            }
+        }
+        return amountOfCoaches;
+    }
+
+    private int getAmountOfCoaches() {
+        ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
+        int amountOfCoaches = 0;
+        for (String[] strArray : userData) {
+            try {
+                if (strArray[2].equals("COACH")) {
+                    amountOfCoaches += 1;
+                }
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+
+            }
+        }
+        return amountOfCoaches;
+    }
+    private void showCoaches(User loggedInUser) {
+        ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
+        for (int i = 0; i < userData.size(); i++) {
+            String[] strArray = userData.get(i);
+            try {
+                if (strArray[2].equals("COACH")) {
+                    ui.displayUserInformation(strArray, loggedInUser, i);
+                }
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+
             }
         }
     }
 
-    private boolean updateTeamCoachInCSV(String[] teamCoach) {
-        boolean previousTeamCoachFound = false;
-        ArrayList<String[]> teamCoachList = fileHandler.readCSV("Teams.csv");
-        for (String[] coach : teamCoachList) {
-            if (coach[0].equalsIgnoreCase(teamCoach[0]) && coach[1].equalsIgnoreCase(teamCoach[1])) {
-                teamCoachList.set(teamCoachList.indexOf(coach), teamCoach);
-                previousTeamCoachFound = true;
-                fileHandler.overwriteCSV("Teams.csv", teamCoachList);
-            }
-        }
-        return previousTeamCoachFound;
-    }
-
-    public void showAllSwimmers(ArrayList<Team> teamArray) {
-        for(Team team : teamArray){
-            if(team.getTeamType().equals(Enum.TeamType.COMPETITIVE)){
-                for(int i = 0; i<team.getMembers().size(); i++){
-                    ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(team.getMembers().get(i).getId());
-                    if(memberRecords.size()!=0){
-                        ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getId());
+    public void showAllSwimmers(User loggedInUser, ArrayList<Team> teamArray) {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
+            for(Team team : teamArray){
+                if(team.getTeamType().equals(Enum.TeamType.COMPETITIVE)){
+                    for(int i = 0; i<team.getMembers().size(); i++){
+                        ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(team.getMembers().get(i).getId());
+                        if(memberRecords.size()!=0){
+                            ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getId());
+                        }
                     }
                 }
             }
+        } else {
+            ui.loggedInUserNoPrivilege();
         }
     }
 
@@ -79,7 +164,7 @@ public class SwimmerController {
 
     public void addRecordToMember(User loggedInUser, ArrayList<Team> teamArray, MemberController memberController) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
-            memberController.showMembers(loggedInUser, teamArray);
+            memberController.showMembers(loggedInUser, teamArray, false);
             String memberID = input.enterCompetitiveMemberID();
             Team team = findCompetitiveTeamWithID(teamArray,memberID);
             if (team != null) {
@@ -108,7 +193,6 @@ public class SwimmerController {
             ui.loggedInUserNoPrivilege();
         }
     }
-
 
     private Team findCompetitiveTeamWithID(ArrayList<Team> teamArray, String memberID){
         for (Team team : teamArray){

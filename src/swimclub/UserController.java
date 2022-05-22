@@ -90,9 +90,14 @@ public class UserController {
     }
 
     public void showUsers(User loggedInUser) {
-        ArrayList<String[]> memberData = fileHandler.readCSV("Users.csv");
-        for (String[] strArray : memberData) {
-            ui.displayUserInformation(strArray, loggedInUser);
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+            ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
+            for (int i = 0; i < userData.size(); i++) {
+                String[] strArray = userData.get(i);
+                ui.displayUserInformation(strArray, loggedInUser, i);
+            }
+        } else {
+            ui.loggedInUserNoPrivilege();
         }
     }
 }

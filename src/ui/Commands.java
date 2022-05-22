@@ -69,11 +69,12 @@ public class Commands {
             ui.listCommandsSwimmerMenu();
             String command = sc.nextLine();
             switch (command) {
-                case "1" -> con.getSwimmerController().showTopSwimmers(con.getLoggedInUser(), con.getTeamArray());
-                case "2" -> con.getSwimmerController().showAllSwimmers(con.getTeamArray());
-                case "3" -> con.getSwimmerController().addRecordToMember(con.getLoggedInUser(), con.getTeamArray(), con.getMemberController());
-                case "4" -> con.getSwimmerController().showMemberRecords(con.getLoggedInUser(), con.getTeamArray());
-                case "5" -> con.getSwimmerController().addCoachToTeam(con.getLoggedInUser(),con.getTeamArray());
+                case "1" -> con.getSwimmerController().addCoachToTeam(con.getLoggedInUser(), con.getTeamArray(), con.getMemberController());
+                case "2" -> con.getSwimmerController().removeCoachFromTeam(con.getLoggedInUser(), con.getTeamArray(), con.getMemberController());
+                case "3" -> con.getSwimmerController().showTopSwimmers(con.getLoggedInUser(), con.getTeamArray());
+                case "4" -> con.getSwimmerController().showAllSwimmers(con.getLoggedInUser(), con.getTeamArray());
+                case "5" -> con.getSwimmerController().addRecordToMember(con.getLoggedInUser(), con.getTeamArray(), con.getMemberController());
+                case "6" -> con.getSwimmerController().showMemberRecords(con.getLoggedInUser(), con.getTeamArray());
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;
@@ -113,7 +114,7 @@ public class Commands {
                 case "1" -> con.getMemberController().addMember(con, con.getLoggedInUser());
                 case "2" -> con.getMemberController().editMember(con, con.getLoggedInUser(), con.getTeamArray());
                 case "3" -> con.getMemberController().removeMember(con.getLoggedInUser(), con.getTeamArray());
-                case "4" -> con.getMemberController().showMembers(con.getLoggedInUser(), con.getTeamArray());
+                case "4" -> con.getMemberController().showMembers(con.getLoggedInUser(), con.getTeamArray(), false);
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;

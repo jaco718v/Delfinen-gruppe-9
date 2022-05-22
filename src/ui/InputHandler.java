@@ -1,5 +1,7 @@
 package ui;
 
+import database.FileHandler;
+import swimclub.User;
 import utilities.Enum;
 import membership.Team;
 import utilities.Utility;
@@ -14,6 +16,7 @@ public class InputHandler {
     private final Scanner sc = new Scanner(System.in);
     private final UI ui = new UI();
     private final Utility util = new Utility();
+    private final FileHandler fileHandler = new FileHandler();
 
     public Scanner getSc() {
         return sc;
@@ -459,5 +462,80 @@ public class InputHandler {
             }
         }
         return input;
+    }
+
+    public User enterCoachToAddToTeam() {
+        User coach = null;
+        String coachId = "";
+        boolean enteredCoachId = false;
+        while (!enteredCoachId) {
+            ui.displayPleaseTypeCoachId();
+            coachId = sc.nextLine();
+            ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
+            for (int i = 0; i < userData.size(); i++) {
+                String[] userArray = userData.get(i);
+                if ((userArray[2].equals("COACH")) && (coachId.equals(Integer.toString(i)))) {
+                    enteredCoachId = true;
+                    coach = new User(userArray[0], userArray[1], Enum.UserType.valueOf(userArray[2]));
+                    break;
+                }
+            }
+            if (!enteredCoachId) {
+                ui.displayPleaseEnterValidCoachId(coachId);
+            }
+        }
+        return coach;
+    }
+
+    public Team enterTeamToAddCoachTo(ArrayList<Team> teamArray) {
+        Team team = null;
+        String teamId = "";
+        boolean enteredTeam = false;
+        while (!enteredTeam) {
+            ui.displayPleaseTypeTeamNumber();
+            teamId = sc.nextLine();
+            if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= teamArray.size()) && (Integer.parseInt(teamId) > 0)) {
+                for (int i = 0; i < teamArray.size(); i++) {
+                    Team currentTeam = teamArray.get(i);
+                    if (i+1 == Integer.parseInt(teamId)) {
+                        team = currentTeam;
+                        enteredTeam = true;
+                        break;
+                    }
+                }
+            }
+            if (!enteredTeam) {
+                ui.displayPleaseEnterValidTeam(teamId);
+            }
+        }
+        return team;
+    }
+
+    public Team enterTeamToRemoveCoachFrom(ArrayList<Team> teamArray) {
+        Team team = null;
+        String teamId = "";
+        boolean enteredTeam = false;
+        while (!enteredTeam) {
+            ui.displayPleaseTypeTeamNumber();
+            teamId = sc.nextLine();
+            if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= teamArray.size()) && (Integer.parseInt(teamId) > 0)) {
+                for (int i = 0; i < teamArray.size(); i++) {
+                    Team currentTeam = teamArray.get(i);
+                    if (i+1 == Integer.parseInt(teamId)) {
+                        if (currentTeam.getCoach() != null) {
+                            team = currentTeam;
+                            enteredTeam = true;
+                            break;
+                        } else {
+                            ui.displayNoCoachOnSelectedTeam();
+                        }
+                    }
+                }
+            }
+            if (!enteredTeam) {
+                ui.displayPleaseEnterValidTeam(teamId);
+            }
+        }
+        return team;
     }
 }

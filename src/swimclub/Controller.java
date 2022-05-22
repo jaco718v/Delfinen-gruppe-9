@@ -38,12 +38,31 @@ public class Controller {
     }
 
     private void createTeams() {
+        ArrayList<String[]> teamData = fileHandler.readCSV("Teams.csv");
+        ArrayList<String[]> newTeamData = new ArrayList<>();
         for (int i = 0; i < Enum.TeamType.values().length; i++) {
             for (int j = 0; j < Enum.AgeGroup.values().length; j++) {
-                teamArray.add(new Team(Enum.TeamType.values()[i], Enum.AgeGroup.values()[j]));
-                // TODO: add coach to team if they are saved in Teams.csv file
+                Team newTeam = new Team(Enum.TeamType.values()[i], Enum.AgeGroup.values()[j]);
+                teamArray.add(newTeam);
+                if (teamData.size() > 0) {
+                    for (String[] strArray : teamData) {
+                        if ((strArray[0].equals(Enum.TeamType.values()[i].name())) && (strArray[1].equals(Enum.AgeGroup.values()[j].name()))) {
+                            try {
+                                if (strArray[2] != null) {
+                                    newTeam.setCoach(new User(strArray[2], strArray[3], Enum.UserType.valueOf(strArray[4])));
+                                    newTeamData.add(new String[] { newTeam.getTeamType().name(), newTeam.getAgeGroup().name(), newTeam.getCoach().getName(), newTeam.getCoach().getPassword(), newTeam.getCoach().getUserType().name() });
+                                }
+                            } catch (ArrayIndexOutOfBoundsException aioobe) {
+                                newTeamData.add(new String[] { newTeam.getTeamType().name(), newTeam.getAgeGroup().name() });
+                            }
+                        }
+                    }
+                } else {
+                    newTeamData.add(new String[] { newTeam.getTeamType().name(), newTeam.getAgeGroup().name() });
+                }
             }
         }
+        fileHandler.overwriteCSV("Teams.csv", newTeamData);
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         for (Team team : teamArray) {
             for (String[] strArray : memberData) {

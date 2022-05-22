@@ -415,10 +415,12 @@ public class UI {
     public void listCommandsSwimmerMenu() {
         System.out.println();
         System.out.println("Swimmer Commands:");
-        System.out.println("1. Show top swimmers");
-        System.out.println("2. Show all swimmers");
-        System.out.println("3. Add swimmer record");
-        System.out.println("4. View swimmer records");
+        System.out.println("1. Add coach to team");
+        System.out.println("2. Remove coach from team");
+        System.out.println("3. Show top swimmers");
+        System.out.println("4. Show all swimmers");
+        System.out.println("5. Add swimmer record");
+        System.out.println("6. View swimmer records");
         System.out.println("5. Assign current user as coach");
         System.out.println("0. Back");
         System.out.print("Select command: ");
@@ -447,7 +449,12 @@ public class UI {
     }
 
     public void displayTeamInformation(int teamNumber, Team team) {
-        System.out.println("Team " + teamNumber + " - Team type: " + addSpacesToStringToFillXCharacters(util.capitalizeString(team.getTeamType().name()), 11) + " - Age group: " + team.getAgeGroup().name());
+        System.out.print("Team " + teamNumber + " - Team type: " + addSpacesToStringToFillXCharacters(util.capitalizeString(team.getTeamType().name()), 11) + " - Age group: " + team.getAgeGroup().name());
+        if (team.getCoach() != null) {
+            System.out.println(" - Coach: " + team.getCoach().getName());
+        } else {
+            System.out.println();
+        }
     }
 
     public void displayReturningToMainMenu() {
@@ -458,20 +465,19 @@ public class UI {
         System.out.println("System shutting down.");
     }
 
-    public void displayUserInformation(String[] strArray, User user) {
+    public void displayUserInformation(String[] strArray, User user, int index) {
         String password = "";
         if (user.getUserType() == Enum.UserType.ADMIN) {
-            System.out.println("Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(strArray[1], 20) + " - User Type: " + strArray[2]);
+            System.out.println("UserID: " + index + " - Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(strArray[1], 20) + " - User Type: " + strArray[2]);
         } else {
             for (int i = 0; i < strArray[1].length(); i++) {
                 password += "*";
             }
-            System.out.println("Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(password, 20) + " - User Type: " + strArray[2]);
+            System.out.println("UserID: " + index + " - Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(password, 20) + " - User Type: " + strArray[2]);
         }
     }
 
     public void displaySubscription(String[] strArray) {
-        Controller con = new Controller();
         System.out.print("MemberID: " + strArray[0] + " - Name: " + addDotsToStringToFillXCharacters(strArray[1], 30) + " - Age: " + util.convertDateToAge(strArray[2]));
         if (strArray[3].equals("true")) {
             System.out.print(" - Active ");
@@ -585,5 +591,37 @@ public class UI {
 
     public void displayMemberIdOutOfRange() {
         System.out.println("MemberID out of range.");
+    }
+
+    public void displayPleaseEnterValidCoachId(String coachId) {
+        System.out.println("Please enter a valid coach ID. You typed: " + coachId);
+    }
+
+    public void displayPleaseTypeCoachId() {
+        System.out.print("Please enter a coach UserID: ");
+    }
+
+    public void displayPleaseEnterValidTeam(String team) {
+        System.out.println("PLease enter a valid team. You typed: " + team);
+    }
+
+    public void displayPleaseTypeTeamNumber() {
+        System.out.print("Please enter a Team number: ");
+    }
+
+    public void displayCoachAddedToTeam(String name, int i) {
+        System.out.println("Added coach: " + name + " to Team " + i);
+    }
+
+    public void displayNoCoachesRegistered() {
+        System.out.println("No coaches registered.");
+    }
+
+    public void displayCoachRemovedFromTeam(String name, int i) {
+        System.out.println("Removed coach: " + name + " from Team " + i);
+    }
+
+    public void displayNoCoachOnSelectedTeam() {
+        System.out.println("No coach on selected team.");
     }
 }

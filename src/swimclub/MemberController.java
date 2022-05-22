@@ -59,9 +59,8 @@ public class MemberController {
 
     public void editMember(Controller con, User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-            // edit member kode her
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
-            showMembers(loggedInUser, teamArray);
+            showMembers(loggedInUser, teamArray, false);
             ui.typeMemberIdPlease();
             String editMember = input.enterMemberId();
             for (int i = 0; i < memberData.size(); i++) {
@@ -127,7 +126,7 @@ public class MemberController {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
             ArrayList<String[]> subData = fileHandler.readCSV("Subscriptions.csv");
-            showMembers(loggedInUser, teamArray);
+            showMembers(loggedInUser, teamArray, false);
             ui.displayPleaseEnterMemberId();
             String memberId = input.enterMemberId();
             boolean removedMember = false;
@@ -172,24 +171,25 @@ public class MemberController {
         }
     }
 
-    public void showMembers(User loggedInUser, ArrayList<Team> teamArray) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+    public void showMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly) {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
 
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
             int teamNumber = 0;
             for (Team team : teamArray) {
                 teamNumber += 1;
                 ui.displayTeamInformation(teamNumber, team);
-
-                for (String[] strArray : memberData) {
-                    int age = util.convertDateToAge(strArray[2]);
-                    if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
-                        if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
-                            ui.displayMemberInformation(strArray);
-                        }
-                    } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
-                        if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
-                            ui.displayMemberInformation(strArray);
+                if (!teamsOnly) {
+                    for (String[] strArray : memberData) {
+                        int age = util.convertDateToAge(strArray[2]);
+                        if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
+                            if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                                ui.displayMemberInformation(strArray);
+                            }
+                        } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
+                            if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                                ui.displayMemberInformation(strArray);
+                            }
                         }
                     }
                 }
