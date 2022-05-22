@@ -104,7 +104,7 @@ public class UI {
     }
 
     public void displayPleaseTypeMemberID() {
-        System.out.print("Please enter the ID of the member whose record needs updating: ");
+        System.out.print("Please enter the ID of the member: ");
     }
 
     public void memberIDNotFound() {
@@ -175,7 +175,7 @@ public class UI {
     }
 
     public void displayTopFive(ArrayList<RecordTimePractice> swimDisciplineRecords, Team team) {
-        System.out.println("Top 5 "+ turnEnumSwimDisciplineToString(swimDisciplineRecords.get(1).getSWIM_DISCIPLINE())+" swimmers");
+        System.out.println("Top 5 "+ turnEnumSwimDisciplineToString(swimDisciplineRecords.get(0).getSWIM_DISCIPLINE())+" swimmers");
         System.out.println("1. "+swimDisciplineRecords.get(0).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(0).getMemberID()));
         if(swimDisciplineRecords.size()>1){
         System.out.println("2. "+swimDisciplineRecords.get(1).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(1).getMemberID()));}
@@ -188,12 +188,12 @@ public class UI {
     }
 
     public void displayTopFiveError() {
-        System.out.println("There are no swimmers in that swim discipline");
+        System.out.println("There are no swimmers records in that swim discipline");
     }
 
-    public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberName) {
-        System.out.println("Member: "+memberName+"\t Swim discipline: "+ turnEnumSwimDisciplineToString(playerRecords.get(0).getSWIM_DISCIPLINE()));
-        System.out.print("Personal best training record: ");
+    public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberID, String memberName) {
+        System.out.println("ID: "+memberID + "\tMember: "+memberName+"\t Swim discipline: "+ turnEnumSwimDisciplineToString(playerRecords.get(0).getSWIM_DISCIPLINE()));
+        System.out.print("Personal best training record:    ");
         for(RecordTime record : playerRecords){
             if(record instanceof RecordTimePractice){
                 System.out.println(record.getRECORD_IN_SECONDS()+"s\t "+record.getDATE_OF_RECORD());

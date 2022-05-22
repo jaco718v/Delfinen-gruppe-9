@@ -9,8 +9,9 @@ public class MemberCompetitive extends Member {
     private ArrayList<RecordTimeCompetition> competitions = new ArrayList<>();
     private ArrayList<RecordTimePractice> bestPracticeRecords = new ArrayList<>();
 
-    public MemberCompetitive(String id, String name, String birthDate, boolean active) {
+    public MemberCompetitive(String id, String name, String birthDate, boolean active, Enum.SwimDiscipline swimDiscipline) {
         super(id, name, birthDate, active);
+        this.swimDiscipline=swimDiscipline;
     }
 
     public void AddRecordCompetition(RecordTimeCompetition record){

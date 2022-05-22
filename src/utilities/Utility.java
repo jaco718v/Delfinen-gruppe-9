@@ -131,11 +131,13 @@ public class Utility {
         return returnValue;
     }
 
-    public Team findCompetitiveTeam(ArrayList<Team> teamArray, Enum.AgeGroup ageGroup) {
-        if (ageGroup == Enum.AgeGroup.U18) {
-            return teamArray.get(2);
+    public Team findCompetitiveTeam(ArrayList<Team> teamArray, Enum.TeamType teamType, Enum.AgeGroup ageGroup) {
+        for(Team team : teamArray){
+            if(team.getTeamType().equals(teamType) && team.getAgeGroup().equals(ageGroup)){
+                return team;
+            }
         }
-        return teamArray.get(3);
+        return null;
     }
 
     public void displayMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly) {

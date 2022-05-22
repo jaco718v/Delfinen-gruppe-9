@@ -141,7 +141,8 @@ public class SwimmerController {
                     for(int i = 0; i<team.getMembers().size(); i++){
                         ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(team.getMembers().get(i).getId());
                         if(memberRecords.size()!=0){
-                            ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getId());
+                            String memberName = team.findCompetitiveMemberNameWithID(team.getMembers().get(i).getId());
+                            ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getId(),memberName);
                         }
                     }
                 }
@@ -172,7 +173,7 @@ public class SwimmerController {
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
                 String recordType = input.recordTypeChoice(memberID);
-                Enum.SwimDiscipline swimDiscipline = input.addSwimDisciplineToRecord(teamArray, memberID);
+                Enum.SwimDiscipline swimDiscipline = input.addSwimDisciplineToRecord(team, memberID);
                 double recordInSeconds = input.addRecordInSeconds();
                 String date = input.addDate();
 
@@ -218,7 +219,7 @@ public class SwimmerController {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             Enum.SwimDiscipline swimDiscipline = input.addSwimDisciplineToRecordViaInput();
             Enum.AgeGroup ageGroupEnum = input.decideAgeGroup();
-            Team teamOfAgeGroup = util.findCompetitiveTeam(teamArray, ageGroupEnum);
+            Team teamOfAgeGroup = util.findCompetitiveTeam(teamArray,Enum.TeamType.COMPETITIVE, ageGroupEnum);
             RecordComparator rc = new RecordComparator();
             ArrayList<RecordTimePractice> swimDisciplineRecords = teamOfAgeGroup.findRecordsOfSwimDiscipline(swimDiscipline);
             swimDisciplineRecords.sort(rc);
@@ -234,12 +235,14 @@ public class SwimmerController {
 
     public void showMemberRecords(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
+            util.displayMembers(loggedInUser, teamArray, false);
             String memberID = input.enterCompetitiveMemberID();
             Team team = findCompetitiveTeamWithID(teamArray,memberID);
             if (team != null) {
+                String memberName = team.findCompetitiveMemberNameWithID(memberID);
                 ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(memberID);
                 if(memberRecords.size()!=0){
-                ui.displayMemberRecords(memberRecords,memberID);
+                ui.displayMemberRecords(memberRecords,memberID,memberName);
                 }
         } else {
             ui.loggedInUserNoPrivilege();

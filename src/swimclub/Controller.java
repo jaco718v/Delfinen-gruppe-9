@@ -82,7 +82,7 @@ public class Controller {
                 if ((team.getTeamType() == teamType) && (team.getAgeGroup() == ageGroup)) {
                     ArrayList<Member> memberList = team.getMemberList();
                     if (teamType == Enum.TeamType.COMPETITIVE) {
-                        memberList.add(new MemberCompetitive(strArray[0], strArray[1], strArray[2], isActive));
+                        memberList.add(new MemberCompetitive(strArray[0], strArray[1], strArray[2], isActive,Enum.SwimDiscipline.valueOf(strArray[5])));
                     } else {
                         memberList.add(new MemberRegular(strArray[0], strArray[1], strArray[2], isActive));
                     }
@@ -90,6 +90,7 @@ public class Controller {
                 }
             }
         }
+        loadRecords();
     }
 
     public void loadRecords() {
@@ -102,7 +103,7 @@ public class Controller {
                             if (strArray[4].equals("practice")) {
                                 ((MemberCompetitive) member).AddRecordPractice(new RecordTimePractice(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3]));
                             }
-                            if (strArray[6].equals("competition")) {
+                            if (strArray.length>5) {
                                 ((MemberCompetitive) member).AddRecordCompetition(new RecordTimeCompetition(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3], strArray[4], Integer.parseInt(strArray[5])));
 
                             }

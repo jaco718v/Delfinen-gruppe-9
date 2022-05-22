@@ -91,8 +91,8 @@ public class Team {
     public Enum.SwimDiscipline findMemberSwimDiscipline(String memberID){
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getId().equals(memberID) && member instanceof MemberCompetitive) {
-                return ((MemberCompetitive)member).getSwimDiscipline();
+            if (member.getId().equals(memberID) && member instanceof MemberCompetitive memberCompetitive) {
+                return memberCompetitive.getSwimDiscipline();
             }
         }
         return null;
@@ -101,10 +101,10 @@ public class Team {
     public ArrayList<RecordTime> findRecordsOfSwimmer(String memberID) {
         ArrayList<RecordTime> recordList = new ArrayList<>();
         for (Member member : getMembers()) {
-            if(memberID.equals(member.getId()))
-                recordList.addAll(((MemberCompetitive)member).getBestPracticeRecords());
+            if(memberID.equals(member.getId())) {
+                recordList.addAll(((MemberCompetitive) member).getBestPracticeRecords());
                 recordList.addAll(((MemberCompetitive) member).getCompetitions());
-
+            }
         }
         return recordList;
     }

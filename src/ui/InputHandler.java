@@ -214,16 +214,10 @@ public class InputHandler {
         return memberID;
     }
 
-    public Enum.SwimDiscipline addSwimDisciplineToRecord(ArrayList<Team> teamArray, String memberID) {
-        Enum.SwimDiscipline swimDiscipline = null;
-        for (Team team : teamArray) {
+    public Enum.SwimDiscipline addSwimDisciplineToRecord(Team team, String memberID) {
+        Enum.SwimDiscipline swimDiscipline;
             swimDiscipline = team.findMemberSwimDiscipline(memberID);
-            if (swimDiscipline != null) {
-                return swimDiscipline;
-            }
-        }
-
-        return null;
+        return swimDiscipline;
     }
 
     public Enum.SwimDiscipline addSwimDisciplineToRecordViaInput() {
