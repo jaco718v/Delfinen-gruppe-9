@@ -421,7 +421,6 @@ public class UI {
         System.out.println("4. Show all swimmers");
         System.out.println("5. Add swimmer record");
         System.out.println("6. View swimmer records");
-        System.out.println("5. Assign current user as coach");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }
