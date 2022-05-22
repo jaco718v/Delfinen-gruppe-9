@@ -95,7 +95,7 @@ public class UI {
     }
 
     public void displayPleaseTypeMemberID(){
-        System.out.println("Please enter the ID of the member whose record needs updating");
+        System.out.print("Please enter the ID of the member whose record needs updating: ");
     }
 
     public void memberIDNotFound(){
@@ -103,9 +103,10 @@ public class UI {
     }
 
     public void DisplayRecordTypeChoice(){
-        System.out.println("Choose the record-type:");
+        System.out.println("Record-types: ");
         System.out.println("1. Practice record");
         System.out.println("2. Competition placing");
+        System.out.print("Choose the record-type: ");
     }
 
     public void displayEnterSwimDiscipline(){
@@ -121,7 +122,7 @@ public class UI {
     }
 
     public void displayEnterRecordInSeconds(){
-        System.out.println("Enter the newly recorded time in seconds");
+        System.out.print("Enter the newly recorded time in seconds: ");
     }
 
     public void displayEnterRecordInSecondsException(){
@@ -129,7 +130,7 @@ public class UI {
     }
 
     public void displayEnterDate(){
-        System.out.println("Enter date of the record in the following format: dd/mm/year");
+        System.out.print("Enter date of the record in the following format: dd/mm/year: ");
     }
 
     public void displayEnterDateException(){
@@ -137,11 +138,11 @@ public class UI {
     }
 
     public void displayEnterConventionName(){
-        System.out.println("Enter the name of the competition or convention");
+        System.out.print("Enter the name of the competition or convention: ");
     }
 
     public void displayEnterPlacing(){
-        System.out.println("Enter the participants placing in the competition");
+        System.out.print("Enter the participants placing in the competition: ");
     }
 
     public void displayEnterPlacingException(){
