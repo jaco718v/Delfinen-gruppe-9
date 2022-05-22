@@ -94,76 +94,78 @@ public class UI {
         System.out.println("Top swimmers:");
     }
 
-    public void displayPleaseTypeMemberID(){
+    public void displayPleaseTypeMemberID() {
         System.out.print("Please enter the ID of the member whose record needs updating: ");
     }
 
-    public void memberIDNotFound(){
+    public void memberIDNotFound() {
         System.out.println("MemberID not found in database of competitive members");
     }
 
-    public void DisplayRecordTypeChoice(){
+    public void DisplayRecordTypeChoice() {
         System.out.println("Record-types: ");
         System.out.println("1. Practice record");
         System.out.println("2. Competition placing");
         System.out.print("Choose the record-type: ");
     }
 
-    public void displayEnterSwimDiscipline(){
-        System.out.println("Choose swim discipline:");
+    public void displayEnterSwimDiscipline() {
+        System.out.println("Swim disciplines:");
         System.out.println("1. Butterfly");
         System.out.println("2. Crawl");
         System.out.println("3. Back crawl");
         System.out.println("4. Breaststroke");
+        System.out.print("Choose swim discipline: ");
     }
 
-    public void displayEnterSwimDisciplineException(){
+    public void displayEnterSwimDisciplineException() {
         System.out.println("Error in input, please enter an integer between 1-4");
     }
 
-    public void displayEnterRecordInSeconds(){
+    public void displayEnterRecordInSeconds() {
         System.out.print("Enter the newly recorded time in seconds: ");
     }
 
-    public void displayEnterRecordInSecondsException(){
+    public void displayEnterRecordInSecondsException() {
         System.out.println("Error in input, try again");
     }
 
-    public void displayEnterDate(){
+    public void displayEnterDate() {
         System.out.print("Enter date of the record in the following format: dd/mm/year: ");
     }
 
-    public void displayEnterDateException(){
+    public void displayEnterDateException() {
         System.out.println("Error in input, please only type in the format: dd/mm/year");
     }
 
-    public void displayEnterConventionName(){
+    public void displayEnterConventionName() {
         System.out.print("Enter the name of the competition or convention: ");
     }
 
-    public void displayEnterPlacing(){
+    public void displayEnterPlacing() {
         System.out.print("Enter the participants placing in the competition: ");
     }
 
-    public void displayEnterPlacingException(){
+    public void displayEnterPlacingException() {
         System.out.println("Error in input, enter a valid number");
     }
 
-    public void displayRecordAddSucces(String recordType){
+    public void displayRecordAddSucces(String recordType) {
         System.out.println("Successfully added " + recordType + " record to swimmer");
     }
 
-    public void displayDecideAgeGroupTopFive(){
-        System.out.println("Choose age group");
+    public void displayDecideAgeGroupTopFive() {
+        System.out.println("Age groups:");
         System.out.println("1. Junior");
         System.out.println("2. Senior");
+        System.out.print("Choose age group: ");
     }
 
-    public void displayDecideAgeGroupTopFiveError(){
+    public void displayDecideAgeGroupTopFiveError() {
         System.out.println("Error in input, choose 1-2F");
     }
 
-    public void displayTopFive(ArrayList<RecordTimePractice> swimDisciplineRecords, Team team){
+    public void displayTopFive(ArrayList<RecordTimePractice> swimDisciplineRecords, Team team) {
         System.out.println("Top 5 "+ turnEnumSwimDisciplineToString(swimDisciplineRecords.get(1).getSWIM_DISCIPLINE())+" swimmers");
         System.out.println("1. "+swimDisciplineRecords.get(0).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(0).getMemberID()));
         if(swimDisciplineRecords.size()>1){
@@ -176,11 +178,11 @@ public class UI {
         System.out.println("5. "+swimDisciplineRecords.get(4).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(4).getMemberID()));}
     }
 
-    public void displayTopFiveError(){
+    public void displayTopFiveError() {
         System.out.println("There are no swimmers in that swim discipline");
     }
 
-    public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberName){
+    public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberName) {
         System.out.println("Member: "+memberName+"\t Swim discipline: "+ turnEnumSwimDisciplineToString(playerRecords.get(0).getSWIM_DISCIPLINE()));
         System.out.print("Personal best training record: ");
         for(RecordTime record : playerRecords){
@@ -196,35 +198,27 @@ public class UI {
         }
     }
 
-    public void displayChooseTeamTypeCoach(){
+    public void displayChooseTeamTypeCoach() {
         System.out.println("Choose the type of team to assign to:");
         System.out.println("1. Regular");
         System.out.println("2. Competitive");
     }
 
-    public void displayChooseTeamTypeCoachError(){
+    public void displayChooseTeamTypeCoachError() {
         System.out.println("Input either 1 or 2.");
     }
 
-    public void displayChooseAgeGroupCoach(){
+    public void displayChooseAgeGroupCoach() {
         System.out.println("Choose the age division of team to assign to:");
         System.out.println("1. Junior");
         System.out.println("2. Senior");
     }
 
-    public void displayChooseAgeGroupCoachError(){
+    public void displayChooseAgeGroupCoachError() {
         System.out.println("Input either 1 or 2.");
     }
 
-    public void displaySuccessRegisteredCoach(){
-        System.out.println("Successfully registered as coach");
-    }
-
-    public void displayFailureRegisteredCoach(){
-        System.out.println("Registered user must be of type: coach");
-    }
-
-    public String turnEnumSwimDisciplineToString(Enum.SwimDiscipline swimDiscipline){
+    public String turnEnumSwimDisciplineToString(Enum.SwimDiscipline swimDiscipline) {
         String swimString = null;
         switch (swimDiscipline){
             case CRAWL -> swimString ="Front Crawl";
@@ -241,14 +235,6 @@ public class UI {
 
     public void displayPleaseEnterValidName(String memberName) {
         System.out.println("Please enter a valid name. You entered: " + memberName);
-    }
-
-    public void displayPleaseEnterMemberAge(){
-        System.out.print("Please enter member age: ");
-    }
-
-    public void displayPleaseEnterValidAge(int memberAge) {
-        System.out.println("Please enter a valid name. You entered: " + memberAge);
     }
 
     public void displayActiveOrPassiveOptions(){
