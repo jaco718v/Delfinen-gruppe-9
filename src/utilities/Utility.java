@@ -2,6 +2,8 @@ package utilities;
 
 import database.FileHandler;
 import membership.*;
+import swimclub.User;
+import ui.UI;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.Scanner;
 
 public class Utility {
     private final FileHandler fileHandler = new FileHandler();
+    private final UI ui = new UI();
 
     public boolean tryParseInt(String str) {
         try {
@@ -134,5 +137,32 @@ public class Utility {
             return teamArray.get(2);
         }
         return teamArray.get(3);
+    }
+
+    public void displayMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly) {
+        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
+            ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
+            int teamNumber = 0;
+            for (Team team : teamArray) {
+                teamNumber += 1;
+                ui.displayTeamInformation(teamNumber, team);
+                if (!teamsOnly) {
+                    for (String[] strArray : memberData) {
+                        int age = convertDateToAge(strArray[2]);
+                        if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
+                            if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                                ui.displayMemberInformation(strArray);
+                            }
+                        } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
+                            if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                                ui.displayMemberInformation(strArray);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            ui.loggedInUserNoPrivilege();
+        }
     }
 }

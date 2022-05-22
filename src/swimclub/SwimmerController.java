@@ -19,7 +19,7 @@ public class SwimmerController {
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
 
-    public void addCoachToTeam(User loggedInUser, ArrayList<Team> teamArray, MemberController memberController) {
+    public void addCoachToTeam(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             int amountOfCoaches = getAmountOfCoaches();
             if (amountOfCoaches > 0) {
@@ -30,7 +30,7 @@ public class SwimmerController {
                 } else {
                     selectedCoach = loggedInUser;
                 }
-                memberController.showMembers(loggedInUser, teamArray, true);
+                util.displayMembers(loggedInUser, teamArray, true);
                 Team selectedTeam = input.enterTeamToAddCoachTo(teamArray);
                 selectedTeam.setCoach(selectedCoach);
                 ArrayList<String[]> teamData = fileHandler.readCSV("Teams.csv");
@@ -61,11 +61,11 @@ public class SwimmerController {
         }
     }
 
-    public void removeCoachFromTeam(User loggedInUser, ArrayList<Team> teamArray, MemberController memberController) {
+    public void removeCoachFromTeam(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             int amountOfCoaches = getAmountOfTeamsWithCoaches();
             if (amountOfCoaches > 0) {
-                memberController.showMembers(loggedInUser, teamArray, true);
+                util.displayMembers(loggedInUser, teamArray, true);
                 Team selectedTeam = input.enterTeamToRemoveCoachFrom(teamArray);
                 User removedCoach = selectedTeam.getCoach();
                 selectedTeam.setCoach(null);
@@ -162,9 +162,9 @@ public class SwimmerController {
         return previousRecordFound;
     }
 
-    public void addRecordToMember(User loggedInUser, ArrayList<Team> teamArray, MemberController memberController) {
+    public void addRecordToMember(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
-            memberController.showMembers(loggedInUser, teamArray, false);
+            util.displayMembers(loggedInUser, teamArray, false);
             String memberID = input.enterCompetitiveMemberID();
             Team team = findCompetitiveTeamWithID(teamArray,memberID);
             if (team != null) {
