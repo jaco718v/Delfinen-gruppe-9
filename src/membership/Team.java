@@ -1,13 +1,11 @@
 package membership;
 
-import database.FileHandler;
 import swimclub.User;
 import utilities.Enum;
 import utilities.Utility;
 import java.util.ArrayList;
 
 public class Team {
-    private FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
     private ArrayList<Member> memberList = new ArrayList<>();
     private User coach;
@@ -34,27 +32,6 @@ public class Team {
     public void setCoach(User coach) {
         this.coach = coach;
     }
-
-
-
-    /*ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
-    ArrayList<String[]> returnData = new ArrayList<>();
-        for (String[] strArray : memberData) {
-        int age = util.convertDateToAge(strArray[2]);
-        if ((ageGroup == Enum.AgeGroup.U18) && (age < 18)) {
-            if (((strArray[4].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
-                returnData.add(strArray);
-            }
-        } else if ((ageGroup == Enum.AgeGroup.O18) && (age >= 18)) {
-            if (((strArray[4].equals("true")) && (teamType == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (teamType == Enum.TeamType.REGULAR))) {
-                returnData.add(strArray);
-            }
-        }
-    }
-        return returnData;
-
-     */
-
 
     public ArrayList<Member> getMembers() {
         return memberList;
@@ -90,7 +67,6 @@ public class Team {
         }
         return null;
     }
-
 
     public boolean confirmCompetitiveMemberID(String memberID){
         ArrayList<Member> memberData = getMembers();

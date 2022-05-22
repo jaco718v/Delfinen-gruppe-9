@@ -119,6 +119,7 @@ public class SwimmerController {
         }
         return amountOfCoaches;
     }
+
     private void showCoaches(User loggedInUser) {
         ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
         for (int i = 0; i < userData.size(); i++) {

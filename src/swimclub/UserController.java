@@ -5,7 +5,6 @@ import membership.Team;
 import utilities.Enum;
 import ui.InputHandler;
 import ui.UI;
-
 import java.util.ArrayList;
 
 public class UserController {
@@ -28,7 +27,7 @@ public class UserController {
             con.setLoggedInUser(loggedInUser);
         } else {
             ui.noRegisteredUsers();
-            addUser(loggedInUser);
+            addUser(null);
         }
     }
 

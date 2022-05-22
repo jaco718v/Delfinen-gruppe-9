@@ -3,10 +3,10 @@ package swimclub;
 import database.FileHandler;
 import membership.*;
 import ui.Commands;
-import utilities.Enum;
 import ui.InputHandler;
 import ui.UI;
 import utilities.Utility;
+import utilities.Enum;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,6 @@ public class Controller {
     private final SubscriptionController subscriptionController = new SubscriptionController();
     private final SwimmerController swimmerController = new SwimmerController();
     private final ArrayList<Team> teamArray = new ArrayList<>();
-    private final ArrayList<RecordTime> recordTimes = new ArrayList<>();
     private User loggedInUser;
     private boolean isRunning = true;
 
@@ -145,9 +144,5 @@ public class Controller {
 
     public ArrayList<Team> getTeamArray() {
         return teamArray;
-    }
-
-    public ArrayList<RecordTime> getRecordTimes() {
-        return recordTimes;
     }
 }

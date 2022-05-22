@@ -40,6 +40,15 @@ public class UI {
         }
     }
 
+    // MAIN/SUB MENU INPUTS
+
+
+    // INPUTS
+
+
+    // INPUT RESPONSES
+
+
     public void loginUser(boolean success) {
         if (success) {
             System.out.println("Login successful.");
@@ -52,7 +61,7 @@ public class UI {
         if (success) {
             System.out.println("Successfully added user.");
         } else {
-            System.out.println("Failed to add user. Please select user type between 1-4.");
+            System.out.println("Failed to add user. Please select user type between 1-" + Enum.UserType.values().length + ".");
         }
     }
 
@@ -119,7 +128,7 @@ public class UI {
     }
 
     public void displayEnterSwimDisciplineException() {
-        System.out.println("Error in input, please enter an integer between 1-4");
+        System.out.println("Error in input, please enter an integer between 1-4.");
     }
 
     public void displayEnterRecordInSeconds() {
@@ -127,15 +136,15 @@ public class UI {
     }
 
     public void displayEnterRecordInSecondsException() {
-        System.out.println("Error in input, try again");
+        System.out.println("Error in input, try again.");
     }
 
     public void displayEnterDate() {
-        System.out.print("Enter date of the record in the following format: dd/mm/year: ");
+        System.out.print("Enter date of the record in the following format: dd/mm/yyyy: ");
     }
 
     public void displayEnterDateException() {
-        System.out.println("Error in input, please only type in the format: dd/mm/year");
+        System.out.println("Error in input, please only type in the format: dd/mm/yyyy");
     }
 
     public void displayEnterConventionName() {
@@ -147,11 +156,11 @@ public class UI {
     }
 
     public void displayEnterPlacingException() {
-        System.out.println("Error in input, enter a valid number");
+        System.out.println("Error in input, enter a valid number.");
     }
 
     public void displayRecordAddSucces(String recordType) {
-        System.out.println("Successfully added " + recordType + " record to swimmer");
+        System.out.println("Successfully added " + recordType + " record to swimmer.");
     }
 
     public void displayDecideAgeGroupTopFive() {
@@ -162,7 +171,7 @@ public class UI {
     }
 
     public void displayDecideAgeGroupTopFiveError() {
-        System.out.println("Error in input, choose 1-2F");
+        System.out.println("Error in input, choose 1-2.");
     }
 
     public void displayTopFive(ArrayList<RecordTimePractice> swimDisciplineRecords, Team team) {
