@@ -172,7 +172,7 @@ public class SwimmerController {
                 ArrayList<String[]> recordList = fileHandler.readCSV("Records.csv");
                 ArrayList<String[]> data = new ArrayList<>();
                 String recordType = input.recordTypeChoice(memberID);
-                Enum.SwimDiscipline swimDiscipline = input.addSwimDisciplineToRecord(teamArray, memberID);
+                Enum.SwimDiscipline swimDiscipline = input.addSwimDisciplineToRecord(team, memberID);
                 double recordInSeconds = input.addRecordInSeconds();
                 String date = input.addDate();
 
