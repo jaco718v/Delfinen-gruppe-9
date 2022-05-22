@@ -344,7 +344,7 @@ public class UI {
         System.out.println();
         System.out.println("Cashier Commands:");
         System.out.println("1. User menu");
-        System.out.println("3. Subscription menu");
+        System.out.println("2. Subscription menu");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
@@ -353,7 +353,7 @@ public class UI {
         System.out.println();
         System.out.println("Coach Commands:");
         System.out.println("1. User menu");
-        System.out.println("9. Swimmer menu");
+        System.out.println("2. Swimmer menu");
         System.out.println("0. Exit program");
         System.out.print("Select command: ");
     }
@@ -609,5 +609,9 @@ public class UI {
 
     public void displayNoCoachOnSelectedTeam() {
         System.out.println("No coach on selected team.");
+    }
+
+    public void displayPleaseEnterValidUserId(int userID) {
+        System.out.println("Please enter a valid UserID. You entered: " + userID);
     }
 }

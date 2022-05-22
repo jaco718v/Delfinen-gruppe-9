@@ -133,7 +133,7 @@ public class Commands {
             switch (command) {
                 case "1" -> con.getUserController().loginUser(con);
                 case "2" -> con.getUserController().addUser(con.getLoggedInUser());
-                case "3" -> con.getUserController().removeUser(con.getLoggedInUser());
+                case "3" -> con.getUserController().removeUser(con.getLoggedInUser(), con.getTeamArray());
                 case "4" -> con.getUserController().showUsers(con.getLoggedInUser());
                 case "0" -> {
                     ui.displayReturningToMainMenu();
