@@ -73,6 +73,7 @@ public class Commands {
                 case "2" -> con.getSwimmerController().showAllSwimmers(con.getTeamArray());
                 case "3" -> con.getSwimmerController().addRecordToMember(con.getLoggedInUser(), con.getTeamArray(), con.getMemberController());
                 case "4" -> con.getSwimmerController().showMemberRecords(con.getLoggedInUser(), con.getTeamArray());
+                case "5" -> con.getSwimmerController().addCoachToTeam(con.getLoggedInUser(),con.getTeamArray());
                 case "0" -> {
                     ui.displayReturningToMainMenu();
                     menuOpen = false;

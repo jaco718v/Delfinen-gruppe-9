@@ -163,7 +163,7 @@ public class UI {
     }
 
     public void displayTopFive(ArrayList<RecordTimePractice> swimDisciplineRecords, Team team){
-        System.out.println("Top 5 "+swimDisciplineRecords.get(1).getSWIM_DISCIPLINE()+" swimmers");
+        System.out.println("Top 5 "+ turnEnumSwimDisciplineToString(swimDisciplineRecords.get(1).getSWIM_DISCIPLINE())+" swimmers");
         System.out.println("1. "+swimDisciplineRecords.get(0).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(0).getMemberID()));
         if(swimDisciplineRecords.size()>1){
         System.out.println("2. "+swimDisciplineRecords.get(1).getRECORD_IN_SECONDS()+"s\t\t"+team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(1).getMemberID()));}
@@ -180,7 +180,7 @@ public class UI {
     }
 
     public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberName){
-        System.out.println("Member: "+memberName+"\t Swim discipline: "+playerRecords.get(0).getSWIM_DISCIPLINE());
+        System.out.println("Member: "+memberName+"\t Swim discipline: "+ turnEnumSwimDisciplineToString(playerRecords.get(0).getSWIM_DISCIPLINE()));
         System.out.print("Personal best training record: ");
         for(RecordTime record : playerRecords){
             if(record instanceof RecordTimePractice){
@@ -193,6 +193,45 @@ public class UI {
                 System.out.println(((RecordTimeCompetition) record).getConvention()+"\t placing nr: "+((RecordTimeCompetition) record).getPlacing()+"\t Time: "+record.getRECORD_IN_SECONDS()+"s\t"+record.getDATE_OF_RECORD());
             }
         }
+    }
+
+    public void displayChooseTeamTypeCoach(){
+        System.out.println("Choose the type of team to assign to:");
+        System.out.println("1. Regular");
+        System.out.println("2. Competitive");
+    }
+
+    public void displayChooseTeamTypeCoachError(){
+        System.out.println("Input either 1 or 2.");
+    }
+
+    public void displayChooseAgeGroupCoach(){
+        System.out.println("Choose the age division of team to assign to:");
+        System.out.println("1. Junior");
+        System.out.println("2. Senior");
+    }
+
+    public void displayChooseAgeGroupCoachError(){
+        System.out.println("Input either 1 or 2.");
+    }
+
+    public void displaySuccessRegisteredCoach(){
+        System.out.println("Successfully registered as coach");
+    }
+
+    public void displayFailureRegisteredCoach(){
+        System.out.println("Registered user must be of type: coach");
+    }
+
+    public String turnEnumSwimDisciplineToString(Enum.SwimDiscipline swimDiscipline){
+        String swimString = null;
+        switch (swimDiscipline){
+            case CRAWL -> swimString ="Front Crawl";
+            case BACKCRAWL -> swimString ="Back Crawl";
+            case BUTTERFLY -> swimString ="Butterfly";
+            case BREAST -> swimString ="Breast Stroke";
+        }
+        return  swimString;
     }
 
     public void displayPleaseTypeUserLoginName() {
@@ -225,7 +264,7 @@ public class UI {
 
     public void displayCompOrRegOptions() {
         System.out.println("""                               
-            Is this an competitive or regular member?
+            Is this a competitive or regular member?
             1. Competitive                             
             2. Regular """);
         System.out.print("Select command: ");
@@ -380,6 +419,7 @@ public class UI {
         System.out.println("2. Show all swimmers");
         System.out.println("3. Add swimmer record");
         System.out.println("4. View swimmer records");
+        System.out.println("5. Assign current user as coach");
         System.out.println("0. Back");
         System.out.print("Select command: ");
     }

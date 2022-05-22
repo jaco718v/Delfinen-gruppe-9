@@ -19,8 +19,37 @@ public class SwimmerController {
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
 
-    public void addCoachToTeam() {
-        // TODO: Add coach (User) to Team and save to Teams.csv (AgeGroup, isCompetitive, CoachName)
+    public void addCoachToTeam(User loggedInUser, ArrayList<Team> teamArray) {
+        Enum.TeamType teamType = input.chooseTeamType();
+        Enum.AgeGroup ageGroup = input.chooseAgeGroup();
+        for (Team team : teamArray){
+            if(team.getTeamType().equals(teamType) && team.getAgeGroup().equals(ageGroup)){
+                team.setCoach(loggedInUser);
+                ArrayList<String[]> data = new ArrayList<>();
+                String[] teamCoach = {String.valueOf(ageGroup), String.valueOf(teamType), loggedInUser.getName()};
+                data.add(teamCoach);
+                if (!updateTeamCoachInCSV(teamCoach)){
+                fileHandler.writeToCSV("Teams.csv", data);
+                }
+                ui.displaySuccessRegisteredCoach();
+            }
+            else {
+                ui.displayFailureRegisteredCoach();
+            }
+        }
+    }
+
+    private boolean updateTeamCoachInCSV(String[] teamCoach) {
+        boolean previousTeamCoachFound = false;
+        ArrayList<String[]> teamCoachList = fileHandler.readCSV("Teams.csv");
+        for (String[] coach : teamCoachList) {
+            if (coach[0].equalsIgnoreCase(teamCoach[0]) && coach[1].equalsIgnoreCase(teamCoach[1])) {
+                teamCoachList.set(teamCoachList.indexOf(coach), teamCoach);
+                previousTeamCoachFound = true;
+                fileHandler.overwriteCSV("Teams.csv", teamCoachList);
+            }
+        }
+        return previousTeamCoachFound;
     }
 
     public void showAllSwimmers(ArrayList<Team> teamArray) {

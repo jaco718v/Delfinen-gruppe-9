@@ -177,6 +177,34 @@ public class InputHandler {
         return competitive;
     }
 
+    public Enum.TeamType chooseTeamType() {
+        ui.displayChooseTeamTypeCoach();
+        Enum.TeamType teamType = null;
+        while(teamType==null){
+            String input = sc.nextLine();
+            switch (input) {
+                case "1" -> teamType = Enum.TeamType.REGULAR;
+                case "2" -> teamType = Enum.TeamType.COMPETITIVE;
+                default -> ui.displayChooseTeamTypeCoachError();
+            }
+        }
+        return teamType;
+    }
+
+    public Enum.AgeGroup chooseAgeGroup() {
+        ui.displayChooseAgeGroupCoach();
+        Enum.AgeGroup ageGroup = null;
+        while(ageGroup==null){
+            String input = sc.nextLine();
+            switch (input) {
+                case "1" -> ageGroup = Enum.AgeGroup.U18;
+                case "2" -> ageGroup = Enum.AgeGroup.O18;
+                default -> ui.displayChooseAgeGroupCoachError();
+            }
+        }
+        return ageGroup;
+    }
+
     public String enterCompetitiveMemberID() {
         ui.displayPleaseTypeMemberID();
         String memberID = sc.nextLine();
