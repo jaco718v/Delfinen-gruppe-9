@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class Utility {
     private final FileHandler fileHandler = new FileHandler();
-    private final UI ui = new UI();
 
     public boolean tryParseInt(String str) {
         try {
@@ -140,6 +139,7 @@ public class Utility {
     }
 
     public void displayMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly) {
+        UI ui = new UI();
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
             int teamNumber = 0;
