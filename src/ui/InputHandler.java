@@ -28,7 +28,7 @@ public class InputHandler {
         while (!enteredUserName) {
             ui.displayPleaseTypeUserLoginName();
             userName = sc.nextLine();
-            if ((!userName.equals("")) && (!userName.equals(" "))) {
+            if ((!userName.equals("")) && (!userName.equals(" ")) && (!userName.equalsIgnoreCase("chairman")) && (!userName.equalsIgnoreCase("cashier")) && (!userName.equalsIgnoreCase("coach"))) {
                 enteredUserName = true;
             }
             if (!enteredUserName) {
@@ -452,8 +452,10 @@ public class InputHandler {
         boolean enteredType = false;
         while (!enteredType) {
             input = sc.nextLine();
-            if ((!input.equals("1")) && (!input.equals("2")) && (!input.equals("3")) && (!input.equals("4")) && (!input.equals("5"))) {
+            if ((input.equals("1")) || (input.equals("2")) || (input.equals("3")) || (input.equals("4")) || (input.equals("5"))) {
                 enteredType = true;
+            } else {
+                ui.displayInvalidInputPleaseEnterNumberBetweenXandY(1, 5);
             }
         }
         return input;
@@ -463,8 +465,10 @@ public class InputHandler {
         boolean enteredType = false;
         while (!enteredType) {
             input = sc.nextLine();
-            if ((!input.equals("1")) && (!input.equals("2")) && (!input.equals("3")) && (!input.equals("4"))) {
+            if ((input.equals("1")) || (input.equals("2")) || (input.equals("3")) || (input.equals("4"))) {
                 enteredType = true;
+            } else {
+                ui.displayInvalidInputPleaseEnterNumberBetweenXandY(1, 5);
             }
         }
         return input;
@@ -543,5 +547,65 @@ public class InputHandler {
             }
         }
         return team;
+    }
+
+    public String enterMemberEdit(String[] array) {
+        String command = "";
+        boolean selectedEditType = false;
+        while (!selectedEditType) {
+            if (array[5].equals("true")) {
+                ui.whatToChangeCompetitive();
+                command = enterMemberEditTypeCompetitive();
+                switch (command) {
+                    case "1" -> {
+                        System.out.println("Editing member name.");
+                        array[2] = addMemberName();
+                        selectedEditType = true;
+                    }
+                    case "2" -> {
+                        System.out.println("Editing member birth date.");
+                        array[3] = addMemberBirthDay() + "/" + addMemberBirthMonth() + "/" + addMemberBirthYear();
+                        selectedEditType = true;
+                    }
+                    case "3" -> {
+                        System.out.println("Editing member activity.");
+                        array[4] = addPassiveOrActive();
+                        selectedEditType = true;
+                    }
+                    case "4" -> {
+                        System.out.println("Editing member type.");
+                        array[5] = addCompetitiveMember();
+                        selectedEditType = true;
+                    }
+                    case "5" -> {
+                        System.out.println("Editing member swim discipline.");
+                        array[6] = String.valueOf(addSwimDisciplineToRecordViaInput());
+                        selectedEditType = true;
+                    }
+                }
+            } else {
+                ui.whatToChange();
+                command = enterMemberEditType();
+                switch (command) {
+                    case "1" -> {
+                        array[2] = addMemberName();
+                        selectedEditType = true;
+                    }
+                    case "2" -> {
+                        array[3] = addMemberBirthDay() + "/" + addMemberBirthMonth() + "/" + addMemberBirthYear();
+                        selectedEditType = true;
+                    }
+                    case "3" -> {
+                        array[4] = addPassiveOrActive();
+                        selectedEditType = true;
+                    }
+                    case "4" -> {
+                        array[5] = addCompetitiveMember();
+                        selectedEditType = true;
+                    }
+                }
+            }
+        }
+        return command;
     }
 }

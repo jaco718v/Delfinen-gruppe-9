@@ -8,10 +8,9 @@ import java.util.stream.Stream;
 public class FileHandler {
 
     public ArrayList<String[]> readCSV(String filepath) {
-
         ArrayList<String[]> csvData = new ArrayList<>();
         try {
-            FileReader fr = new FileReader(new File(filepath));
+            FileReader fr = new FileReader(filepath);
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArray;
@@ -28,41 +27,27 @@ public class FileHandler {
 
     public boolean writeToCSV(String filepath, ArrayList<String[]> data) {
         boolean value = true;
-        ArrayList<String[]> csvData = new ArrayList<String[]>();
-        try {
-            FileReader fr = new FileReader(new File(filepath));
-            BufferedReader br = new BufferedReader(fr);
-            String line = "";
-            String[] tempArray;
-            while ((line = br.readLine()) != null) {
-                tempArray = line.split(",");
-                csvData.add(tempArray);
-            }
-            br.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-            value = false;
-        }
+        ArrayList<String[]> csvData = readCSV(filepath);
 
         csvData.addAll(data);
-        try (PrintWriter pw = new PrintWriter(new File(filepath))) {
+        try (PrintWriter pw = new PrintWriter(filepath)) {
             csvData.stream()
                     .map(this::convertToCSV)
                     .forEach(pw::println);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             value = false;
         }
         return value;
     }
 
     public void overwriteCSV(String filepath, ArrayList<String[]> data) {
-        try (PrintWriter pw = new PrintWriter(new File(filepath))) {
+        try (PrintWriter pw = new PrintWriter(filepath)) {
             data.stream()
                     .map(this::convertToCSV)
                     .forEach(pw::println);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 

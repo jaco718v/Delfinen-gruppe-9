@@ -89,34 +89,38 @@ public class Utility {
         int birthDay = Integer.parseInt(dateInputScanner.next());
         int birthMonth = Integer.parseInt(dateInputScanner.next());
         int birthYear = Integer.parseInt(dateInputScanner.next());
+        return calculateAmountOfYears(birthDay, birthMonth, birthYear);
+    }
+
+    private int calculateAmountOfYears(int day, int month, int year) {
         int age;
-        if ((birthDay < LocalDateTime.now().getDayOfMonth()) && (birthMonth < LocalDateTime.now().getMonth().getValue())) {
-            age = LocalDateTime.now().getYear() - birthYear - 1;
+        if ((day < LocalDateTime.now().getDayOfMonth()) && (month < LocalDateTime.now().getMonth().getValue())) {
+            age = LocalDateTime.now().getYear() - year - 1;
         } else {
-            age = LocalDateTime.now().getYear() - birthYear;
+            age = LocalDateTime.now().getYear() - year;
         }
         return age;
     }
 
-    public int convertDateToAgeToMonths(String string) {
+    public int convertDateToAgeInMonths(String string) {
         Scanner dateInputScanner = new Scanner(string);
         dateInputScanner.useDelimiter("/");
         int day = Integer.parseInt(dateInputScanner.next());
         int month = Integer.parseInt(dateInputScanner.next());
         int year = Integer.parseInt(dateInputScanner.next());
-        int age;
+        return calculateAmountOfMonths(day, month, year);
+    }
+
+    private int calculateAmountOfMonths(int day, int month, int year) {
+        int age = LocalDateTime.now().getYear() - year;
         int ageMonths;
         if ((day < LocalDateTime.now().getDayOfMonth()) && (month < LocalDateTime.now().getMonth().getValue())) {
-            age = LocalDateTime.now().getYear() - year;
             ageMonths = age * 12 + LocalDateTime.now().getMonth().getValue() - month + 1;
         } else if ((day >= LocalDateTime.now().getDayOfMonth()) && (month < LocalDateTime.now().getMonth().getValue())) {
-            age = LocalDateTime.now().getYear() - year;
             ageMonths = (age * 12) + LocalDateTime.now().getMonth().getValue() - month;
         } else if ((day < LocalDateTime.now().getDayOfMonth()) && (month >= LocalDateTime.now().getMonth().getValue())) {
-            age = LocalDateTime.now().getYear() - year;
             ageMonths = (age * 12) + LocalDateTime.now().getMonth().getValue() - month + 1;
         } else {
-            age = LocalDateTime.now().getYear() - year;
             ageMonths = (age * 12) + LocalDateTime.now().getMonth().getValue() - month;
         }
         return ageMonths;

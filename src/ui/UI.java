@@ -527,7 +527,7 @@ public class UI {
     }
 
     public void displayPleaseEnterMemberId() {
-        System.out.print("Please enter Member ID: ");
+        System.out.print("Please enter MemberID: ");
     }
 
     public void displayMemberListFull() {
@@ -556,10 +556,6 @@ public class UI {
         System.out.println("3. Active or passive");
         System.out.println("4. Regular or competitive");
         System.out.print("Select command: ");
-    }
-
-    public void typeMemberIdPlease() {
-        System.out.println("Please enter MemberID: ");
     }
 
     public void nameChanged() {
@@ -640,5 +636,9 @@ public class UI {
 
     public void displayPleaseEnterValidUserId(int userID) {
         System.out.println("Please enter a valid UserID. You entered: " + userID);
+    }
+
+    public void displayInvalidInputPleaseEnterNumberBetweenXandY(int x, int y) {
+        System.out.println("Invalid input. Please enter a number between " + x + " and " + y + ".");
     }
 }

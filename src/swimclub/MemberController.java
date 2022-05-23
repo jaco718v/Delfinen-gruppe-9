@@ -63,66 +63,14 @@ public class MemberController {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
             showMembers(loggedInUser, teamArray);
-            ui.typeMemberIdPlease();
             String editMember = input.enterMemberId();
             for (int i = 0; i < memberData.size(); i++) {
                 String[] array = memberData.get(i);
                 if (array[0].equals(editMember)) {
-                    String command = "";
-                    boolean selectedEditType = false;
-                    while (!selectedEditType) {
-                        if (array[5].equals("true")) {
-                            ui.whatToChangeCompetitive();
-                            command = input.enterMemberEditTypeCompetitive();
-                            switch (command) {
-                                case "1" -> {
-                                    array[2] = input.addMemberName();
-                                    selectedEditType = true;
-                                }
-                                case "2" -> {
-                                    array[3] = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
-                                    selectedEditType = true;
-                                }
-                                case "3" -> {
-                                    array[4] = input.addPassiveOrActive();
-                                    selectedEditType = true;
-                                }
-                                case "4" -> {
-                                    array[5] = input.addCompetitiveMember();
-                                    selectedEditType = true;
-                                }
-                                case "5" -> {
-                                    array[6] = String.valueOf(input.addSwimDisciplineToRecordViaInput());
-                                    selectedEditType = true;
-                                }
-                            }
-                        } else {
-                            ui.whatToChange();
-                            command = input.enterMemberEditType();
-                            switch (command) {
-                                case "1" -> {
-                                    array[2] = input.addMemberName();
-                                    selectedEditType = true;
-                                }
-                                case "2" -> {
-                                    array[3] = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
-                                    selectedEditType = true;
-                                }
-                                case "3" -> {
-                                    array[4] = input.addPassiveOrActive();
-                                    selectedEditType = true;
-                                }
-                                case "4" -> {
-                                    array[5] = input.addCompetitiveMember();
-                                    selectedEditType = true;
-                                }
-                            }
-
-                        }
-                        memberData.remove(i);
-                        memberData.add(i, array);
-                        fileHandler.overwriteCSV("Members.csv", memberData);
-                    }
+                    String command = input.enterMemberEdit(array);
+                    memberData.remove(i);
+                    memberData.add(i, array);
+                    fileHandler.overwriteCSV("Members.csv", memberData);
                     boolean editedMember = false;
                     for (Team team : con.getTeamArray()) {
                         if (editedMember) {

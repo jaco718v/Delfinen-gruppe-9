@@ -14,7 +14,7 @@ public class UserController {
 
     public void loginUser(Controller con) {
         ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
-        User loggedInUser = null;
+        User loggedInUser;
         if (userData.size() > 0) {
             String[] userReturnStrings = input.enterUserName(userData);
             int userIndex = Integer.parseInt(userReturnStrings[1]);
@@ -39,25 +39,22 @@ public class UserController {
                 String userPassword = input.addUserPassword();
                 String userType = input.addUserType();
 
+                ArrayList<String[]> newData = new ArrayList<>();
                 switch (userType) {
                     case "1" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.ADMIN.name()});
+                        newData.add(new String[] { userName, userPassword, Enum.UserType.ADMIN.name() });
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                     case "2" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.CHAIRMAN.name()});
+                        newData.add(new String[] { userName, userPassword, Enum.UserType.CHAIRMAN.name() });
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                     case "3" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.CASHIER.name()});
+                        newData.add(new String[] { userName, userPassword, Enum.UserType.CASHIER.name() });
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                     case "4" -> {
-                        ArrayList<String[]> newData = new ArrayList<>();
-                        newData.add(new String[]{userName, userPassword, Enum.UserType.COACH.name()});
+                        newData.add(new String[] { userName, userPassword, Enum.UserType.COACH.name() });
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                 }
