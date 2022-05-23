@@ -37,6 +37,16 @@ public class Team {
         return memberList;
     }
 
+    public ArrayList<Member> getActiveMembers(){
+        ArrayList<Member> activeMembers = new ArrayList<>();
+        for(Member member : this.memberList){
+            if(member.getActive()){
+                activeMembers.add(member);
+            }
+        }
+        return activeMembers;
+    }
+
     public ArrayList<Member> getCompetitiveMembers() {
         ArrayList<Member> competitiveMembers = new ArrayList<>();
         for(Member member : this.memberList){
@@ -49,7 +59,7 @@ public class Team {
 
     public ArrayList<Member> getActiveMembersAboveAge(int ageThreshold) {
         ArrayList<Member> membersAboveAge = new ArrayList<>();
-        ArrayList<Member> activeMembers = getCompetitiveMembers();
+        ArrayList<Member> activeMembers = getActiveMembers();
         for(Member member : activeMembers){
             if(util.convertDateToAge(member.getBirthDate())>ageThreshold){
                 membersAboveAge.add(member);

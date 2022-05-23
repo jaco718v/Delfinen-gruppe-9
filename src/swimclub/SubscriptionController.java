@@ -84,7 +84,10 @@ public class SubscriptionController {
             double seniorDiscount = 0.25;
             double subscriptionSum = 0;
             for (Team team : teamArray) {
-                double subscription = subscriptionJunior;
+                double subscription = 0;
+                if(team.getAgeGroup().equals(Enum.AgeGroup.U18)){
+                    subscription = subscriptionJunior;
+                }
                 if (team.getAgeGroup() == Enum.AgeGroup.O18) {
                     subscription = subscriptionSenior;
                     subscriptionSum -= subscriptionSenior * seniorDiscount * team.getActiveMembersAboveAge(seniorThreshold).size();
