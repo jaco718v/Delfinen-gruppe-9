@@ -446,6 +446,17 @@ public class InputHandler {
         return sc.nextLine();
     }
 
+    public String enterMemberEditTypeCompetitive() {
+        String input = "";
+        boolean enteredType = false;
+        while (!enteredType) {
+            input = sc.nextLine();
+            if ((!input.equals("1")) && (!input.equals("2")) && (!input.equals("3")) && (!input.equals("4")) && (!input.equals("5"))) {
+                enteredType = true;
+            }
+        }
+        return input;
+    }
     public String enterMemberEditType() {
         String input = "";
         boolean enteredType = false;

@@ -82,7 +82,8 @@ public class Controller {
                 if ((team.getTeamType() == teamType) && (team.getAgeGroup() == ageGroup)) {
                     ArrayList<Member> memberList = team.getMemberList();
                     if (teamType == Enum.TeamType.COMPETITIVE) {
-                        memberList.add(new MemberCompetitive(strArray[0], strArray[1], strArray[2], isActive,Enum.SwimDiscipline.valueOf(strArray[5])));
+                        memberList.add(new MemberCompetitive(strArray[0], strArray[1], strArray[2], isActive, Enum.SwimDiscipline.valueOf(strArray[5])));
+
                     } else {
                         memberList.add(new MemberRegular(strArray[0], strArray[1], strArray[2], isActive));
                     }

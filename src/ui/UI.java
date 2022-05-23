@@ -6,7 +6,6 @@ import membership.RecordTimePractice;
 import utilities.Enum;
 import membership.Team;
 import swimclub.User;
-import swimclub.Controller;
 import utilities.Utility;
 
 import java.util.ArrayList;
@@ -539,9 +538,23 @@ public class UI {
         displaySubscription(strArray);
     }
 
+    public void whatToChangeCompetitive() {
+        System.out.println("What do you want to change?");
+        System.out.println("1. Name");
+        System.out.println("2. Birth date");
+        System.out.println("3. Active or passive");
+        System.out.println("4. Regular or competitive");
+        System.out.println("5. Swimming discipline");
+        System.out.print("Select command: ");
+    }
+
     public void whatToChange() {
         System.out.println("What do you want to change?");
-        System.out.println("1. Name"+"\n2. Birth date"+"\n3. Active or passive"+ "\n4. Regular or competitive");
+        System.out.println("1. Name");
+        System.out.println("2. Birth date");
+        System.out.println("3. Active or passive");
+        System.out.println("4. Regular or competitive");
+        System.out.print("Select command: ");
     }
 
     public void typeMemberIdPlease() {
@@ -626,5 +639,9 @@ public class UI {
 
     public void displayPleaseEnterValidUserId(int userID) {
         System.out.println("Please enter a valid UserID. You entered: " + userID);
+    }
+
+    public void displayFailedToAddMemberPracticeRecord() {
+        System.out.println("Failed to add member practice record.");
     }
 }

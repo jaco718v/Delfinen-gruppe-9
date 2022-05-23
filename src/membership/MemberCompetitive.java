@@ -26,6 +26,10 @@ public class MemberCompetitive extends Member {
         return swimDiscipline;
     }
 
+    public void setSwimDiscipline(Enum.SwimDiscipline swimDiscipline) {
+        this.swimDiscipline = swimDiscipline;
+    }
+
     public ArrayList<RecordTimePractice> getBestPracticeRecords() {
         return bestPracticeRecords;
     }
