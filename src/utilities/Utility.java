@@ -98,6 +98,30 @@ public class Utility {
         return age;
     }
 
+    public int convertDateToAgeToMonths(String string) {
+        Scanner dateInputScanner = new Scanner(string);
+        dateInputScanner.useDelimiter("/");
+        int day = Integer.parseInt(dateInputScanner.next());
+        int month = Integer.parseInt(dateInputScanner.next());
+        int year = Integer.parseInt(dateInputScanner.next());
+        int age;
+        int ageMonths;
+        if ((day < LocalDateTime.now().getDayOfMonth()) && (month < LocalDateTime.now().getMonth().getValue())) {
+            age = LocalDateTime.now().getYear() - year;
+            ageMonths = age * 12 + LocalDateTime.now().getMonth().getValue() - month + 1;
+        } else if ((day >= LocalDateTime.now().getDayOfMonth()) && (month < LocalDateTime.now().getMonth().getValue())) {
+            age = LocalDateTime.now().getYear() - year;
+            ageMonths = (age * 12) + LocalDateTime.now().getMonth().getValue() - month;
+        } else if ((day < LocalDateTime.now().getDayOfMonth()) && (month >= LocalDateTime.now().getMonth().getValue())) {
+            age = LocalDateTime.now().getYear() - year;
+            ageMonths = (age * 12) + LocalDateTime.now().getMonth().getValue() - month + 1;
+        } else {
+            age = LocalDateTime.now().getYear() - year;
+            ageMonths = (age * 12) + LocalDateTime.now().getMonth().getValue() - month;
+        }
+        return ageMonths;
+    }
+
     public String addMemberId() {
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         String returnValue = "FULL";

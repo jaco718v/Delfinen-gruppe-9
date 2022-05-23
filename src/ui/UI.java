@@ -640,8 +640,4 @@ public class UI {
     public void displayPleaseEnterValidUserId(int userID) {
         System.out.println("Please enter a valid UserID. You entered: " + userID);
     }
-
-    public void displayFailedToAddMemberPracticeRecord() {
-        System.out.println("Failed to add member practice record.");
-    }
 }

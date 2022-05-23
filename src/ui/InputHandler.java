@@ -418,6 +418,7 @@ public class InputHandler {
                 String[] strArray = subscriptionData.get(i);
                 if (strArray[0].equals(userIdInput)) {
                     foundId = Integer.toString(i);
+                    enteredUserId = true;
                 }
             }
             if (foundId.equals("-1")) {
