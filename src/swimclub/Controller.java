@@ -101,10 +101,10 @@ public class Controller {
                     for (String[] strArray : memberRecords) {
                         if (member.getId().equals(strArray[0])) {
                             if (strArray[4].equals("practice")) {
-                                ((MemberCompetitive) member).AddRecordPractice(new RecordTimePractice(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3]));
+                                ((MemberCompetitive) member).addRecordPractice(new RecordTimePractice(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3]));
                             }
-                            if (strArray.length>5) {
-                                ((MemberCompetitive) member).AddRecordCompetition(new RecordTimeCompetition(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3], strArray[4], Integer.parseInt(strArray[5])));
+                            if (strArray.length > 5) {
+                                ((MemberCompetitive) member).addRecordCompetition(new RecordTimeCompetition(strArray[0], Enum.SwimDiscipline.valueOf(strArray[1]), Double.parseDouble(strArray[2]), strArray[3], strArray[4], Integer.parseInt(strArray[5])));
 
                             }
                         }
