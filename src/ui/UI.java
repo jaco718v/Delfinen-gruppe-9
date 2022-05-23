@@ -8,6 +8,7 @@ import membership.Team;
 import swimclub.User;
 import utilities.Utility;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class UI {
@@ -39,14 +40,132 @@ public class UI {
         }
     }
 
-    // MAIN/SUB MENU INPUTS
+   // Commands UI
+
+    public void listCommandsUserMenuLoginOnly() {
+        System.out.println();
+        System.out.println("User Commands:");
+        System.out.println("1. Login user");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsUserMenu() {
+        System.out.println();
+        System.out.println("User Commands:");
+        System.out.println("1. Login user");
+        System.out.println("2. Add user");
+        System.out.println("3. Remove user");
+        System.out.println("4. Show users");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsMemberMenu() {
+        System.out.println();
+        System.out.println("Member Commands:");
+        System.out.println("1. Add member");
+        System.out.println("2. Edit member");
+        System.out.println("3. Remove member");
+        System.out.println("4. Show members");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsSubscriptionMenu() {
+        System.out.println();
+        System.out.println("Subscription Commands:");
+        System.out.println("1. Set payment status");
+        System.out.println("2. Show subscriptions");
+        System.out.println("3. Show expected subscription fees");
+        System.out.println("4. Show members in arrears");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsSwimmerMenu() {
+        System.out.println();
+        System.out.println("Swimmer Commands:");
+        System.out.println("1. Add coach to team");
+        System.out.println("2. Remove coach from team");
+        System.out.println("3. Show top swimmers");
+        System.out.println("4. Show all swimmer records");
+        System.out.println("5. Add swimmer record");
+        System.out.println("6. View swimmer records");
+        System.out.println("0. Back");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsAdmin() {
+        System.out.println();
+        System.out.println("Admin Commands:");
+        System.out.println("1. User menu");
+        System.out.println("2. Member menu");
+        System.out.println("3. Subscription menu");
+        System.out.println("4. Swimmer menu");
+        System.out.println("0. Exit program");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsChairman() {
+        System.out.println();
+        System.out.println("Chairman Commands:");
+        System.out.println("1. User menu");
+        System.out.println("2. Member menu");
+        System.out.println("0. Exit program");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsCashier() {
+        System.out.println();
+        System.out.println("Cashier Commands:");
+        System.out.println("1. User menu");
+        System.out.println("2. Subscription menu");
+        System.out.println("0. Exit program");
+        System.out.print("Select command: ");
+    }
+
+    public void listCommandsCoach() {
+        System.out.println();
+        System.out.println("Coach Commands:");
+        System.out.println("1. User menu");
+        System.out.println("2. Swimmer menu");
+        System.out.println("0. Exit program");
+        System.out.print("Select command: ");
+    }
+
+    public void displayNoSuchCommand(String command) {
+        System.out.println("No such command: " + command);
+    }
+
+    public void listCommandsNotLoggedIn() {
+        System.out.println();
+        System.out.println("Login Commands:");
+        System.out.println("1. Login user");
+        System.out.println("0. Exit program");
+        System.out.print("Select command: ");
+    }
 
 
-    // INPUTS
+    // Member Controller UI
+    public void addMember(boolean success) {
 
+        if (success) {
+            System.out.println("Successfully added member.");
+        } else {
+            System.out.println("Failed to add member.");
+        }
+    }
 
-    // INPUT RESPONSES
+    public void removeMember(boolean success) {
+        if (success) {
+            System.out.println("Successfully removed member.");
+        } else {
+            System.out.println("Failed to remove member.");
+        }
+    }
 
+    // User Controller UI
 
     public void loginUser(boolean success) {
         if (success) {
@@ -72,22 +191,123 @@ public class UI {
         }
     }
 
-    public void addMember(boolean success) {
+    // Input Handler UI
 
-        if (success) {
-            System.out.println("Successfully added member.");
+
+    public void displayPleaseTypeUserLoginName() {
+        System.out.print("Please type user login name: ");
+    }
+
+    public void displayPleaseEnterValidName(String memberName) {
+        System.out.println("Please enter a valid name. You entered: " + memberName);
+    }
+
+    public void displayPleaseTypeLoginPassword() {
+        System.out.print("Please type user login password: ");
+    }
+
+    public void displayBadPassword(String userPassword) {
+        System.out.println("Bad password, try something else than: " + userPassword);
+    }
+
+    public void displayPleaseSelectUserType() {
+        System.out.println("Please select one of the following user types:");
+        System.out.println("1. ADMIN");
+        System.out.println("2. CHAIRMAN");
+        System.out.println("3. CASHIER");
+        System.out.println("4. COACH");
+        System.out.print("Select user type: ");
+    }
+
+    public void displayPleaseEnterValidUserName(String userName) {
+        System.out.println("Please enter a valid user name. You entered: " + userName);
+    }
+
+    public void displayPleaseEnterUserId() {
+        System.out.print("Please enter the ID of the User: ");
+    }
+
+    public void displayNoSuchMemberFound() {
+        System.out.println("No such member found.");
+    }
+
+    public void displayPleaseEnterMemberName() {
+        System.out.print("Please enter Member Name: ");
+    }
+
+    public void displayPleaseEnterMemberBirthDay() {
+        System.out.print("Please enter birth day: ");
+    }
+
+    public void displayPleaseEnterValidBirthDay() {
+        System.out.println("Please enter a valid birth day.");
+    }
+
+    public void displayPleaseEnterValidBirthMonth() {
+        System.out.println("Please enter a valid birth month.");
+    }
+
+    public void displayPleaseEnterValidBirthYear() {
+        System.out.println("Please enter a valid birth year.");
+    }
+
+    public void displayPleaseEnterMemberBirthMonth() {
+        System.out.print("Please enter birth month: ");
+    }
+
+    public void displayPleaseEnterMemberYear() {
+        System.out.print("Please enter birth year: ");
+    }
+
+    public void displayActiveOrPassiveOptions(){
+        System.out.println("""                               
+                               Is this an active or passive member?
+                               1. Active
+                               2. Passive""");
+        System.out.print("Select command: ");
+    }
+
+    public void displayActiveOrPassiveOutcome(boolean b) {
+        if (b) {
+            System.out.println("Member is active.");
         } else {
-            System.out.println("Failed to add member.");
+            System.out.println("Member is passive.");
         }
     }
 
-    public void removeMember(boolean success) {
-        if (success) {
-            System.out.println("Successfully removed member.");
-        } else {
-            System.out.println("Failed to remove member.");
-        }
+    public void displayDefaultOption(){
+        System.out.println("You've have entered invalid information");
     }
+
+    public void displayCompOrRegOptions() {
+        System.out.println("""                               
+            Is this a competitive or regular member?
+            1. Competitive                             
+            2. Regular """);
+        System.out.print("Select command: ");
+    }
+
+    public void displayCompOrReg(){
+        System.out.println("No such option.");
+    }
+
+    public void displayEnterDate() {
+        System.out.print("Enter date of the record in the following format: dd/mm/yyyy: ");
+    }
+
+    public void displayEnterDateException() {
+        System.out.println("Error in input, please only type in the format: dd/mm/yyyy");
+    }
+
+
+
+
+
+
+
+
+
+
 
     public void showExpectedSubscriptionFees(double subscriptionFees) {
         System.out.println("Expected subscription fees:");
@@ -142,13 +362,7 @@ public class UI {
         System.out.println("Error in input, try again.");
     }
 
-    public void displayEnterDate() {
-        System.out.print("Enter date of the record in the following format: dd/mm/yyyy: ");
-    }
 
-    public void displayEnterDateException() {
-        System.out.println("Error in input, please only type in the format: dd/mm/yyyy");
-    }
 
     public void displayEnterConventionName() {
         System.out.print("Enter the name of the competition or convention: ");
@@ -241,45 +455,17 @@ public class UI {
         return  swimString;
     }
 
-    public void displayPleaseTypeUserLoginName() {
-        System.out.print("Please type user login name: ");
-    }
 
-    public void displayPleaseEnterValidName(String memberName) {
-        System.out.println("Please enter a valid name. You entered: " + memberName);
-    }
 
-    public void displayActiveOrPassiveOptions(){
-        System.out.println("""                               
-                               Is this an active or passive member?
-                               1. Active
-                               2. Passive""");
-        System.out.print("Select command: ");
-    }
 
-    public void displayDefaultOption(){
-        System.out.println("You've have entered invalid information");
-    }
 
-    public void displayCompOrRegOptions() {
-        System.out.println("""                               
-            Is this a competitive or regular member?
-            1. Competitive                             
-            2. Regular """);
-        System.out.print("Select command: ");
-    }
 
-    public void displayCompOrReg(){
-        System.out.println("No such option.");
-    }
 
-    public void displayPleaseTypeLoginPassword() {
-        System.out.print("Please type user login password: ");
-    }
 
-    public void displayPleaseEnterValidUserName(String userName) {
-        System.out.println("Please enter a valid user name. You entered: " + userName);
-    }
+
+
+
+
 
     public void displayWrongPassword() {
         System.out.println("Wrong password, try again.");
@@ -299,130 +485,12 @@ public class UI {
         System.out.println("Logged in user does not have privileges for this action.");
     }
 
-    public void displayBadPassword(String userPassword) {
-        System.out.println("Bad password, try something else than: " + userPassword);
-    }
 
-    public void displayPleaseSelectUserType() {
-        System.out.println("Please select one of the following user types:");
-        System.out.println("1. ADMIN");
-        System.out.println("2. CHAIRMAN");
-        System.out.println("3. CASHIER");
-        System.out.println("4. COACH");
-        System.out.print("Select user type: ");
-    }
 
-    public void displayActiveOrPassiveOutcome(boolean b) {
-        if (b) {
-            System.out.println("Member is active.");
-        } else {
-            System.out.println("Member is passive.");
-        }
-    }
 
-    public void displayNoSuchCommand(String command) {
-        System.out.println("No such command: " + command);
-    }
 
-    public void listCommandsNotLoggedIn() {
-        System.out.println();
-        System.out.println("Login Commands:");
-        System.out.println("1. Login user");
-        System.out.println("0. Exit program");
-        System.out.print("Select command: ");
-    }
 
-    public void listCommandsAdmin() {
-        System.out.println();
-        System.out.println("Admin Commands:");
-        System.out.println("1. User menu");
-        System.out.println("2. Member menu");
-        System.out.println("3. Subscription menu");
-        System.out.println("4. Swimmer menu");
-        System.out.println("0. Exit program");
-        System.out.print("Select command: ");
-    }
 
-    public void listCommandsChairman() {
-        System.out.println();
-        System.out.println("Chairman Commands:");
-        System.out.println("1. User menu");
-        System.out.println("2. Member menu");
-        System.out.println("0. Exit program");
-        System.out.print("Select command: ");
-    }
-
-    public void listCommandsCashier() {
-        System.out.println();
-        System.out.println("Cashier Commands:");
-        System.out.println("1. User menu");
-        System.out.println("2. Subscription menu");
-        System.out.println("0. Exit program");
-        System.out.print("Select command: ");
-    }
-
-    public void listCommandsCoach() {
-        System.out.println();
-        System.out.println("Coach Commands:");
-        System.out.println("1. User menu");
-        System.out.println("2. Swimmer menu");
-        System.out.println("0. Exit program");
-        System.out.print("Select command: ");
-    }
-
-    public void listCommandsUserMenu() {
-        System.out.println();
-        System.out.println("User Commands:");
-        System.out.println("1. Login user");
-        System.out.println("2. Add user");
-        System.out.println("3. Remove user");
-        System.out.println("4. Show users");
-        System.out.println("0. Back");
-        System.out.print("Select command: ");
-    }
-
-    public void listCommandsUserMenuLoginOnly() {
-        System.out.println();
-        System.out.println("User Commands:");
-        System.out.println("1. Login user");
-        System.out.println("0. Back");
-        System.out.print("Select command: ");
-    }
-
-    public void listCommandsMemberMenu() {
-        System.out.println();
-        System.out.println("Member Commands:");
-        System.out.println("1. Add member");
-        System.out.println("2. Edit member");
-        System.out.println("3. Remove member");
-        System.out.println("4. Show members");
-        System.out.println("0. Back");
-        System.out.print("Select command: ");
-    }
-
-    public void listCommandsSubscriptionMenu() {
-        System.out.println();
-        System.out.println("Subscription Commands:");
-        System.out.println("1. Set payment status");
-        System.out.println("2. Show subscriptions");
-        System.out.println("3. Show expected subscription fees");
-        System.out.println("4. Show members in arrears");
-        System.out.println("0. Back");
-        System.out.print("Select command: ");
-    }
-
-    public void listCommandsSwimmerMenu() {
-        System.out.println();
-        System.out.println("Swimmer Commands:");
-        System.out.println("1. Add coach to team");
-        System.out.println("2. Remove coach from team");
-        System.out.println("3. Show top swimmers");
-        System.out.println("4. Show all swimmer records");
-        System.out.println("5. Add swimmer record");
-        System.out.println("6. View swimmer records");
-        System.out.println("0. Back");
-        System.out.print("Select command: ");
-    }
 
     public void displayMemberInformation(String[] strArray) {
         System.out.print("MemberID: " + strArray[0]);
@@ -491,13 +559,13 @@ public class UI {
         System.out.println();
     }
 
-    public void displaySubscriptionsInArrears() {
+   /* public void displaySubscriptionsInArrears(//String[] strArray) {
         System.out.println("Subscriptions in arrears:");
-    }
+        System.out.println("MemberID: "+ strArray[0] + "- Name: " + strArray[1] + "Time in arrears: ");
 
-    public void displayPleaseEnterUserId() {
-        System.out.print("Please enter the ID of the User: ");
-    }
+    }*/
+
+
 
     public void displayPleaseEnterPaymentStatus() {
         System.out.println("Set new payment status:");
@@ -506,9 +574,7 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void displayPleaseEnterMemberName() {
-        System.out.print("Please enter Member Name: ");
-    }
+
 
     public void displaySelectedSwimmerMenu() {
         System.out.println("Selected Swimmer Menu.");
@@ -562,33 +628,15 @@ public class UI {
         System.out.println("Name has been changed.");
     }
 
-    public void displayPleaseEnterMemberBirthDay() {
-        System.out.print("Please enter birth day: ");
-    }
 
-    public void displayPleaseEnterMemberBirthMonth() {
-        System.out.print("Please enter birth month: ");
-    }
 
-    public void displayPleaseEnterMemberYear() {
-        System.out.print("Please enter birth year: ");
-    }
 
-    public void displayPleaseEnterValidBirthDay() {
-        System.out.println("Please enter a valid birth day.");
-    }
 
-    public void displayPleaseEnterValidBirthMonth() {
-        System.out.println("Please enter a valid birth month.");
-    }
 
-    public void displayPleaseEnterValidBirthYear() {
-        System.out.println("Please enter a valid birth year.");
-    }
 
-    public void displayNoSuchMemberFound() {
-        System.out.println("No such member found.");
-    }
+
+
+
 
     public void enterMemberId(boolean success) {
         if (success) {
