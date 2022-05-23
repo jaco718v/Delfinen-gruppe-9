@@ -111,6 +111,10 @@ public class UI {
         System.out.println("MemberID not found in database of competitive members");
     }
 
+    public void noMemberRecords(){
+        System.out.println("No records found in database");
+    }
+
     public void DisplayRecordTypeChoice() {
         System.out.println("Record-types: ");
         System.out.println("1. Practice record");

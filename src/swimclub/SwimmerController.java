@@ -136,16 +136,21 @@ public class SwimmerController {
 
     public void showAllSwimmers(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
+            boolean recordEmpty = true;
             for(Team team : teamArray){
                 if(team.getTeamType().equals(Enum.TeamType.COMPETITIVE)){
                     for(int i = 0; i<team.getMembers().size(); i++){
                         ArrayList<RecordTime> memberRecords = team.findRecordsOfSwimmer(team.getMembers().get(i).getId());
                         if(memberRecords.size()!=0){
+                            recordEmpty = false;
                             String memberName = team.findCompetitiveMemberNameWithID(team.getMembers().get(i).getId());
                             ui.displayMemberRecords(memberRecords,team.getMembers().get(i).getId(),memberName);
                         }
                     }
                 }
+            }
+            if(recordEmpty){
+                ui.noMemberRecords();
             }
         } else {
             ui.loggedInUserNoPrivilege();
@@ -191,6 +196,9 @@ public class SwimmerController {
                 }
                 ui.displayRecordAddSucces(recordType);
             }
+            else{
+                ui.memberIDNotFound();
+            }
         } else {
             ui.loggedInUserNoPrivilege();
         }
@@ -198,7 +206,7 @@ public class SwimmerController {
 
     private Team findCompetitiveTeamWithID(ArrayList<Team> teamArray, String memberID){
         for (Team team : teamArray){
-            if(team.confirmCompetitiveMemberID(memberID)){
+            if(team.confirmCompetitiveMemberID(memberID) && team.getTeamType().equals(Enum.TeamType.COMPETITIVE)){
                 return team;
             }
         }
@@ -244,9 +252,12 @@ public class SwimmerController {
                 if(memberRecords.size()!=0){
                 ui.displayMemberRecords(memberRecords,memberID,memberName);
                 }
-        } else {
+        }
+            else{
+                ui.memberIDNotFound();
+            }}
+        else {
             ui.loggedInUserNoPrivilege();
         }
-    }
     }
 }
