@@ -174,17 +174,17 @@ public class Utility {
                 ui.displayTeamInformation(teamNumber, team);
                 if (!teamsOnly) {
                     for (String[] strArray : memberData) {
-                        int age = convertDateToAge(strArray[2]);
+                        int age = convertDateToAge(strArray[3]);
                         if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
-                            if ((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) {
+                            if ((strArray[5].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) {
                                 ui.displayMemberInformation(strArray);
-                            } else if ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR) && (!competitiveOnly)) {
+                            } else if ((strArray[5].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR) && (!competitiveOnly)) {
                                 ui.displayMemberInformation(strArray);
                             }
                         } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
-                            if ((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) {
+                            if ((strArray[5].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) {
                                 ui.displayMemberInformation(strArray);
-                            } else if ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR) && (!competitiveOnly)) {
+                            } else if ((strArray[5].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR) && (!competitiveOnly)) {
                                 ui.displayMemberInformation(strArray);
                             }
                         }

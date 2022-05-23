@@ -67,8 +67,8 @@ public class Controller {
             for (String[] strArray : memberData) {
                 Enum.TeamType teamType;
                 Enum.AgeGroup ageGroup;
-                int age = util.convertDateToAge(strArray[2]);
-                if (strArray[4].equals("true")) {
+                int age = util.convertDateToAge(strArray[3]);
+                if (strArray[5].equals("true")) {
                     teamType = Enum.TeamType.COMPETITIVE;
                 } else {
                     teamType = Enum.TeamType.REGULAR;
@@ -78,14 +78,14 @@ public class Controller {
                 } else {
                     ageGroup = Enum.AgeGroup.O18;
                 }
-                boolean isActive = strArray[3].equals("true");
+                boolean isActive = strArray[4].equals("true");
                 if ((team.getTeamType() == teamType) && (team.getAgeGroup() == ageGroup)) {
                     ArrayList<Member> memberList = team.getMemberList();
                     if (teamType == Enum.TeamType.COMPETITIVE) {
-                        memberList.add(new MemberCompetitive(strArray[0], strArray[1], strArray[2], isActive, Enum.SwimDiscipline.valueOf(strArray[5])));
+                        memberList.add(new MemberCompetitive(strArray[0], strArray[1], strArray[2], strArray[3], isActive, Enum.SwimDiscipline.valueOf(strArray[5])));
 
                     } else {
-                        memberList.add(new MemberRegular(strArray[0], strArray[1], strArray[2], isActive));
+                        memberList.add(new MemberRegular(strArray[0], strArray[1], strArray[2], strArray[3], isActive));
                     }
                     team.setMemberList(memberList);
                 }

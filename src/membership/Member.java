@@ -8,13 +8,15 @@ import java.util.ArrayList;
 public abstract class Member {
   private Utility util = new Utility();
   private String id;
+  private String memberSinceDate;
   private String name;
   private String birthDate;
   private boolean active;
   private Enum.AgeGroup ageGroup;
 
-  public Member(String id, String name, String birthDate, boolean active) {
+  public Member(String id, String memberSinceDate, String name, String birthDate, boolean active) {
     this.id = id;
+    this.memberSinceDate = memberSinceDate;
     this.name = name;
     this.birthDate = birthDate;
     this.active = active;
@@ -56,5 +58,9 @@ public abstract class Member {
 
   public Enum.AgeGroup getAgeGroup() {
     return ageGroup;
+  }
+
+  public String getMemberSinceDate() {
+    return memberSinceDate;
   }
 }

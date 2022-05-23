@@ -426,21 +426,22 @@ public class UI {
 
     public void displayMemberInformation(String[] strArray) {
         System.out.print("MemberID: " + strArray[0]);
-        System.out.print(" - Name: " + addDotsToStringToFillXCharacters(strArray[1], 30));
-        System.out.print(" - Birth date: " + strArray[2]);
-        int age = util.convertDateToAge(strArray[2]);
+        System.out.print(" - Member since: " + strArray[1]);
+        System.out.print(" - Name: " + addDotsToStringToFillXCharacters(strArray[2], 30));
+        System.out.print(" - Birth date: " + strArray[3]);
+        int age = util.convertDateToAge(strArray[3]);
         System.out.print(" - Age: " + age);
         if (age < 100) {
             System.out.print(" ");
         }
-        if (strArray[3].equals("true")) {
+        if (strArray[4].equals("true")) {
             System.out.print(" - Active ");
-        } else if (strArray[3].equals("false")) {
+        } else if (strArray[4].equals("false")) {
             System.out.print(" - Passive");
         }
-        if (strArray[4].equals("true")) {
+        if (strArray[5].equals("true")) {
             System.out.print(" - Competitive");
-        } else if (strArray[4].equals("false")) {
+        } else if (strArray[5].equals("false")) {
             System.out.print(" - Regular    ");
         }
         System.out.println();

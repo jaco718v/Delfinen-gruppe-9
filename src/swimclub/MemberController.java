@@ -10,6 +10,7 @@ import ui.InputHandler;
 import ui.UI;
 import utilities.Utility;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MemberController {
@@ -24,6 +25,7 @@ public class MemberController {
 
             String memberId = util.addMemberId();
             if (!memberId.equals("FULL")) {
+                String memberSince = String.format("%02d", LocalDateTime.now().getDayOfMonth()) + "/" + String.format("%02d", LocalDateTime.now().getMonthValue()) + "/" + LocalDateTime.now().getYear();
                 String memberName = input.addMemberName();
                 String memberBirthDate = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
                 String isActive = input.addPassiveOrActive();
@@ -33,18 +35,18 @@ public class MemberController {
                     swimDiscipline = String.valueOf(input.addSwimDisciplineToRecordViaInput());
                 }
 
-                newMemberData.add(new String[]{ memberId, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline });
+                newMemberData.add(new String[] { memberId, memberSince, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline });
                 boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
                 boolean isActiveBool = isActive.equals("true");
                 for (Team team : con.getTeamArray()) {
                     if ((team.getTeamType() == Enum.TeamType.COMPETITIVE) && (isCompetitive.equals("true")) && (team.getAgeGroup() == Enum.AgeGroup.U18) && (util.convertDateToAge(memberBirthDate) < 18)) {
-                        team.getMemberList().add(new MemberCompetitive(memberId, memberName, memberBirthDate, isActiveBool,Enum.SwimDiscipline.valueOf(swimDiscipline)));
+                        team.getMemberList().add(new MemberCompetitive(memberId, memberSince, memberName, memberBirthDate, isActiveBool,Enum.SwimDiscipline.valueOf(swimDiscipline)));
                     } else if ((team.getTeamType() == Enum.TeamType.COMPETITIVE) && (isCompetitive.equals("true")) && (team.getAgeGroup() == Enum.AgeGroup.O18) && (util.convertDateToAge(memberBirthDate) >= 18)) {
-                        team.getMemberList().add(new MemberCompetitive(memberId, memberName, memberBirthDate, isActiveBool,Enum.SwimDiscipline.valueOf(swimDiscipline)));
+                        team.getMemberList().add(new MemberCompetitive(memberId, memberSince, memberName, memberBirthDate, isActiveBool,Enum.SwimDiscipline.valueOf(swimDiscipline)));
                     } else if ((team.getTeamType() == Enum.TeamType.REGULAR) && (isCompetitive.equals("false")) && (team.getAgeGroup() == Enum.AgeGroup.U18) && (util.convertDateToAge(memberBirthDate) < 18)) {
-                        team.getMemberList().add(new MemberRegular(memberId, memberName, memberBirthDate, isActiveBool));
+                        team.getMemberList().add(new MemberRegular(memberId, memberSince, memberName, memberBirthDate, isActiveBool));
                     } else if ((team.getTeamType() == Enum.TeamType.REGULAR) && (isCompetitive.equals("false")) && (team.getAgeGroup() == Enum.AgeGroup.O18) && (util.convertDateToAge(memberBirthDate) >= 18)) {
-                        team.getMemberList().add(new MemberRegular(memberId, memberName, memberBirthDate, isActiveBool));
+                        team.getMemberList().add(new MemberRegular(memberId, memberSince, memberName, memberBirthDate, isActiveBool));
                     }
                 }
                 con.getSubscriptionController().updateSubscriptions();
@@ -69,28 +71,28 @@ public class MemberController {
                     String command = "";
                     boolean selectedEditType = false;
                     while (!selectedEditType) {
-                        if (array[4].equals("true")) {
+                        if (array[5].equals("true")) {
                             ui.whatToChangeCompetitive();
                             command = input.enterMemberEditTypeCompetitive();
                             switch (command) {
                                 case "1" -> {
-                                    array[1] = input.addMemberName();
+                                    array[2] = input.addMemberName();
                                     selectedEditType = true;
                                 }
                                 case "2" -> {
-                                    array[2] = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
+                                    array[3] = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
                                     selectedEditType = true;
                                 }
                                 case "3" -> {
-                                    array[3] = input.addPassiveOrActive();
+                                    array[4] = input.addPassiveOrActive();
                                     selectedEditType = true;
                                 }
                                 case "4" -> {
-                                    array[4] = input.addCompetitiveMember();
+                                    array[5] = input.addCompetitiveMember();
                                     selectedEditType = true;
                                 }
                                 case "5" -> {
-                                    array[5] = String.valueOf(input.addSwimDisciplineToRecordViaInput());
+                                    array[6] = String.valueOf(input.addSwimDisciplineToRecordViaInput());
                                     selectedEditType = true;
                                 }
                             }
@@ -99,19 +101,19 @@ public class MemberController {
                             command = input.enterMemberEditType();
                             switch (command) {
                                 case "1" -> {
-                                    array[1] = input.addMemberName();
+                                    array[2] = input.addMemberName();
                                     selectedEditType = true;
                                 }
                                 case "2" -> {
-                                    array[2] = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
+                                    array[3] = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
                                     selectedEditType = true;
                                 }
                                 case "3" -> {
-                                    array[3] = input.addPassiveOrActive();
+                                    array[4] = input.addPassiveOrActive();
                                     selectedEditType = true;
                                 }
                                 case "4" -> {
-                                    array[4] = input.addCompetitiveMember();
+                                    array[5] = input.addCompetitiveMember();
                                     selectedEditType = true;
                                 }
                             }
@@ -129,15 +131,15 @@ public class MemberController {
                         for (int j = 0; j < team.getMemberList().size(); j++) {
                             Member currentMember = team.getMemberList().get(j);
                             if (editMember.equals(currentMember.getId())) {
-                                boolean isActive = array[3].equals("true");
-                                boolean isCompetitive = array[4].equals("true");
+                                boolean isActive = array[5].equals("true");
+                                boolean isCompetitive = array[6].equals("true");
                                 switch (command) {
                                     case "1" -> {
-                                        currentMember.setName(array[1]);
+                                        currentMember.setName(array[2]);
                                         editedMember = true;
                                     }
                                     case "2" -> {
-                                        currentMember.setBirthDate(array[2]);
+                                        currentMember.setBirthDate(array[3]);
                                         editedMember = true;
                                     }
                                     case "3" -> {
@@ -147,15 +149,15 @@ public class MemberController {
                                     case "4" -> {
                                         team.getMemberList().remove(j);
                                         if (isCompetitive) {
-                                            team.getMemberList().add(j, new MemberCompetitive(currentMember.getId(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive(),Enum.SwimDiscipline.valueOf(array[5])));
+                                            team.getMemberList().add(j, new MemberCompetitive(currentMember.getId(), currentMember.getMemberSinceDate(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive(),Enum.SwimDiscipline.valueOf(array[5])));
                                         } else {
-                                            team.getMemberList().add(j, new MemberRegular(currentMember.getId(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive()));
+                                            team.getMemberList().add(j, new MemberRegular(currentMember.getId(), currentMember.getMemberSinceDate(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive()));
                                         }
                                         editedMember = true;
                                     }
                                     case "5" -> {
                                         if (isCompetitive) {
-                                            ((MemberCompetitive) currentMember).setSwimDiscipline(Enum.SwimDiscipline.valueOf(array[5]));
+                                            ((MemberCompetitive) currentMember).setSwimDiscipline(Enum.SwimDiscipline.valueOf(array[6]));
                                             editedMember = true;
                                         }
                                     }
