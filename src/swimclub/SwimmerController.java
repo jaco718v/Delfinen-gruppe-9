@@ -160,7 +160,7 @@ public class SwimmerController {
     private boolean updateRecordInCSV(ArrayList<String[]> recordList, String[] newRecord) {
         boolean previousRecordFound = false;
         for (String[] record : recordList) {
-            if (record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])) {
+            if (record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1]) && record.length==5) {
                 recordList.set(recordList.indexOf(record), newRecord);
                 previousRecordFound = true;
                 fileHandler.overwriteCSV("Records.csv", recordList);
