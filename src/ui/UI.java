@@ -192,7 +192,7 @@ public class UI {
     }
 
     public void displayTopFiveError() {
-        System.out.println("There are no swimmers records in that swim discipline");
+        System.out.println("There are no swimmer records in that swim discipline and/or age group");
     }
 
     public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberID, String memberName) {

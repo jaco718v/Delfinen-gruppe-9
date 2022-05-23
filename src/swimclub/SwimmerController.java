@@ -252,6 +252,9 @@ public class SwimmerController {
                 if(memberRecords.size()!=0){
                 ui.displayMemberRecords(memberRecords,memberID,memberName);
                 }
+                else{
+                    ui.noMemberRecords();
+                }
         }
             else{
                 ui.memberIDNotFound();
