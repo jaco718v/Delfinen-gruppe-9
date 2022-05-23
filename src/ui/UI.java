@@ -559,22 +559,12 @@ public class UI {
         System.out.println();
     }
 
-   /* public void displaySubscriptionsInArrears(//String[] strArray) {
-        System.out.println("Subscriptions in arrears:");
-        System.out.println("MemberID: "+ strArray[0] + "- Name: " + strArray[1] + "Time in arrears: ");
-
-    }*/
-
-
-
     public void displayPleaseEnterPaymentStatus() {
         System.out.println("Set new payment status:");
         System.out.println("1. Has paid");
         System.out.println("2. In arrears");
         System.out.print("Select command: ");
     }
-
-
 
     public void displaySelectedSwimmerMenu() {
         System.out.println("Selected Swimmer Menu.");
@@ -627,16 +617,6 @@ public class UI {
     public void nameChanged() {
         System.out.println("Name has been changed.");
     }
-
-
-
-
-
-
-
-
-
-
 
     public void enterMemberId(boolean success) {
         if (success) {
