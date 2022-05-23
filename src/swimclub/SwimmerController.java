@@ -196,9 +196,6 @@ public class SwimmerController {
                 }
                 ui.displayRecordAddSucces(recordType);
             }
-            else{
-                ui.memberIDNotFound();
-            }
         } else {
             ui.loggedInUserNoPrivilege();
         }
@@ -256,9 +253,7 @@ public class SwimmerController {
                     ui.noMemberRecords();
                 }
         }
-            else{
-                ui.memberIDNotFound();
-            }}
+        }
         else {
             ui.loggedInUserNoPrivilege();
         }

@@ -418,7 +418,7 @@ public class UI {
         System.out.println("1. Add coach to team");
         System.out.println("2. Remove coach from team");
         System.out.println("3. Show top swimmers");
-        System.out.println("4. Show all swimmers");
+        System.out.println("4. Show all swimmer records");
         System.out.println("5. Add swimmer record");
         System.out.println("6. View swimmer records");
         System.out.println("0. Back");
