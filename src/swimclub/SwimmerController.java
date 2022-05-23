@@ -30,7 +30,7 @@ public class SwimmerController {
                 } else {
                     selectedCoach = loggedInUser;
                 }
-                util.displayMembers(loggedInUser, teamArray, true);
+                util.displayMembers(loggedInUser, teamArray, true, false);
                 Team selectedTeam = input.enterTeamToAddCoachTo(teamArray);
                 selectedTeam.setCoach(selectedCoach);
                 ArrayList<String[]> teamData = fileHandler.readCSV("Teams.csv");
@@ -65,7 +65,7 @@ public class SwimmerController {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             int amountOfCoaches = getAmountOfTeamsWithCoaches();
             if (amountOfCoaches > 0) {
-                util.displayMembers(loggedInUser, teamArray, true);
+                util.displayMembers(loggedInUser, teamArray, true, false);
                 Team selectedTeam = input.enterTeamToRemoveCoachFrom(teamArray);
                 User removedCoach = selectedTeam.getCoach();
                 selectedTeam.setCoach(null);
@@ -171,7 +171,7 @@ public class SwimmerController {
 
     public void addRecordToMember(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
-            util.displayMembers(loggedInUser, teamArray, false);
+            util.displayMembers(loggedInUser, teamArray, false, true);
             String memberID = input.enterCompetitiveMemberID();
             Team team = findCompetitiveTeamWithID(teamArray,memberID);
             if (team != null) {
@@ -243,7 +243,7 @@ public class SwimmerController {
 
     public void showMemberRecords(User loggedInUser, ArrayList<Team> teamArray) {
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
-            util.displayMembers(loggedInUser, teamArray, false);
+            util.displayMembers(loggedInUser, teamArray, false, true);
             String memberID = input.enterCompetitiveMemberID();
             Team team = findCompetitiveTeamWithID(teamArray,memberID);
             if (team != null) {

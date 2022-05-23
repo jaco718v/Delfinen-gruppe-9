@@ -140,7 +140,7 @@ public class Utility {
         return null;
     }
 
-    public void displayMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly) {
+    public void displayMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly, boolean competitiveOnly) {
         UI ui = new UI();
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
@@ -152,11 +152,15 @@ public class Utility {
                     for (String[] strArray : memberData) {
                         int age = convertDateToAge(strArray[2]);
                         if ((team.getAgeGroup() == Enum.AgeGroup.U18) && (age < 18)) {
-                            if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                            if ((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) {
+                                ui.displayMemberInformation(strArray);
+                            } else if ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR) && (!competitiveOnly)) {
                                 ui.displayMemberInformation(strArray);
                             }
                         } else if ((team.getAgeGroup() == Enum.AgeGroup.O18) && (age >= 18)) {
-                            if (((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) || ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR))) {
+                            if ((strArray[4].equals("true")) && (team.getTeamType() == Enum.TeamType.COMPETITIVE)) {
+                                ui.displayMemberInformation(strArray);
+                            } else if ((strArray[4].equals("false")) && (team.getTeamType() == Enum.TeamType.REGULAR) && (!competitiveOnly)) {
                                 ui.displayMemberInformation(strArray);
                             }
                         }
