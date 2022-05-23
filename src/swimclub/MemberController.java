@@ -177,6 +177,6 @@ public class MemberController {
     }
 
     public void showMembers(User loggedInUser, ArrayList<Team> teamArray) {
-        util.displayMembers(loggedInUser, teamArray, false);
+        util.displayMembers(loggedInUser, teamArray, false, false);
     }
 }
