@@ -126,6 +126,32 @@ public class Utility {
         return ageMonths;
     }
 
+    public String addDotsToStringToFillXCharacters(String string, int takeUpCharacters) {
+        if (!string.equals("")) {
+            for (int i = 0; i < takeUpCharacters; i++) {
+                if (i >= string.length()) {
+                    string += ".";
+                }
+            }
+            return string;
+        } else {
+            return null;
+        }
+    }
+
+    public String addSpacesToStringToFillXCharacters(String string, int takeUpCharacters) {
+        if (!string.equals("")) {
+            for (int i = 0; i < takeUpCharacters; i++) {
+                if (i >= string.length()) {
+                    string += " ";
+                }
+            }
+            return string;
+        } else {
+            return null;
+        }
+    }
+
     public String addMemberId() {
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         String returnValue = "FULL";
@@ -196,7 +222,7 @@ public class Utility {
                 }
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 }

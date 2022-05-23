@@ -57,7 +57,7 @@ public class SwimmerController {
                 ui.displayNoCoachesRegistered();
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -86,7 +86,7 @@ public class SwimmerController {
                 ui.displayNoCoachesRegistered();
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -150,10 +150,10 @@ public class SwimmerController {
                 }
             }
             if(recordEmpty){
-                ui.noMemberRecords();
+                ui.displayNoMemberRecords();
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -197,7 +197,7 @@ public class SwimmerController {
                 ui.displayRecordAddSucces(recordType);
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -207,7 +207,7 @@ public class SwimmerController {
                 return team;
             }
         }
-        ui.memberIDNotFound();
+        ui.displayMemberIDNotFound();
         return null;
     }
 
@@ -234,7 +234,7 @@ public class SwimmerController {
                 ui.displayTopFiveError();
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -250,12 +250,12 @@ public class SwimmerController {
                 ui.displayMemberRecords(memberRecords,memberID,memberName);
                 }
                 else{
-                    ui.noMemberRecords();
+                    ui.displayNoMemberRecords();
                 }
         }
         }
         else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 }

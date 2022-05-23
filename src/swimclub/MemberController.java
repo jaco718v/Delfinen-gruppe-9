@@ -50,12 +50,12 @@ public class MemberController {
                     }
                 }
                 con.getSubscriptionController().updateSubscriptions();
-                ui.addMember(success);
+                ui.displayAddMember(success);
             } else {
                 ui.displayMemberListFull();
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -118,7 +118,7 @@ public class MemberController {
                 }
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -158,16 +158,16 @@ public class MemberController {
                             break;
                         }
                     }
-                    ui.removeMember(true);
+                    ui.displayRemoveMember(true);
                     removedMember = true;
                     break;
                 }
             }
             if (!removedMember) {
-                ui.removeMember(false);
+                ui.displayRemoveMember(false);
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 

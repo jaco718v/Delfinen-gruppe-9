@@ -26,7 +26,7 @@ public class UserController {
             loggedInUser = new User(userName, userPassword, userType);
             con.setLoggedInUser(loggedInUser);
         } else {
-            ui.noRegisteredUsers();
+            ui.displayNoRegisteredUsers();
             addUser(null);
         }
     }
@@ -59,10 +59,10 @@ public class UserController {
                     }
                 }
             } else {
-                ui.loggedInUserNoPrivilege();
+                ui.displayLoggedInUserNoPrivilege();
             }
         } else {
-            ui.noRegisteredUsersCreatingAdmin();
+            ui.displayNoRegisteredUsersCreatingAdmin();
             userData.add(new String[]{"admin", "admin", Enum.UserType.ADMIN.name()});
             fileHandler.writeToCSV("Users.csv", userData);
         }
@@ -102,10 +102,10 @@ public class UserController {
                     ui.displayPleaseEnterValidUserId(userID);
                 }
             } else {
-                ui.noRegisteredUsers();
+                ui.displayNoRegisteredUsers();
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -117,7 +117,7 @@ public class UserController {
                 ui.displayUserInformation(strArray, loggedInUser, i);
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 }

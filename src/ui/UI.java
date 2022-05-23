@@ -8,37 +8,10 @@ import membership.Team;
 import swimclub.User;
 import utilities.Utility;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class UI {
     private final Utility util = new Utility();
-
-    public String addDotsToStringToFillXCharacters(String string, int takeUpCharacters) {
-        if (!string.equals("")) {
-            for (int i = 0; i < takeUpCharacters; i++) {
-                if (i >= string.length()) {
-                    string += ".";
-                }
-            }
-            return string;
-        } else {
-            return null;
-        }
-    }
-
-    public String addSpacesToStringToFillXCharacters(String string, int takeUpCharacters) {
-        if (!string.equals("")) {
-            for (int i = 0; i < takeUpCharacters; i++) {
-                if (i >= string.length()) {
-                    string += " ";
-                }
-            }
-            return string;
-        } else {
-            return null;
-        }
-    }
 
    // Commands UI
 
@@ -134,10 +107,6 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void displayNoSuchCommand(String command) {
-        System.out.println("No such command: " + command);
-    }
-
     public void listCommandsNotLoggedIn() {
         System.out.println();
         System.out.println("Login Commands:");
@@ -146,9 +115,13 @@ public class UI {
         System.out.print("Select command: ");
     }
 
+    public void displayNoSuchCommand(String command) {
+        System.out.println("No such command: " + command);
+    }
 
     // Member Controller UI
-    public void addMember(boolean success) {
+
+    public void displayAddMember(boolean success) {
 
         if (success) {
             System.out.println("Successfully added member.");
@@ -157,7 +130,7 @@ public class UI {
         }
     }
 
-    public void removeMember(boolean success) {
+    public void displayRemoveMember(boolean success) {
         if (success) {
             System.out.println("Successfully removed member.");
         } else {
@@ -167,7 +140,7 @@ public class UI {
 
     // User Controller UI
 
-    public void loginUser(boolean success) {
+    public void displayLoginUser(boolean success) {
         if (success) {
             System.out.println("Login successful.");
         } else {
@@ -175,7 +148,7 @@ public class UI {
         }
     }
 
-    public void addUser(boolean success) {
+    public void displayAddUser(boolean success) {
         if (success) {
             System.out.println("Successfully added user.");
         } else {
@@ -183,7 +156,7 @@ public class UI {
         }
     }
 
-    public void removeUser(boolean success) {
+    public void displayRemoveUser(boolean success) {
         if (success) {
             System.out.println("Successfully removed user.");
         } else {
@@ -192,7 +165,6 @@ public class UI {
     }
 
     // Input Handler UI
-
 
     public void displayPleaseTypeUserLoginName() {
         System.out.print("Please type user login name: ");
@@ -299,42 +271,24 @@ public class UI {
         System.out.println("Error in input, please only type in the format: dd/mm/yyyy");
     }
 
-
-
-
-
-
-
-
-
-
-
     public void showExpectedSubscriptionFees(double subscriptionFees) {
         System.out.println("Expected subscription fees:");
         System.out.println(subscriptionFees + " kr.");
-    }
-
-    public void showMembersInArrears() {
-        System.out.println("Members in arrears:");
-    }
-
-    public void showTopSwimmers() {
-        System.out.println("Top swimmers:");
     }
 
     public void displayPleaseTypeMemberID() {
         System.out.print("Please enter the ID of the member: ");
     }
 
-    public void memberIDNotFound() {
-        System.out.println("MemberID not found in database of competitive members");
+    public void displayMemberIDNotFound() {
+        System.out.println("MemberID not found in database of competitive members.");
     }
 
-    public void noMemberRecords(){
-        System.out.println("No records found in database");
+    public void displayNoMemberRecords(){
+        System.out.println("No records found in database.");
     }
 
-    public void DisplayRecordTypeChoice() {
+    public void displayRecordTypeChoice() {
         System.out.println("Record-types: ");
         System.out.println("1. Practice record");
         System.out.println("2. Competition placing");
@@ -361,8 +315,6 @@ public class UI {
     public void displayEnterRecordInSecondsException() {
         System.out.println("Error in input, try again.");
     }
-
-
 
     public void displayEnterConventionName() {
         System.out.print("Enter the name of the competition or convention: ");
@@ -446,56 +398,37 @@ public class UI {
 
     public String turnEnumSwimDisciplineToString(Enum.SwimDiscipline swimDiscipline) {
         String swimString = null;
-        switch (swimDiscipline){
-            case CRAWL -> swimString ="Front Crawl";
-            case BACKCRAWL -> swimString ="Back Crawl";
-            case BUTTERFLY -> swimString ="Butterfly";
-            case BREAST -> swimString ="Breast Stroke";
+        switch (swimDiscipline) {
+            case CRAWL -> swimString = "Front Crawl";
+            case BACKCRAWL -> swimString = "Back Crawl";
+            case BUTTERFLY -> swimString = "Butterfly";
+            case BREAST -> swimString = "Breast Stroke";
         }
         return  swimString;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void displayWrongPassword() {
         System.out.println("Wrong password, try again.");
     }
 
-    public void noRegisteredUsers() {
+    public void displayNoRegisteredUsers() {
         System.out.println("Can't login, no registered users.");
     }
 
-    public void noRegisteredUsersCreatingAdmin() {
+    public void displayNoRegisteredUsersCreatingAdmin() {
         System.out.println("No registered users, creating default admin user.");
         System.out.println("Login name: admin");
         System.out.println("Login password: admin");
     }
 
-    public void loggedInUserNoPrivilege() {
+    public void displayLoggedInUserNoPrivilege() {
         System.out.println("Logged in user does not have privileges for this action.");
     }
-
-
-
-
-
-
-
 
     public void displayMemberInformation(String[] strArray) {
         System.out.print("MemberID: " + strArray[0]);
         System.out.print(" - Member since: " + strArray[1]);
-        System.out.print(" - Name: " + addDotsToStringToFillXCharacters(strArray[2], 30));
+        System.out.print(" - Name: " + util.addDotsToStringToFillXCharacters(strArray[2], 35));
         System.out.print(" - Birth date: " + strArray[3]);
         int age = util.convertDateToAge(strArray[3]);
         System.out.print(" - Age: " + age);
@@ -516,7 +449,7 @@ public class UI {
     }
 
     public void displayTeamInformation(int teamNumber, Team team) {
-        System.out.print("Team " + teamNumber + " - Team type: " + addSpacesToStringToFillXCharacters(util.capitalizeString(team.getTeamType().name()), 11) + " - Age group: " + team.getAgeGroup().name());
+        System.out.print("Team " + teamNumber + " - Team type: " + util.addSpacesToStringToFillXCharacters(util.capitalizeString(team.getTeamType().name()), 11) + " - Age group: " + team.getAgeGroup().name());
         if (team.getCoach() != null) {
             System.out.println(" - Coach: " + team.getCoach().getName());
         } else {
@@ -535,17 +468,17 @@ public class UI {
     public void displayUserInformation(String[] strArray, User user, int index) {
         String password = "";
         if (user.getUserType() == Enum.UserType.ADMIN) {
-            System.out.println("UserID: " + index + " - Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(strArray[1], 20) + " - User Type: " + strArray[2]);
+            System.out.println("UserID: " + index + " - Name: " + util.addDotsToStringToFillXCharacters(strArray[0], 35) + " - Password: " + util.addDotsToStringToFillXCharacters(strArray[1], 20) + " - User Type: " + strArray[2]);
         } else {
             for (int i = 0; i < strArray[1].length(); i++) {
                 password += "*";
             }
-            System.out.println("UserID: " + index + " - Name: " + addDotsToStringToFillXCharacters(strArray[0], 30) + " - Password: " + addDotsToStringToFillXCharacters(password, 20) + " - User Type: " + strArray[2]);
+            System.out.println("UserID: " + index + " - Name: " + util.addDotsToStringToFillXCharacters(strArray[0], 35) + " - Password: " + util.addDotsToStringToFillXCharacters(password, 20) + " - User Type: " + strArray[2]);
         }
     }
 
     public void displaySubscription(String[] strArray) {
-        System.out.print("MemberID: " + strArray[0] + " - Name: " + addDotsToStringToFillXCharacters(strArray[1], 30) + " - Age: " + util.convertDateToAge(strArray[2]));
+        System.out.print("MemberID: " + strArray[0] + " - Name: " + util.addDotsToStringToFillXCharacters(strArray[1], 35) + " - Age: " + util.convertDateToAge(strArray[2]));
         if (strArray[3].equals("true")) {
             System.out.print(" - Active ");
         } else if (strArray[3].equals("false")) {
@@ -595,7 +528,7 @@ public class UI {
         displaySubscription(strArray);
     }
 
-    public void whatToChangeCompetitive() {
+    public void displayWhatToChangeCompetitive() {
         System.out.println("What do you want to change?");
         System.out.println("1. Name");
         System.out.println("2. Birth date");
@@ -605,25 +538,13 @@ public class UI {
         System.out.print("Select command: ");
     }
 
-    public void whatToChange() {
+    public void displayWhatToChange() {
         System.out.println("What do you want to change?");
         System.out.println("1. Name");
         System.out.println("2. Birth date");
         System.out.println("3. Active or passive");
         System.out.println("4. Regular or competitive");
         System.out.print("Select command: ");
-    }
-
-    public void nameChanged() {
-        System.out.println("Name has been changed.");
-    }
-
-    public void enterMemberId(boolean success) {
-        if (success) {
-            System.out.println("Login successful.");
-        } else {
-            System.out.println("Login failed.");
-        }
     }
 
     public void displayMemberIdOutOfRange() {

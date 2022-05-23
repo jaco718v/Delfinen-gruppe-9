@@ -63,7 +63,7 @@ public class InputHandler {
             switch (userType) {
                 case "1", "2", "3", "4" -> enteredUserType = true;
             }
-            ui.addUser(enteredUserType);
+            ui.displayAddUser(enteredUserType);
             if (!enteredUserType) {
                 ui.displayBadPassword(userType);
             }
@@ -241,7 +241,7 @@ public class InputHandler {
 
     public String recordTypeChoice(String memberName) {
         String recordType = null;
-        ui.DisplayRecordTypeChoice();
+        ui.displayRecordTypeChoice();
         while (recordType == null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")) {
             recordType = sc.nextLine();
         }
@@ -359,7 +359,7 @@ public class InputHandler {
                     enteredUserPassword = true;
                 }
             }
-            ui.loginUser(enteredUserPassword);
+            ui.displayLoginUser(enteredUserPassword);
             if (!enteredUserPassword) {
                 ui.displayWrongPassword();
             }
@@ -399,7 +399,7 @@ public class InputHandler {
                     break;
                 }
             }
-            ui.removeUser(enteredUserName);
+            ui.displayRemoveUser(enteredUserName);
             if (!enteredUserName) {
                 ui.displayPleaseEnterValidUserName(userName);
             }
@@ -554,7 +554,7 @@ public class InputHandler {
         boolean selectedEditType = false;
         while (!selectedEditType) {
             if (array[5].equals("true")) {
-                ui.whatToChangeCompetitive();
+                ui.displayWhatToChangeCompetitive();
                 command = enterMemberEditTypeCompetitive();
                 switch (command) {
                     case "1" -> {
@@ -584,7 +584,7 @@ public class InputHandler {
                     }
                 }
             } else {
-                ui.whatToChange();
+                ui.displayWhatToChange();
                 command = enterMemberEditType();
                 switch (command) {
                     case "1" -> {

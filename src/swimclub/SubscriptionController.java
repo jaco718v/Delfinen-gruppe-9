@@ -7,9 +7,6 @@ import ui.InputHandler;
 import ui.UI;
 import utilities.Utility;
 
-import java.time.LocalDateTime;
-
-import java.time.Month;
 import java.util.ArrayList;
 
 public class SubscriptionController {
@@ -43,7 +40,7 @@ public class SubscriptionController {
                 fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -74,7 +71,7 @@ public class SubscriptionController {
                 ui.displaySubscription(strArray);
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
 
     }
@@ -101,7 +98,7 @@ public class SubscriptionController {
             }
             ui.showExpectedSubscriptionFees(subscriptionSum);
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
 
@@ -115,7 +112,7 @@ public class SubscriptionController {
                 }
             }
         } else {
-            ui.loggedInUserNoPrivilege();
+            ui.displayLoggedInUserNoPrivilege();
         }
     }
     /*
