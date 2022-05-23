@@ -14,11 +14,11 @@ public class MemberCompetitive extends Member {
         this.swimDiscipline=swimDiscipline;
     }
 
-    public void AddRecordCompetition(RecordTimeCompetition record){
+    public void addRecordCompetition(RecordTimeCompetition record){
         this.competitions.add(record);
     }
 
-    public void AddRecordPractice(RecordTimePractice record){
+    public void addRecordPractice(RecordTimePractice record){
         this.bestPracticeRecords.add(record);
     }
 

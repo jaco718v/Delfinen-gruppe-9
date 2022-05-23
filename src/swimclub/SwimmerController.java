@@ -160,7 +160,7 @@ public class SwimmerController {
     private boolean updateRecordInCSV(ArrayList<String[]> recordList, String[] newRecord) {
         boolean previousRecordFound = false;
         for (String[] record : recordList) {
-            if (record[0].equalsIgnoreCase(newRecord[0]) && record[2].equalsIgnoreCase(newRecord[2])) {
+            if (record[0].equalsIgnoreCase(newRecord[0]) && record[1].equalsIgnoreCase(newRecord[1])) {
                 recordList.set(recordList.indexOf(record), newRecord);
                 previousRecordFound = true;
                 fileHandler.overwriteCSV("Records.csv", recordList);
@@ -183,7 +183,7 @@ public class SwimmerController {
                 String date = input.addDate();
 
                 if (recordType.equals("practice")) {
-                    team.findCompetitiveMemberWithID(memberID).AddRecordPractice(new RecordTimePractice(memberID,swimDiscipline,recordInSeconds,date));
+                    team.findCompetitiveMemberWithID(memberID).addRecordPractice(new RecordTimePractice(memberID,swimDiscipline,recordInSeconds,date));
                     String[] newRecord = {memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, "practice"};
                     data.add(newRecord);
                     boolean updateStatus = updateRecordInCSV(recordList, newRecord);
@@ -215,7 +215,7 @@ public class SwimmerController {
         ui.displayEnterConventionName();
         String convention = input.enterString();
         int placing = input.addPlacing();
-        team.findCompetitiveMemberWithID(memberID).AddRecordCompetition(new RecordTimeCompetition(memberID,swimDiscipline,recordInSeconds,date,convention,placing));
+        team.findCompetitiveMemberWithID(memberID).addRecordCompetition(new RecordTimeCompetition(memberID,swimDiscipline,recordInSeconds,date,convention,placing));
         data.add(new String[]{memberID, String.valueOf(swimDiscipline), String.valueOf(recordInSeconds), date, convention, String.valueOf(placing),"competition"});
         fileHandler.writeToCSV("Records.csv", data);
     }
