@@ -181,6 +181,7 @@ public class UILanguageTranslations {
     private String en_danishMenu2 = "2. Danish";
     private String en_selectLanguage = "Select language: ";
     private String en_pleaseEnterValidLanguage = "Please enter a valid language.";
+    private String en_welcome = "Welcome to the swimclub management program.";
 
     private String da_userCommands = "Bruger Kommandoer:";
     private String da_loginUserMenu = "1. Login bruger";
@@ -362,6 +363,7 @@ public class UILanguageTranslations {
     private String da_danishMenu2 = "2. Dansk";
     private String da_selectLanguage = "Vælg sprog: ";
     private String da_pleaseEnterValidLanguage = "Indtast venligst et gyldigt sprog.";
+    private String da_welcome = "Velkommen til svømmeklubbens direktions program.";
 
     public String[] getEnglish() {
         return new String[] {
@@ -544,7 +546,8 @@ public class UILanguageTranslations {
                 en_englishMenu1,
                 en_danishMenu2,
                 en_selectLanguage,
-                en_pleaseEnterValidLanguage
+                en_pleaseEnterValidLanguage,
+                en_welcome
         };
     }
 
@@ -729,7 +732,8 @@ public class UILanguageTranslations {
                 da_englishMenu1,
                 da_danishMenu2,
                 da_selectLanguage,
-                da_pleaseEnterValidLanguage
+                da_pleaseEnterValidLanguage,
+                da_welcome
         };
     }
 }

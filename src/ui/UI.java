@@ -196,7 +196,13 @@ public class UI {
     private String danishMenu2 = "2. Danish";
     private String selectLanguage = "Select language: ";
     private String pleaseEnterValidLanguage = "Please enter a valid language.";
+    private String welcome = "Welcome to the swimclub management program.";
+    // Welcome
 
+    public void displayWelcome() {
+        System.out.println();
+        System.out.println(welcome);
+    }
    // Commands UI
 
     public void listCommandsUserMenuLoginOnly() {
@@ -300,13 +306,13 @@ public class UI {
     }
 
     public void displayNoSuchCommand(String command) {
+        System.out.println();
         System.out.println(noSuchCommand + command);
     }
 
     // Member Controller UI
 
     public void displayAddMember(boolean success) {
-
         if (success) {
             System.out.println(addMemberSuccess);
         } else {
@@ -351,6 +357,7 @@ public class UI {
     // Input Handler UI
 
     public void displayPleaseSelectLanguage() {
+        System.out.println();
         System.out.println(selectLanguages);
         System.out.println(englishMenu1);
         System.out.println(danishMenu2);
@@ -358,10 +365,12 @@ public class UI {
     }
 
     public void displayPleaseEnterValidLanguage(String language) {
+        System.out.println();
         System.out.println(pleaseEnterValidLanguage);
     }
 
     public void displayPleaseTypeUserLoginName() {
+        System.out.println();
         System.out.print(typeUserLogin);
     }
 
@@ -378,6 +387,7 @@ public class UI {
     }
 
     public void displayPleaseSelectUserType() {
+        System.out.println();
         System.out.println(selectUserTypes);
         System.out.println(admin1);
         System.out.println(chairman2);
@@ -387,6 +397,7 @@ public class UI {
     }
 
     public void displayPleaseEnterUserId() {
+        System.out.println();
         System.out.print(pleaseEnterId);
     }
 
@@ -395,10 +406,12 @@ public class UI {
     }
 
     public void displayPleaseEnterMemberName() {
+        System.out.println();
         System.out.print(pleaseEnterMemberName);
     }
 
     public void displayPleaseEnterMemberBirthDay() {
+        System.out.println();
         System.out.print(pleaseEnterBirthDay);
     }
 
@@ -407,6 +420,7 @@ public class UI {
     }
 
     public void displayPleaseEnterMemberBirthMonth() {
+        System.out.println();
         System.out.print(pleaseEnterBirthMonth);
     }
 
@@ -415,6 +429,7 @@ public class UI {
     }
 
     public void displayPleaseEnterMemberYear() {
+        System.out.println();
         System.out.print(pleaseEnterBirthYear);
     }
 
@@ -423,6 +438,7 @@ public class UI {
     }
 
     public void displayActiveOrPassiveOptions(){
+        System.out.println();
         System.out.println(activeOrPassiveMember);
         System.out.println(active1Menu);
         System.out.println(passive2Menu);
@@ -437,11 +453,12 @@ public class UI {
         }
     }
 
-    public void displayDefaultOption(){
+    public void displayDefaultOption() {
         System.out.println(defaultInvalid);
     }
 
     public void displayCompOrRegOptions() {
+        System.out.println();
         System.out.println(compOrReg);
         System.out.println(competitive1Menu);
         System.out.println(regular2Menu);
@@ -453,6 +470,7 @@ public class UI {
     }
 
     public void displayEnterDate() {
+        System.out.println();
         System.out.print(pleaseEnterRecordDate);
     }
 
@@ -461,11 +479,13 @@ public class UI {
     }
 
     public void showExpectedSubscriptionFees(double subscriptionFees) {
+        System.out.println();
         System.out.println(expectedSubscriptionFees);
         System.out.println(subscriptionFees + " kr.");
     }
 
     public void displayPleaseTypeMemberID() {
+        System.out.println();
         System.out.print(pleaseEnterIdOfMember);
     }
 
@@ -478,6 +498,7 @@ public class UI {
     }
 
     public void displayRecordTypeChoice() {
+        System.out.println();
         System.out.println(recordTypes);
         System.out.println(practiceRecord1);
         System.out.println(competitionPlacement2);
@@ -485,6 +506,7 @@ public class UI {
     }
 
     public void displayEnterSwimDiscipline() {
+        System.out.println();
         System.out.println(swimDisciplines);
         System.out.println(butterflyMenu1);
         System.out.println(crawlMenu2);
@@ -498,6 +520,7 @@ public class UI {
     }
 
     public void displayEnterRecordInSeconds() {
+        System.out.println();
         System.out.print(pleaseEnterRecordTimeSeconds);
     }
 
@@ -506,10 +529,12 @@ public class UI {
     }
 
     public void displayEnterConventionName() {
+        System.out.println();
         System.out.print(pleaseEnterCompetition);
     }
 
     public void displayEnterPlacing() {
+        System.out.println();
         System.out.print(pleaseEnterPlacement);
     }
 
@@ -522,6 +547,7 @@ public class UI {
     }
 
     public void displayDecideAgeGroupTopFive() {
+        System.out.println();
         System.out.println(ageGroups);
         System.out.println(u18Menu1);
         System.out.println(o18Menu2);
@@ -533,6 +559,7 @@ public class UI {
     }
 
     public void displayTopFive(ArrayList<RecordTimePractice> swimDisciplineRecords, Team team) {
+        System.out.println();
         System.out.println("Top 5 " + turnEnumSwimDisciplineToString(swimDisciplineRecords.get(0).getSWIM_DISCIPLINE()) + top5swimmers);
         System.out.println("1. " + swimDisciplineRecords.get(0).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(0).getMemberID()));
         if(swimDisciplineRecords.size()>1){
@@ -550,6 +577,7 @@ public class UI {
     }
 
     public void displayMemberRecords(ArrayList<RecordTime> playerRecords, String memberID, String memberName) {
+        System.out.println();
         System.out.println("ID: " + memberID + "\t" + memberColon + memberName + "\t" + swimDisciplineColon + turnEnumSwimDisciplineToString(playerRecords.get(0).getSWIM_DISCIPLINE()));
         System.out.print(personalBestTrainingRecord);
         for(RecordTime record : playerRecords){
@@ -566,6 +594,7 @@ public class UI {
     }
 
     public void displayChooseTeamTypeCoach() {
+        System.out.println();
         System.out.println(chooseTypeOfTeamToAssignTo);
         System.out.println(regularMenu1);
         System.out.println(competitiveMenu2);
@@ -576,9 +605,11 @@ public class UI {
     }
 
     public void displayChooseAgeGroupCoach() {
+        System.out.println();
         System.out.println(ageGroups);
         System.out.println(u18Menu1);
         System.out.println(o18Menu2);
+        System.out.print(selectCommand);
     }
 
     public void displayChooseAgeGroupCoachError() {
@@ -593,7 +624,7 @@ public class UI {
             case BUTTERFLY -> swimString = butterfly;
             case BREAST -> swimString = breastStroke;
         }
-        return  swimString;
+        return swimString;
     }
 
     public void displayWrongPassword() {
@@ -605,6 +636,7 @@ public class UI {
     }
 
     public void displayNoRegisteredUsersCreatingAdmin() {
+        System.out.println();
         System.out.println(noRegisteredUsersCreateAdmin);
         System.out.println(loginNameAdmin);
         System.out.println(loginPasswordAdmin);
@@ -682,6 +714,7 @@ public class UI {
     }
 
     public void displayPleaseEnterPaymentStatus() {
+        System.out.println();
         System.out.println(setNewPaymentStatus);
         System.out.println(hasPaidMenu1);
         System.out.println(inArrearsMenu2);
@@ -689,22 +722,27 @@ public class UI {
     }
 
     public void displaySelectedSwimmerMenu() {
+        System.out.println();
         System.out.println(selectedSwimmerMenu);
     }
 
     public void displaySelectedUserMenu() {
+        System.out.println();
         System.out.println(selectedUserMenu);
     }
 
     public void displaySelectedMemberMenu() {
+        System.out.println();
         System.out.println(selectedMemberMenu);
     }
 
     public void displaySelectedSubscriptionMenu() {
+        System.out.println();
         System.out.println(selectedSubscriptionMenu);
     }
 
     public void displayPleaseEnterMemberId() {
+        System.out.println();
         System.out.print(pleaseEnterMemberId);
     }
 
@@ -718,6 +756,7 @@ public class UI {
     }
 
     public void displayWhatToChangeCompetitive() {
+        System.out.println();
         System.out.println(whatDoYouWantToChange);
         System.out.println(editNameMenu1);
         System.out.println(editBirthDateMenu2);
@@ -728,6 +767,7 @@ public class UI {
     }
 
     public void displayWhatToChange() {
+        System.out.println();
         System.out.println(whatDoYouWantToChange);
         System.out.println(editNameMenu1);
         System.out.println(editBirthDateMenu2);
@@ -745,6 +785,7 @@ public class UI {
     }
 
     public void displayPleaseTypeCoachId() {
+        System.out.println();
         System.out.print(pleaseEnterCoachUserId);
     }
 
@@ -753,6 +794,7 @@ public class UI {
     }
 
     public void displayPleaseTypeTeamNumber() {
+        System.out.println();
         System.out.print(pleaseEnterTeamNumber);
     }
 
@@ -969,6 +1011,7 @@ public class UI {
         danishMenu2 = translations[177];
         selectLanguage = translations[178];
         pleaseEnterValidLanguage = translations[179];
+        welcome = translations[180];
     }
 
     private String[] setLanguageEn() {

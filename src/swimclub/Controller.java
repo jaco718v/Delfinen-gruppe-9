@@ -32,6 +32,7 @@ public class Controller {
 
     private void run() {
         createTeams();
+        ui.displayWelcome();
         setLanguage();
         while (isRunning) {
             cmds.commands(this, input.getSc());
