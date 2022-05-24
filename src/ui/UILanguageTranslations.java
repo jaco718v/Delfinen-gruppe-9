@@ -140,7 +140,7 @@ public class UILanguageTranslations {
     private String en_teamInfoAgeGroup = " - Age group: ";
     private String en_teamInfoCoach = " - Coach: ";
     private String en_returnToMainMenu = "Returning to main menu.";
-    private String en_systemShutdown = "System shutting down.";
+    private String en_systemShutdown = "Program shutting down.";
     private String en_userInfoUserId = "UserID: ";
     private String en_userInfoPassword = " - Password: ";
     private String en_userInfoUserType = " - User Type: ";
@@ -322,7 +322,7 @@ public class UILanguageTranslations {
     private String da_teamInfoAgeGroup = " - Aldersgruppe: ";
     private String da_teamInfoCoach = " - Træner: ";
     private String da_returnToMainMenu = "Returnerer to hoved menuen.";
-    private String da_systemShutdown = "Systemet lukker ned.";
+    private String da_systemShutdown = "Programmet lukker ned.";
     private String da_userInfoUserId = "BrugerID: ";
     private String da_userInfoPassword = " - Kodeord: ";
     private String da_userInfoUserType = " - Bruger Type: ";

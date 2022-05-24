@@ -155,7 +155,7 @@ public class UI {
     private String teamInfoAgeGroup = " - Age group: ";
     private String teamInfoCoach = " - Coach: ";
     private String returnToMainMenu = "Returning to main menu.";
-    private String systemShutdown = "System shutting down.";
+    private String systemShutdown = "Program shutting down.";
     private String userInfoUserId = "UserID: ";
     private String userInfoPassword = " - Password: ";
     private String userInfoUserType = " - User Type: ";
@@ -197,6 +197,7 @@ public class UI {
     private String selectLanguage = "Select language: ";
     private String pleaseEnterValidLanguage = "Please enter a valid language.";
     private String welcome = "Welcome to the swimclub management program.";
+
     // Welcome
 
     public void displayWelcome() {
