@@ -194,8 +194,8 @@ public class Utility {
         return null;
     }
 
-    public void displayMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly, boolean competitiveOnly) {
-        UI ui = new UI();
+    public void displayMembers(User loggedInUser, ArrayList<Team> teamArray, boolean teamsOnly, boolean competitiveOnly, String language) {
+        UI ui = new UI(language);
         if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN) || (loggedInUser.getUserType() == Enum.UserType.COACH)) {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
             int teamNumber = 0;

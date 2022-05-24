@@ -1,6 +1,7 @@
 package ui;
 
 import database.FileHandler;
+import swimclub.Controller;
 import swimclub.User;
 import utilities.Enum;
 import membership.Team;
@@ -14,7 +15,6 @@ import java.util.Scanner;
 
 public class InputHandler {
     private final Scanner sc = new Scanner(System.in);
-    private final UI ui = new UI();
     private final Utility util = new Utility();
     private final FileHandler fileHandler = new FileHandler();
 
@@ -22,7 +22,8 @@ public class InputHandler {
         return sc;
     }
 
-    public String addUserName() {
+    public String addUserName(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String userName = "";
         boolean enteredUserName = false;
         while (!enteredUserName) {
@@ -32,13 +33,14 @@ public class InputHandler {
                 enteredUserName = true;
             }
             if (!enteredUserName) {
-                ui.displayPleaseEnterValidUserName(userName);
+                ui.displayPleaseEnterValidName(userName);
             }
         }
         return util.writeNameParts(userName);
     }
 
-    public String addUserPassword() {
+    public String addUserPassword(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String userPassword = "";
         boolean enteredUserPassword = false;
         while (!enteredUserPassword) {
@@ -54,7 +56,8 @@ public class InputHandler {
         return userPassword;
     }
 
-    public String addUserType() {
+    public String addUserType(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String userType = "";
         boolean enteredUserType = false;
         while (!enteredUserType) {
@@ -71,7 +74,8 @@ public class InputHandler {
         return userType;
     }
 
-    public String addMemberName() {
+    public String addMemberName(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String memberName = "";
         boolean enteredMemberName = false;
         while (!enteredMemberName) {
@@ -87,7 +91,8 @@ public class InputHandler {
         return util.writeNameParts(memberName);
     }
 
-    public String addMemberBirthDay() {
+    public String addMemberBirthDay(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String memberBirthDay = "";
         int birthDay = 0;
         boolean enteredMemberBirthDay = false;
@@ -108,7 +113,8 @@ public class InputHandler {
         }
     }
 
-    public String addMemberBirthMonth() {
+    public String addMemberBirthMonth(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String memberBirthMonth = "";
         int birthMonth = 0;
         boolean enteredMemberBirthMonth = false;
@@ -129,7 +135,8 @@ public class InputHandler {
         }
     }
 
-    public String addMemberBirthYear() {
+    public String addMemberBirthYear(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String memberBirthYear = "";
         int birthYear = 0;
         boolean enteredMemberBirthYear = false;
@@ -150,7 +157,8 @@ public class InputHandler {
         }
     }
 
-    public String addPassiveOrActive() {
+    public String addPassiveOrActive(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String value = "false";
         ui.displayActiveOrPassiveOptions();
         String input = sc.nextLine();
@@ -168,7 +176,8 @@ public class InputHandler {
         return value;
     }
 
-    public String addCompetitiveMember() {
+    public String addCompetitiveMember(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayCompOrRegOptions();
         String competitive = "false";
         String input = sc.nextLine();
@@ -180,7 +189,8 @@ public class InputHandler {
         return competitive;
     }
 
-    public Enum.TeamType chooseTeamType() {
+    public Enum.TeamType chooseTeamType(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayChooseTeamTypeCoach();
         Enum.TeamType teamType = null;
         while(teamType==null){
@@ -194,7 +204,8 @@ public class InputHandler {
         return teamType;
     }
 
-    public Enum.AgeGroup chooseAgeGroup() {
+    public Enum.AgeGroup chooseAgeGroup(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayChooseAgeGroupCoach();
         Enum.AgeGroup ageGroup = null;
         while(ageGroup==null){
@@ -208,7 +219,8 @@ public class InputHandler {
         return ageGroup;
     }
 
-    public String enterCompetitiveMemberID() {
+    public String enterCompetitiveMemberID(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayPleaseTypeMemberID();
         String memberID = sc.nextLine();
         return memberID;
@@ -220,7 +232,8 @@ public class InputHandler {
         return swimDiscipline;
     }
 
-    public Enum.SwimDiscipline addSwimDisciplineToRecordViaInput() {
+    public Enum.SwimDiscipline addSwimDisciplineToRecordViaInput(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayEnterSwimDiscipline();
         Enum.SwimDiscipline swimDiscipline = null;
         while (swimDiscipline == null) {
@@ -239,7 +252,8 @@ public class InputHandler {
         return swimDiscipline;
     }
 
-    public String recordTypeChoice(String memberName) {
+    public String recordTypeChoice(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String recordType = null;
         ui.displayRecordTypeChoice();
         while (recordType == null || !recordType.equalsIgnoreCase("1") && !recordType.equalsIgnoreCase("2")) {
@@ -254,7 +268,8 @@ public class InputHandler {
         return recordType;
     }
 
-    public double addRecordInSeconds() {
+    public double addRecordInSeconds(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayEnterRecordInSeconds();
         double recordDouble = 0;
         String recordInSeconds = null;
@@ -269,7 +284,8 @@ public class InputHandler {
         return recordDouble;
     }
 
-    public String addDate() {
+    public String addDate(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayEnterDate();
         int day = 0;
         int month = 0;
@@ -294,7 +310,8 @@ public class InputHandler {
         return dateInput;
     }
 
-    public int addPlacing() {
+    public int addPlacing(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayEnterPlacing();
         int placeInt = 0;
         String place = null;
@@ -309,7 +326,8 @@ public class InputHandler {
         return placeInt;
     }
 
-    public Enum.AgeGroup decideAgeGroup() {
+    public Enum.AgeGroup decideAgeGroup(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ui.displayDecideAgeGroupTopFive();
         int choice = 0;
         while (choice != 1 && choice != 2) {
@@ -326,7 +344,8 @@ public class InputHandler {
         return Enum.AgeGroup.O18;
     }
 
-    public String[] enterUserName(ArrayList<String[]> userData) {
+    public String[] enterUserName(ArrayList<String[]> userData, Controller con) {
+        UI ui = new UI(con.getLanguage());
         String[] returnStrings = new String[2];
         boolean enteredUserName = false;
         while (!enteredUserName) {
@@ -340,13 +359,14 @@ public class InputHandler {
                 }
             }
             if (!enteredUserName) {
-                ui.displayPleaseEnterValidUserName(returnStrings[0]);
+                ui.displayPleaseEnterValidName(returnStrings[0]);
             }
         }
         return returnStrings;
     }
 
-    public String enterUserPassword(ArrayList<String[]> userData, int userIndex) {
+    public String enterUserPassword(ArrayList<String[]> userData, int userIndex, Controller con) {
+        UI ui = new UI(con.getLanguage());
         String userPassword = "";
 
         boolean enteredUserPassword = false;
@@ -367,7 +387,8 @@ public class InputHandler {
         return userPassword;
     }
 
-    public String enterMemberId() {
+    public String enterMemberId(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String memberId = "";
 
         boolean enteredUserId = false;
@@ -384,7 +405,8 @@ public class InputHandler {
         return memberId;
     }
 
-    public int enterUserNameGetId(ArrayList<String[]> userData) {
+    public int enterUserNameGetId(ArrayList<String[]> userData, Controller con) {
+        UI ui = new UI(con.getLanguage());
         String userName = "";
         int userID = -1;
         boolean enteredUserName = false;
@@ -401,13 +423,14 @@ public class InputHandler {
             }
             ui.displayRemoveUser(enteredUserName);
             if (!enteredUserName) {
-                ui.displayPleaseEnterValidUserName(userName);
+                ui.displayPleaseEnterValidName(userName);
             }
         }
         return userID;
     }
 
-    public String enterUserId(ArrayList<String[]> subscriptionData) {
+    public String enterUserId(ArrayList<String[]> subscriptionData, Controller con) {
+        UI ui = new UI(con.getLanguage());
         String foundId = "-1";
         boolean enteredUserId = false;
         while (!enteredUserId) {
@@ -428,7 +451,8 @@ public class InputHandler {
         return foundId;
     }
 
-    public String enterUserPaymentStatus() {
+    public String enterUserPaymentStatus(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String paymentStatusSelection = "";
         boolean enteredPaymentStatus = false;
         while (!enteredPaymentStatus) {
@@ -447,7 +471,8 @@ public class InputHandler {
         return sc.nextLine();
     }
 
-    public String enterMemberEditTypeCompetitive() {
+    public String enterMemberEditTypeCompetitive(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String input = "";
         boolean enteredType = false;
         while (!enteredType) {
@@ -460,7 +485,9 @@ public class InputHandler {
         }
         return input;
     }
-    public String enterMemberEditType() {
+
+    public String enterMemberEditType(Controller con) {
+        UI ui = new UI(con.getLanguage());
         String input = "";
         boolean enteredType = false;
         while (!enteredType) {
@@ -474,7 +501,8 @@ public class InputHandler {
         return input;
     }
 
-    public User enterCoachToAddToTeam() {
+    public User enterCoachToAddToTeam(Controller con) {
+        UI ui = new UI(con.getLanguage());
         User coach = null;
         String coachId = "";
         boolean enteredCoachId = false;
@@ -497,16 +525,17 @@ public class InputHandler {
         return coach;
     }
 
-    public Team enterTeamToAddCoachTo(ArrayList<Team> teamArray) {
+    public Team enterTeamToAddCoachTo(Controller con) {
+        UI ui = new UI(con.getLanguage());
         Team team = null;
         String teamId = "";
         boolean enteredTeam = false;
         while (!enteredTeam) {
             ui.displayPleaseTypeTeamNumber();
             teamId = sc.nextLine();
-            if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= teamArray.size()) && (Integer.parseInt(teamId) > 0)) {
-                for (int i = 0; i < teamArray.size(); i++) {
-                    Team currentTeam = teamArray.get(i);
+            if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= con.getTeamArray().size()) && (Integer.parseInt(teamId) > 0)) {
+                for (int i = 0; i < con.getTeamArray().size(); i++) {
+                    Team currentTeam = con.getTeamArray().get(i);
                     if (i+1 == Integer.parseInt(teamId)) {
                         team = currentTeam;
                         enteredTeam = true;
@@ -521,16 +550,17 @@ public class InputHandler {
         return team;
     }
 
-    public Team enterTeamToRemoveCoachFrom(ArrayList<Team> teamArray) {
+    public Team enterTeamToRemoveCoachFrom(Controller con) {
+        UI ui = new UI(con.getLanguage());
         Team team = null;
         String teamId = "";
         boolean enteredTeam = false;
         while (!enteredTeam) {
             ui.displayPleaseTypeTeamNumber();
             teamId = sc.nextLine();
-            if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= teamArray.size()) && (Integer.parseInt(teamId) > 0)) {
-                for (int i = 0; i < teamArray.size(); i++) {
-                    Team currentTeam = teamArray.get(i);
+            if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= con.getTeamArray().size()) && (Integer.parseInt(teamId) > 0)) {
+                for (int i = 0; i < con.getTeamArray().size(); i++) {
+                    Team currentTeam = con.getTeamArray().get(i);
                     if (i+1 == Integer.parseInt(teamId)) {
                         if (currentTeam.getCoach() != null) {
                             team = currentTeam;
@@ -549,63 +579,86 @@ public class InputHandler {
         return team;
     }
 
-    public String enterMemberEdit(String[] array) {
+    public String enterMemberEdit(String[] array, Controller con) {
+        UI ui = new UI(con.getLanguage());
         String command = "";
         boolean selectedEditType = false;
         while (!selectedEditType) {
             if (array[5].equals("true")) {
                 ui.displayWhatToChangeCompetitive();
-                command = enterMemberEditTypeCompetitive();
+                command = enterMemberEditTypeCompetitive(con);
                 switch (command) {
                     case "1" -> {
                         System.out.println("Editing member name.");
-                        array[2] = addMemberName();
+                        array[2] = addMemberName(con);
                         selectedEditType = true;
                     }
                     case "2" -> {
                         System.out.println("Editing member birth date.");
-                        array[3] = addMemberBirthDay() + "/" + addMemberBirthMonth() + "/" + addMemberBirthYear();
+                        array[3] = addMemberBirthDay(con) + "/" + addMemberBirthMonth(con) + "/" + addMemberBirthYear(con);
                         selectedEditType = true;
                     }
                     case "3" -> {
                         System.out.println("Editing member activity.");
-                        array[4] = addPassiveOrActive();
+                        array[4] = addPassiveOrActive(con);
                         selectedEditType = true;
                     }
                     case "4" -> {
                         System.out.println("Editing member type.");
-                        array[5] = addCompetitiveMember();
+                        array[5] = addCompetitiveMember(con);
                         selectedEditType = true;
                     }
                     case "5" -> {
                         System.out.println("Editing member swim discipline.");
-                        array[6] = String.valueOf(addSwimDisciplineToRecordViaInput());
+                        array[6] = String.valueOf(addSwimDisciplineToRecordViaInput(con));
                         selectedEditType = true;
                     }
                 }
             } else {
                 ui.displayWhatToChange();
-                command = enterMemberEditType();
+                command = enterMemberEditType(con);
                 switch (command) {
                     case "1" -> {
-                        array[2] = addMemberName();
+                        array[2] = addMemberName(con);
                         selectedEditType = true;
                     }
                     case "2" -> {
-                        array[3] = addMemberBirthDay() + "/" + addMemberBirthMonth() + "/" + addMemberBirthYear();
+                        array[3] = addMemberBirthDay(con) + "/" + addMemberBirthMonth(con) + "/" + addMemberBirthYear(con);
                         selectedEditType = true;
                     }
                     case "3" -> {
-                        array[4] = addPassiveOrActive();
+                        array[4] = addPassiveOrActive(con);
                         selectedEditType = true;
                     }
                     case "4" -> {
-                        array[5] = addCompetitiveMember();
+                        array[5] = addCompetitiveMember(con);
                         selectedEditType = true;
                     }
                 }
             }
         }
         return command;
+    }
+
+    public String selectLanguage(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        String language = "";
+        String input = "";
+        boolean enteredLanguage = false;
+        while (!enteredLanguage) {
+            ui.displayPleaseSelectLanguage();
+            input = sc.nextLine();
+            if (input.equals("1")) {
+                language = "en";
+                enteredLanguage = true;
+            } else if (input.equals("2")) {
+                language = "da";
+                enteredLanguage = true;
+            }
+            if (!enteredLanguage) {
+                ui.displayPleaseEnterValidLanguage(language);
+            }
+        }
+        return language;
     }
 }

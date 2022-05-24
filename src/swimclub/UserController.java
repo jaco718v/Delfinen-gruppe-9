@@ -9,17 +9,17 @@ import java.util.ArrayList;
 
 public class UserController {
     private final FileHandler fileHandler = new FileHandler();
-    private final UI ui = new UI();
     private final InputHandler input = new InputHandler();
 
     public void loginUser(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
         User loggedInUser;
         if (userData.size() > 0) {
-            String[] userReturnStrings = input.enterUserName(userData);
+            String[] userReturnStrings = input.enterUserName(userData, con);
             int userIndex = Integer.parseInt(userReturnStrings[1]);
             String userName = userReturnStrings[0];
-            String userPassword = input.enterUserPassword(userData, userIndex);
+            String userPassword = input.enterUserPassword(userData, userIndex, con);
 
             String[] strArray = userData.get(userIndex);
             Enum.UserType userType = Enum.UserType.valueOf(strArray[2]);
@@ -31,13 +31,14 @@ public class UserController {
         }
     }
 
-    public void addUser(User loggedInUser) {
+    public void addUser(Controller con) {
+        UI ui = new UI(con.getLanguage());
         ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
         if (userData.size() > 0) {
-            if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
-                String userName = input.addUserName();
-                String userPassword = input.addUserPassword();
-                String userType = input.addUserType();
+            if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CHAIRMAN)) {
+                String userName = input.addUserName(con);
+                String userPassword = input.addUserPassword(con);
+                String userType = input.addUserType(con);
 
                 ArrayList<String[]> newData = new ArrayList<>();
                 switch (userType) {
@@ -68,16 +69,17 @@ public class UserController {
         }
     }
 
-    public void removeUser(User loggedInUser, ArrayList<Team> teamArray) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+    public void removeUser(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
-            showUsers(loggedInUser);
+            showUsers(con);
             if (userData.size() > 0) {
-                int userID = input.enterUserNameGetId(userData);
+                int userID = input.enterUserNameGetId(userData, con);
                 if (userID != -1) {
                     String[] strArray = userData.get(userID);
                     if (strArray[2].equals("COACH")) {
-                        for (Team team : teamArray) {
+                        for (Team team : con.getTeamArray()) {
                             if ((team.getCoach() != null) && (strArray[0].equals(team.getCoach().getName()))) {
                                 team.setCoach(null);
                             }
@@ -109,12 +111,13 @@ public class UserController {
         }
     }
 
-    public void showUsers(User loggedInUser) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+    public void showUsers(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
             for (int i = 0; i < userData.size(); i++) {
                 String[] strArray = userData.get(i);
-                ui.displayUserInformation(strArray, loggedInUser, i);
+                ui.displayUserInformation(strArray, con.getLoggedInUser(), i);
             }
         } else {
             ui.displayLoggedInUserNoPrivilege();

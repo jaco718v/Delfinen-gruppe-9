@@ -10,24 +10,24 @@ import utilities.Utility;
 import java.util.ArrayList;
 
 public class SubscriptionController {
-    private final UI ui = new UI();
     private final InputHandler input = new InputHandler();
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
 
-    public void setPaymentStatus(User loggedInUser) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
-            showSubscriptions(loggedInUser);
+    public void setPaymentStatus(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
+            showSubscriptions(con);
             ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
 
-            String foundId = input.enterUserId(subscriptionData);
+            String foundId = input.enterUserId(subscriptionData, con);
             if (!foundId.equals("-1")) {
                 int foundIdInt = -1;
                 if (util.tryParseInt(foundId)) {
                     foundIdInt = Integer.parseInt(foundId);
                 }
                 String[] strArray = subscriptionData.get(foundIdInt);
-                String userPaymentStatusInput = input.enterUserPaymentStatus();
+                String userPaymentStatusInput = input.enterUserPaymentStatus(con);
                 if (userPaymentStatusInput.equals("1")) {
                     strArray[4] = "true";
                 } else if (userPaymentStatusInput.equals("2")) {
@@ -58,13 +58,13 @@ public class SubscriptionController {
             if (!isRegistered) {
                 subscriptionData.add(new String[]{strArray[0], strArray[1], strArray[2], strArray[3], "false"});
                 fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
-                System.out.println("Registered member subscription.");
             }
         }
     }
 
-    public void showSubscriptions(User loggedInUser) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
+    public void showSubscriptions(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
             updateSubscriptions();
             ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
             for (String[] strArray : subscriptionData) {
@@ -76,16 +76,16 @@ public class SubscriptionController {
 
     }
 
-
-    public void showExpectedSubscriptionFees(User loggedInUser, ArrayList<Team> teamArray) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
+    public void showExpectedSubscriptionFees(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
             double subscriptionJunior = 1000;
             double subscriptionSenior = 1600;
             double subscriptionPassive = 500;
             int seniorThreshold = 60;
             double seniorDiscount = 0.25;
             double subscriptionSum = 0;
-            for (Team team : teamArray) {
+            for (Team team : con.getTeamArray()) {
                 double subscription = 0;
                 if (team.getAgeGroup().equals(Enum.AgeGroup.U18)) {
                     subscription = subscriptionJunior;
@@ -102,8 +102,9 @@ public class SubscriptionController {
         }
     }
 
-    public void showSubscriptionsInArrears(User loggedInUser) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CASHIER)) {
+    public void showSubscriptionsInArrears(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
             updateSubscriptions();
             ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
             for (String[] strArray : subscriptionData) {

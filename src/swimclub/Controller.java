@@ -11,7 +11,8 @@ import utilities.Enum;
 import java.util.ArrayList;
 
 public class Controller {
-    private final UI ui = new UI();
+    private String language = "";
+    private final UI ui = new UI(language);
     private final Commands cmds = new Commands();
     private final InputHandler input = new InputHandler();
     private final FileHandler fileHandler = new FileHandler();
@@ -31,6 +32,7 @@ public class Controller {
 
     private void run() {
         createTeams();
+        setLanguage();
         while (isRunning) {
             cmds.commands(this, input.getSc());
         }
@@ -145,5 +147,14 @@ public class Controller {
 
     public ArrayList<Team> getTeamArray() {
         return teamArray;
+    }
+
+    private void setLanguage() {
+        language = input.selectLanguage(this);
+        ui.setLanguage(language);
+    }
+
+    public String getLanguage() {
+        return language;
     }
 }

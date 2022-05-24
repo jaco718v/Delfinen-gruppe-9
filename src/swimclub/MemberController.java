@@ -14,25 +14,25 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MemberController {
-    private final UI ui = new UI();
     private final InputHandler input = new InputHandler();
     private final FileHandler fileHandler = new FileHandler();
     private final Utility util = new Utility();
 
-    public void addMember(Controller con, User loggedInUser) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+    public void addMember(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> newMemberData = new ArrayList<>();
 
             String memberId = util.addMemberId();
             if (!memberId.equals("FULL")) {
                 String memberSince = String.format("%02d", LocalDateTime.now().getDayOfMonth()) + "/" + String.format("%02d", LocalDateTime.now().getMonthValue()) + "/" + LocalDateTime.now().getYear();
-                String memberName = input.addMemberName();
-                String memberBirthDate = input.addMemberBirthDay() + "/" + input.addMemberBirthMonth() + "/" + input.addMemberBirthYear();
-                String isActive = input.addPassiveOrActive();
-                String isCompetitive = input.addCompetitiveMember();
+                String memberName = input.addMemberName(con);
+                String memberBirthDate = input.addMemberBirthDay(con) + "/" + input.addMemberBirthMonth(con) + "/" + input.addMemberBirthYear(con);
+                String isActive = input.addPassiveOrActive(con);
+                String isCompetitive = input.addCompetitiveMember(con);
                 String swimDiscipline = "";
                 if (isCompetitive.equals("true")) {
-                    swimDiscipline = String.valueOf(input.addSwimDisciplineToRecordViaInput());
+                    swimDiscipline = String.valueOf(input.addSwimDisciplineToRecordViaInput(con));
                 }
 
                 newMemberData.add(new String[] { memberId, memberSince, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline });
@@ -59,15 +59,16 @@ public class MemberController {
         }
     }
 
-    public void editMember(Controller con, User loggedInUser, ArrayList<Team> teamArray) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+    public void editMember(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
-            showMembers(loggedInUser, teamArray);
-            String editMember = input.enterMemberId();
+            showMembers(con);
+            String editMember = input.enterMemberId(con);
             for (int i = 0; i < memberData.size(); i++) {
                 String[] array = memberData.get(i);
                 if (array[0].equals(editMember)) {
-                    String command = input.enterMemberEdit(array);
+                    String command = input.enterMemberEdit(array, con);
                     memberData.remove(i);
                     memberData.add(i, array);
                     fileHandler.overwriteCSV("Members.csv", memberData);
@@ -122,13 +123,14 @@ public class MemberController {
         }
     }
 
-    public void removeMember(User loggedInUser, ArrayList<Team> teamArray) {
-        if ((loggedInUser.getUserType() == Enum.UserType.ADMIN) || (loggedInUser.getUserType() == Enum.UserType.CHAIRMAN)) {
+    public void removeMember(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
             ArrayList<String[]> subData = fileHandler.readCSV("Subscriptions.csv");
-            showMembers(loggedInUser, teamArray);
+            showMembers(con);
             ui.displayPleaseEnterMemberId();
-            String memberId = input.enterMemberId();
+            String memberId = input.enterMemberId(con);
             boolean removedMember = false;
             boolean removedMemberInList = false;
             for (int i = 0; i < memberData.size(); i++) {
@@ -136,7 +138,7 @@ public class MemberController {
                 if (memberArray[0].equals(memberId)) {
                     memberData.remove(i);
                     fileHandler.overwriteCSV("Members.csv", memberData);
-                    for (Team team : teamArray) {
+                    for (Team team : con.getTeamArray()) {
                         ArrayList<Member> memberList = team.getMemberList();
                         for (int j = 0; j < memberList.size(); j++) {
                             if (memberList.get(j).getId().equals(memberId)) {
@@ -171,7 +173,7 @@ public class MemberController {
         }
     }
 
-    public void showMembers(User loggedInUser, ArrayList<Team> teamArray) {
-        util.displayMembers(loggedInUser, teamArray, false, false);
+    public void showMembers(Controller con) {
+        util.displayMembers(con.getLoggedInUser(), con.getTeamArray(), false, false, con.getLanguage());
     }
 }
