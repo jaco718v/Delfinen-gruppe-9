@@ -25,18 +25,20 @@ public class InputHandler {
     public String addUserName(Controller con) {
         UI ui = new UI(con.getLanguage());
         String userName = "";
+        String input;
         boolean enteredUserName = false;
         while (!enteredUserName) {
             ui.displayPleaseTypeUserLoginName();
-            userName = sc.nextLine();
-            if ((!userName.equals("")) && (!userName.equals(" ")) && (!userName.equalsIgnoreCase("chairman")) && (!userName.equalsIgnoreCase("cashier")) && (!userName.equalsIgnoreCase("coach"))) {
+            input = sc.nextLine();
+            userName = util.writeNameParts(input);
+            if ((!userName.equals("")) && (!userName.equals("null")) && (!util.tryParseInt(userName))) {
                 enteredUserName = true;
             }
             if (!enteredUserName) {
-                ui.displayPleaseEnterValidName(userName);
+                ui.displayPleaseEnterValidName(input);
             }
         }
-        return util.writeNameParts(userName);
+        return userName;
     }
 
     public String addUserPassword(Controller con) {
@@ -77,18 +79,20 @@ public class InputHandler {
     public String addMemberName(Controller con) {
         UI ui = new UI(con.getLanguage());
         String memberName = "";
+        String input;
         boolean enteredMemberName = false;
         while (!enteredMemberName) {
             ui.displayPleaseEnterMemberName();
-            memberName = sc.nextLine();
-            if ((!memberName.equals("")) && (!memberName.equals(" ")) && (!util.tryParseInt(memberName))) {
+            input = sc.nextLine();
+            memberName = util.writeNameParts(input);
+            if ((!memberName.equals("")) && (!memberName.equals("null")) && (!util.tryParseInt(memberName))) {
                 enteredMemberName = true;
             }
             if (!enteredMemberName) {
-                ui.displayPleaseEnterValidName(memberName);
+                ui.displayPleaseEnterValidName(input);
             }
         }
-        return util.writeNameParts(memberName);
+        return memberName;
     }
 
     public String addMemberBirthDay(Controller con) {
@@ -291,7 +295,6 @@ public class InputHandler {
         int month = 0;
         int year = 0;
         String dateInput = null;
-        int[] date = {day, month, year};
         while (year == 0 || day > 31 || month > 12) {
             try {
                 dateInput = sc.nextLine();
@@ -407,7 +410,7 @@ public class InputHandler {
 
     public int enterUserNameGetId(ArrayList<String[]> userData, Controller con) {
         UI ui = new UI(con.getLanguage());
-        String userName = "";
+        String userName;
         int userID = -1;
         boolean enteredUserName = false;
         while (!enteredUserName) {
@@ -504,7 +507,7 @@ public class InputHandler {
     public User enterCoachToAddToTeam(Controller con) {
         UI ui = new UI(con.getLanguage());
         User coach = null;
-        String coachId = "";
+        String coachId;
         boolean enteredCoachId = false;
         while (!enteredCoachId) {
             ui.displayPleaseTypeCoachId();
@@ -528,7 +531,7 @@ public class InputHandler {
     public Team enterTeamToAddCoachTo(Controller con) {
         UI ui = new UI(con.getLanguage());
         Team team = null;
-        String teamId = "";
+        String teamId;
         boolean enteredTeam = false;
         while (!enteredTeam) {
             ui.displayPleaseTypeTeamNumber();
@@ -553,7 +556,7 @@ public class InputHandler {
     public Team enterTeamToRemoveCoachFrom(Controller con) {
         UI ui = new UI(con.getLanguage());
         Team team = null;
-        String teamId = "";
+        String teamId;
         boolean enteredTeam = false;
         while (!enteredTeam) {
             ui.displayPleaseTypeTeamNumber();
@@ -643,7 +646,7 @@ public class InputHandler {
     public String selectLanguage(Controller con) {
         UI ui = new UI(con.getLanguage());
         String language = "";
-        String input = "";
+        String input;
         boolean enteredLanguage = false;
         while (!enteredLanguage) {
             ui.displayPleaseSelectLanguage();

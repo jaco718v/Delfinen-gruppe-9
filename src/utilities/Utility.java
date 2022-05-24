@@ -22,7 +22,9 @@ public class Utility {
     }
 
     public String capitalizeString(String capitalizeWord) {
-        capitalizeWord = capitalizeWord.substring(0, 1).toUpperCase() + capitalizeWord.substring(1).toLowerCase();
+        if (capitalizeWord.length() > 0) {
+            capitalizeWord = capitalizeWord.substring(0, 1).toUpperCase() + capitalizeWord.substring(1).toLowerCase();
+        }
         return capitalizeWord;
     }
 
@@ -37,18 +39,17 @@ public class Utility {
         int secondWordEndIndex = myName.lastIndexOf(" ");
         int thirdWordStartIndex = myName.lastIndexOf(" ") + 1;
 
-        if (secondWordStartIndex != thirdWordStartIndex) {
-            middleName = myName.substring(secondWordStartIndex, secondWordEndIndex);
-            middleName = capitalizeString(middleName);
-
-            lastName = myName.substring(thirdWordStartIndex);
-            lastName = capitalizeString(lastName);
-        } else {
-            middleName = "";
-            lastName = myName.substring(secondWordStartIndex);
-            lastName = capitalizeString(lastName);
-        }
         if (firstWordEndIndex != -1) {
+            if (secondWordStartIndex != thirdWordStartIndex) {
+                middleName = myName.substring(secondWordStartIndex, secondWordEndIndex);
+                middleName = capitalizeString(middleName);
+                lastName = myName.substring(thirdWordStartIndex);
+                lastName = capitalizeString(lastName);
+            } else {
+                middleName = "";
+                lastName = myName.substring(secondWordStartIndex);
+                lastName = capitalizeString(lastName);
+            }
             firstName = myName.substring(firstWordStartIndex, firstWordEndIndex);
             firstName = capitalizeString(firstName);
             String[] fullNameArray;
@@ -66,7 +67,7 @@ public class Utility {
             }
             return fullName.toString();
         } else {
-            return null;
+            return "null";
         }
     }
 
