@@ -204,6 +204,7 @@ public class UI {
         System.out.println();
         System.out.println(welcome);
     }
+
    // Commands UI
 
     public void listCommandsUserMenuLoginOnly() {
