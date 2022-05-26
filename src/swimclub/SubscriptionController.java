@@ -125,21 +125,19 @@ public class SubscriptionController {
         }
     }
 
-    /*
-    public void calculateSubscriptionsArrears(User loggedInUser) {
+    public void setAllMembersInArrears() {
         ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
-        for (String[] strArray : subscriptionData) {
-            if (LocalDateTime.now().getMonth() == Month.JANUARY.//første dag på året) {
-                    strArray[4].equals("false");
+        for (int i = 0; i < subscriptionData.size(); i++) {
+            String[] subArray = subscriptionData.get(i);
+            if (subArray[5].equals("true")) {
+                subArray[5] = "false";
+                subscriptionData.remove(i);
+                subscriptionData.add(i, subArray);
+            }
+
         }
+        fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
     }
-
-    public void calculateArrearsAtRegistrationDate() {
-        // Lav en metode som tager tilmeldningsdatoen og regner restancen ud, hvis man f.eks melder sig ind midt i år.
-
-
-    }
-    */
 }
 
 

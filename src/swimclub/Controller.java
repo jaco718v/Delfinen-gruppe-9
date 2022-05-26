@@ -8,6 +8,8 @@ import ui.UI;
 import utilities.Utility;
 import utilities.Enum;
 
+import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Controller {
@@ -31,12 +33,26 @@ public class Controller {
     }
 
     private void run() {
+        checkYear();
         createTeams();
         ui.displayWelcome();
         setLanguage();
         while (isRunning) {
             cmds.commands(this, input.getSc());
         }
+    }
+
+    private void checkYear() {
+            ArrayList<String[]> yearData = fileHandler.readCSV("YearTracker.csv");
+            if (yearData.size() > 0) {
+                String[] yearArray = yearData.get(0);
+                if (!yearArray[0].equals(String.valueOf(LocalDateTime.now().getYear()))) {
+                    subscriptionController.setAllMembersInArrears();
+                }
+            } else {
+                yearData.add(new String[] { String.valueOf(LocalDateTime.now().getYear()) });
+                fileHandler.overwriteCSV("YearTracker.csv", yearData);
+            }
     }
 
     private void createTeams() {
