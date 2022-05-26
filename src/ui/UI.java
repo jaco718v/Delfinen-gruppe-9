@@ -705,17 +705,18 @@ public class UI {
         }
     }
 
-    public void displaySubscription(String[] strArray) {
-        System.out.print(memberIdColon + strArray[0] + memberNameColon + util.addDotsToStringToFillXCharacters(strArray[1], 35) + memberAgeColon + util.convertDateToAge(strArray[2]));
-        if (strArray[3].equals("true")) {
+    public void displaySubscription(String[] strArray, double arrearsAmount) {
+        System.out.print(memberIdColon + strArray[0] + memberNameColon + util.addDotsToStringToFillXCharacters(strArray[2], 35) + memberAgeColon + util.convertDateToAge(strArray[3]));
+        if (strArray[4].equals("true")) {
             System.out.print(memberActive);
-        } else if (strArray[3].equals("false")) {
+        } else if (strArray[4].equals("false")) {
             System.out.print(memberPassive);
         }
-        if (strArray[4].equals("true")) {
+        if (strArray[5].equals("true")) {
             System.out.print(hasPaid);
-        } else if (strArray[4].equals("false")) {
+        } else if (strArray[5].equals("false")) {
             System.out.print(isInArrears);
+            System.out.printf(" - %.2fkr.", arrearsAmount);
         }
         System.out.println();
     }
@@ -757,9 +758,9 @@ public class UI {
         System.out.println(memberListFull);
     }
 
-    public void displayUpdatedMemberSubscription(String[] strArray) {
+    public void displayUpdatedMemberSubscription(String[] strArray, double arrearsAmount) {
         System.out.println(updatedMemberSubscription);
-        displaySubscription(strArray);
+        displaySubscription(strArray, arrearsAmount);
     }
 
     public void displayWhatToChangeCompetitive() {

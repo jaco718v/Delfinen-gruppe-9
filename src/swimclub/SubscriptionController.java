@@ -7,6 +7,7 @@ import ui.InputHandler;
 import ui.UI;
 import utilities.Utility;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class SubscriptionController {
@@ -26,17 +27,18 @@ public class SubscriptionController {
                 if (util.tryParseInt(foundId)) {
                     foundIdInt = Integer.parseInt(foundId);
                 }
-                String[] strArray = subscriptionData.get(foundIdInt);
+                String[] subArray = subscriptionData.get(foundIdInt);
                 String userPaymentStatusInput = input.enterUserPaymentStatus(con);
                 if (userPaymentStatusInput.equals("1")) {
-                    strArray[4] = "true";
+                    subArray[5] = "true";
                 } else if (userPaymentStatusInput.equals("2")) {
-                    strArray[4] = "false";
+                    subArray[5] = "false";
                 }
                 subscriptionData.remove(foundIdInt);
-                subscriptionData.add(foundIdInt, strArray);
+                subscriptionData.add(foundIdInt, subArray);
                 String[] printArray = subscriptionData.get(foundIdInt);
-                ui.displayUpdatedMemberSubscription(printArray);
+                double arrearsAmount = util.calculateArrearsAmount(printArray);
+                ui.displayUpdatedMemberSubscription(printArray, arrearsAmount);
                 fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
             }
         } else {
@@ -47,16 +49,20 @@ public class SubscriptionController {
     public void updateSubscriptions() {
         ArrayList<String[]> memberData = fileHandler.readCSV("Members.csv");
         ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
-        for (String[] strArray : memberData) {
+        for (String[] memberArray : memberData) {
             boolean isRegistered = false;
             for (String[] subArray : subscriptionData) {
-                if (subArray[0].equals(strArray[0])) {
+                if (subArray[0].equals(memberArray[0])) {
                     isRegistered = true;
                     break;
                 }
             }
             if (!isRegistered) {
-                subscriptionData.add(new String[]{strArray[0], strArray[1], strArray[2], strArray[3], "false"});
+                int day = LocalDateTime.now().getDayOfMonth();
+                int month = LocalDateTime.now().getMonthValue();
+                int year = LocalDateTime.now().getYear();
+                String inArrearsDate = String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + year;
+                subscriptionData.add(new String[] { memberArray[0], memberArray[1], memberArray[2], memberArray[3], memberArray[4], "false", inArrearsDate });
                 fileHandler.overwriteCSV("Subscriptions.csv", subscriptionData);
             }
         }
@@ -67,8 +73,9 @@ public class SubscriptionController {
         if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
             updateSubscriptions();
             ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
-            for (String[] strArray : subscriptionData) {
-                ui.displaySubscription(strArray);
+            for (String[] subArray : subscriptionData) {
+                double arrearsAmount = util.calculateArrearsAmount(subArray);
+                ui.displaySubscription(subArray, arrearsAmount);
             }
         } else {
             ui.displayLoggedInUserNoPrivilege();
@@ -81,9 +88,10 @@ public class SubscriptionController {
         if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
             updateSubscriptions();
             ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
-            for (String[] strArray : subscriptionData) {
-                if (strArray[4].equals("false")) {
-                    ui.displaySubscription(strArray);
+            for (String[] subArray : subscriptionData) {
+                if (subArray[5].equals("false")) {
+                    double arrearsAmount = util.calculateArrearsAmount(subArray);
+                    ui.displaySubscription(subArray, arrearsAmount);
                 }
             }
         } else {
