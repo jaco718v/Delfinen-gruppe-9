@@ -5,6 +5,7 @@ import membership.Team;
 import utilities.Enum;
 import ui.InputHandler;
 import ui.UI;
+
 import java.util.ArrayList;
 
 public class UserController {
@@ -43,19 +44,19 @@ public class UserController {
                 ArrayList<String[]> newData = new ArrayList<>();
                 switch (userType) {
                     case "1" -> {
-                        newData.add(new String[] { userName, userPassword, Enum.UserType.ADMIN.name() });
+                        newData.add(new String[]{userName, userPassword, Enum.UserType.ADMIN.name()});
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                     case "2" -> {
-                        newData.add(new String[] { userName, userPassword, Enum.UserType.CHAIRMAN.name() });
+                        newData.add(new String[]{userName, userPassword, Enum.UserType.CHAIRMAN.name()});
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                     case "3" -> {
-                        newData.add(new String[] { userName, userPassword, Enum.UserType.CASHIER.name() });
+                        newData.add(new String[]{userName, userPassword, Enum.UserType.CASHIER.name()});
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                     case "4" -> {
-                        newData.add(new String[] { userName, userPassword, Enum.UserType.COACH.name() });
+                        newData.add(new String[]{userName, userPassword, Enum.UserType.COACH.name()});
                         fileHandler.writeToCSV("Users.csv", newData);
                     }
                 }
@@ -90,7 +91,7 @@ public class UserController {
                             try {
                                 if ((teamDataArray[2] != null) && (strArray[0].equals(teamDataArray[2]))) {
                                     teamData.remove(i);
-                                    teamData.add(i, new String[] { teamDataArray[0], teamDataArray[1] });
+                                    teamData.add(i, new String[]{teamDataArray[0], teamDataArray[1]});
                                 }
                             } catch (ArrayIndexOutOfBoundsException ignored) {
 

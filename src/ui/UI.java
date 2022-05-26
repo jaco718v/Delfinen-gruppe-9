@@ -14,6 +14,7 @@ public class UI {
     public UI(String language) {
         setLanguage(language);
     }
+
     private final Utility util = new Utility();
     private final UILanguageTranslations lt = new UILanguageTranslations();
     private String userCommands = "User Commands:";
@@ -68,10 +69,10 @@ public class UI {
     private String typeUserPassword = "Please type user login password: ";
     private String invalidPassword = "Invalid password, try something else than: ";
     private String selectUserTypes = "Please select one of the following user types:";
-    private String admin1 = "1. ADMIN";
-    private String chairman2 = "2. CHAIRMAN";
-    private String cashier3 = "3. CASHIER";
-    private String coach4 = "4. COACH";
+    private String admin1 = "1. Admin";
+    private String chairman2 = "2. Chairman";
+    private String cashier3 = "3. Cashier";
+    private String coach4 = "4. Coach";
     private String selectUserType = "Select user type: ";
     private String pleaseEnterId = "Please enter the ID of the User: ";
     private String noSuchMember = "No such member found.";
@@ -205,7 +206,7 @@ public class UI {
         System.out.println(welcome);
     }
 
-   // Commands UI
+    // Commands UI
 
     public void listCommandsUserMenuLoginOnly() {
         System.out.println();
@@ -439,7 +440,7 @@ public class UI {
         System.out.println(invalidBirthYear);
     }
 
-    public void displayActiveOrPassiveOptions(){
+    public void displayActiveOrPassiveOptions() {
         System.out.println();
         System.out.println(activeOrPassiveMember);
         System.out.println(active1Menu);
@@ -467,7 +468,7 @@ public class UI {
         System.out.print(selectCommand);
     }
 
-    public void displayCompOrReg(){
+    public void displayCompOrReg() {
         System.out.println(noSuchOption);
     }
 
@@ -480,7 +481,7 @@ public class UI {
         System.out.println(invalidRecordDate);
     }
 
-    public void showExpectedSubscriptionFees(double subscriptionFees) {
+    public void displayExpectedSubscriptionFees(double subscriptionFees) {
         System.out.println();
         System.out.println(expectedSubscriptionFees);
         System.out.println(subscriptionFees + " kr.");
@@ -495,7 +496,7 @@ public class UI {
         System.out.println(invalidCompetitiveMemberId);
     }
 
-    public void displayNoMemberRecords(){
+    public void displayNoMemberRecords() {
         System.out.println(noRecordsFound);
     }
 
@@ -564,14 +565,18 @@ public class UI {
         System.out.println();
         System.out.println("Top 5 " + turnEnumSwimDisciplineToString(swimDisciplineRecords.get(0).getSWIM_DISCIPLINE()) + top5swimmers);
         System.out.println("1. " + swimDisciplineRecords.get(0).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(0).getMemberID()));
-        if(swimDisciplineRecords.size()>1){
-        System.out.println("2. " + swimDisciplineRecords.get(1).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(1).getMemberID()));}
-        if(swimDisciplineRecords.size()>2){
-        System.out.println("3. " + swimDisciplineRecords.get(2).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(2).getMemberID()));}
-        if(swimDisciplineRecords.size()>3){
-        System.out.println("4. " + swimDisciplineRecords.get(3).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(3).getMemberID()));}
-        if(swimDisciplineRecords.size()>4){
-        System.out.println("5. " + swimDisciplineRecords.get(4).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(4).getMemberID()));}
+        if (swimDisciplineRecords.size() > 1) {
+            System.out.println("2. " + swimDisciplineRecords.get(1).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(1).getMemberID()));
+        }
+        if (swimDisciplineRecords.size() > 2) {
+            System.out.println("3. " + swimDisciplineRecords.get(2).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(2).getMemberID()));
+        }
+        if (swimDisciplineRecords.size() > 3) {
+            System.out.println("4. " + swimDisciplineRecords.get(3).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(3).getMemberID()));
+        }
+        if (swimDisciplineRecords.size() > 4) {
+            System.out.println("5. " + swimDisciplineRecords.get(4).getRECORD_IN_SECONDS() + "s\t\t" + team.findCompetitiveMemberNameWithID(swimDisciplineRecords.get(4).getMemberID()));
+        }
     }
 
     public void displayTopFiveError() {
@@ -582,15 +587,15 @@ public class UI {
         System.out.println();
         System.out.println("ID: " + memberID + "\t" + memberColon + memberName + "\t" + swimDisciplineColon + turnEnumSwimDisciplineToString(playerRecords.get(0).getSWIM_DISCIPLINE()));
         System.out.print(personalBestTrainingRecord);
-        for(RecordTime record : playerRecords){
-            if(record instanceof RecordTimePractice){
+        for (RecordTime record : playerRecords) {
+            if (record instanceof RecordTimePractice) {
                 System.out.println(record.getRECORD_IN_SECONDS() + "s\t " + record.getDATE_OF_RECORD());
             }
         }
         System.out.println(competitionPlacementsColon);
-        for(RecordTime record : playerRecords){
-            if(record instanceof RecordTimeCompetition){
-                System.out.println(((RecordTimeCompetition) record).getConvention() + "\t placement: " + ((RecordTimeCompetition) record).getPlacing()+"\t Time: "+record.getRECORD_IN_SECONDS()+"s\t"+record.getDATE_OF_RECORD());
+        for (RecordTime record : playerRecords) {
+            if (record instanceof RecordTimeCompetition) {
+                System.out.println(((RecordTimeCompetition) record).getConvention() + "\t placement: " + ((RecordTimeCompetition) record).getPlacing() + "\t Time: " + record.getRECORD_IN_SECONDS() + "s\t" + record.getDATE_OF_RECORD());
             }
         }
     }

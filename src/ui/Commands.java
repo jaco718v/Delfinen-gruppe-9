@@ -1,9 +1,11 @@
 package ui;
+
 import swimclub.Controller;
 
 import java.util.Scanner;
 
 public class Commands {
+
     public void commands(Controller con, Scanner sc) {
         UI ui = new UI(con.getLanguage());
         if (con.getLoggedInUser() != null) {

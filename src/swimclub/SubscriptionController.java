@@ -76,6 +76,21 @@ public class SubscriptionController {
 
     }
 
+    public void showSubscriptionsInArrears(Controller con) {
+        UI ui = new UI(con.getLanguage());
+        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
+            updateSubscriptions();
+            ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
+            for (String[] strArray : subscriptionData) {
+                if (strArray[4].equals("false")) {
+                    ui.displaySubscription(strArray);
+                }
+            }
+        } else {
+            ui.displayLoggedInUserNoPrivilege();
+        }
+    }
+
     public void showExpectedSubscriptionFees(Controller con) {
         UI ui = new UI(con.getLanguage());
         if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
@@ -96,26 +111,12 @@ public class SubscriptionController {
                 }
                 subscriptionSum += team.getCompetitiveMembers().size() * subscription + (team.getMembers().size() - team.getCompetitiveMembers().size()) * subscriptionPassive;
             }
-            ui.showExpectedSubscriptionFees(subscriptionSum);
+            ui.displayExpectedSubscriptionFees(subscriptionSum);
         } else {
             ui.displayLoggedInUserNoPrivilege();
         }
     }
 
-    public void showSubscriptionsInArrears(Controller con) {
-        UI ui = new UI(con.getLanguage());
-        if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
-            updateSubscriptions();
-            ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
-            for (String[] strArray : subscriptionData) {
-                if (strArray[4].equals("false")) {
-                    ui.displaySubscription(strArray);
-                }
-            }
-        } else {
-            ui.displayLoggedInUserNoPrivilege();
-        }
-    }
     /*
     public void calculateSubscriptionsArrears(User loggedInUser) {
         ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");

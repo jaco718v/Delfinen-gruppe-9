@@ -187,8 +187,8 @@ public class Utility {
     }
 
     public Team findCompetitiveTeam(ArrayList<Team> teamArray, Enum.TeamType teamType, Enum.AgeGroup ageGroup) {
-        for(Team team : teamArray){
-            if(team.getTeamType().equals(teamType) && team.getAgeGroup().equals(ageGroup)){
+        for (Team team : teamArray) {
+            if (team.getTeamType().equals(teamType) && team.getAgeGroup().equals(ageGroup)) {
                 return team;
             }
         }

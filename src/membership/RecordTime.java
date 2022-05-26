@@ -8,7 +8,6 @@ public abstract class RecordTime {
     private final double RECORD_IN_SECONDS;
     private final String DATE_OF_RECORD;
 
-
     protected RecordTime(String memberID, Enum.SwimDiscipline swim_discipline, double record_in_seconds, String date_of_record) {
         this.memberID = memberID;
         SWIM_DISCIPLINE = swim_discipline;

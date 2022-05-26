@@ -52,15 +52,15 @@ public class Controller {
                             try {
                                 if (strArray[2] != null) {
                                     newTeam.setCoach(new User(strArray[2], strArray[3], Enum.UserType.valueOf(strArray[4])));
-                                    newTeamData.add(new String[] { newTeam.getTeamType().name(), newTeam.getAgeGroup().name(), newTeam.getCoach().getName(), newTeam.getCoach().getPassword(), newTeam.getCoach().getUserType().name() });
+                                    newTeamData.add(new String[]{newTeam.getTeamType().name(), newTeam.getAgeGroup().name(), newTeam.getCoach().getName(), newTeam.getCoach().getPassword(), newTeam.getCoach().getUserType().name()});
                                 }
                             } catch (ArrayIndexOutOfBoundsException aioobe) {
-                                newTeamData.add(new String[] { newTeam.getTeamType().name(), newTeam.getAgeGroup().name() });
+                                newTeamData.add(new String[]{newTeam.getTeamType().name(), newTeam.getAgeGroup().name()});
                             }
                         }
                     }
                 } else {
-                    newTeamData.add(new String[] { newTeam.getTeamType().name(), newTeam.getAgeGroup().name() });
+                    newTeamData.add(new String[]{newTeam.getTeamType().name(), newTeam.getAgeGroup().name()});
                 }
             }
         }

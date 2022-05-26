@@ -3,6 +3,7 @@ package membership;
 import swimclub.User;
 import utilities.Enum;
 import utilities.Utility;
+
 import java.util.ArrayList;
 
 public class Team {
@@ -37,10 +38,10 @@ public class Team {
         return memberList;
     }
 
-    public ArrayList<Member> getActiveMembers(){
+    public ArrayList<Member> getActiveMembers() {
         ArrayList<Member> activeMembers = new ArrayList<>();
-        for(Member member : this.memberList){
-            if(member.getActive()){
+        for (Member member : this.memberList) {
+            if (member.getActive()) {
                 activeMembers.add(member);
             }
         }
@@ -49,8 +50,8 @@ public class Team {
 
     public ArrayList<Member> getCompetitiveMembers() {
         ArrayList<Member> competitiveMembers = new ArrayList<>();
-        for(Member member : this.memberList){
-            if(member instanceof MemberCompetitive){
+        for (Member member : this.memberList) {
+            if (member instanceof MemberCompetitive) {
                 competitiveMembers.add(member);
             }
         }
@@ -60,45 +61,45 @@ public class Team {
     public ArrayList<Member> getActiveMembersAboveAge(int ageThreshold) {
         ArrayList<Member> membersAboveAge = new ArrayList<>();
         ArrayList<Member> activeMembers = getActiveMembers();
-        for(Member member : activeMembers){
-            if(util.convertDateToAge(member.getBirthDate())>ageThreshold){
+        for (Member member : activeMembers) {
+            if (util.convertDateToAge(member.getBirthDate()) > ageThreshold) {
                 membersAboveAge.add(member);
             }
         }
         return membersAboveAge;
     }
 
-    public String findCompetitiveMemberNameWithID(String memberID){
+    public String findCompetitiveMemberNameWithID(String memberID) {
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getId().equals(memberID)){
+            if (member.getId().equals(memberID)) {
                 return member.getName();
             }
         }
         return null;
     }
 
-    public boolean confirmCompetitiveMemberID(String memberID){
+    public boolean confirmCompetitiveMemberID(String memberID) {
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getId().equals(memberID)){
+            if (member.getId().equals(memberID)) {
                 return true;
             }
         }
         return false;
     }
 
-    public MemberCompetitive findCompetitiveMemberWithID(String memberID){
+    public MemberCompetitive findCompetitiveMemberWithID(String memberID) {
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
-            if (member.getId().equals(memberID)){
-                return (MemberCompetitive)member;
+            if (member.getId().equals(memberID)) {
+                return (MemberCompetitive) member;
             }
         }
         return null;
     }
 
-    public Enum.SwimDiscipline findMemberSwimDiscipline(String memberID){
+    public Enum.SwimDiscipline findMemberSwimDiscipline(String memberID) {
         ArrayList<Member> memberData = getMembers();
         for (Member member : memberData) {
             if (member.getId().equals(memberID) && member instanceof MemberCompetitive memberCompetitive) {
@@ -111,7 +112,7 @@ public class Team {
     public ArrayList<RecordTime> findRecordsOfSwimmer(String memberID) {
         ArrayList<RecordTime> recordList = new ArrayList<>();
         for (Member member : getMembers()) {
-            if(memberID.equals(member.getId())) {
+            if (memberID.equals(member.getId())) {
                 recordList.addAll(((MemberCompetitive) member).getBestPracticeRecords());
                 recordList.addAll(((MemberCompetitive) member).getCompetitions());
             }
@@ -122,8 +123,8 @@ public class Team {
     public ArrayList<RecordTimePractice> findRecordsOfSwimDiscipline(Enum.SwimDiscipline swimDiscipline) {
         ArrayList<RecordTimePractice> recordList = new ArrayList<>();
         for (Member member : getMembers()) {
-            for(RecordTimePractice record : ((MemberCompetitive)member).getBestPracticeRecords()) {
-                if(record.getSWIM_DISCIPLINE().equals(swimDiscipline)){
+            for (RecordTimePractice record : ((MemberCompetitive) member).getBestPracticeRecords()) {
+                if (record.getSWIM_DISCIPLINE().equals(swimDiscipline)) {
                     recordList.add(record);
                 }
             }

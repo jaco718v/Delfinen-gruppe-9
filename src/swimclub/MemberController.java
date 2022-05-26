@@ -35,14 +35,14 @@ public class MemberController {
                     swimDiscipline = String.valueOf(input.addSwimDisciplineToRecordViaInput(con));
                 }
 
-                newMemberData.add(new String[] { memberId, memberSince, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline });
+                newMemberData.add(new String[]{memberId, memberSince, memberName, memberBirthDate, isActive, isCompetitive, swimDiscipline});
                 boolean success = fileHandler.writeToCSV("Members.csv", newMemberData);
                 boolean isActiveBool = isActive.equals("true");
                 for (Team team : con.getTeamArray()) {
                     if ((team.getTeamType() == Enum.TeamType.COMPETITIVE) && (isCompetitive.equals("true")) && (team.getAgeGroup() == Enum.AgeGroup.U18) && (util.convertDateToAge(memberBirthDate) < 18)) {
-                        team.getMemberList().add(new MemberCompetitive(memberId, memberSince, memberName, memberBirthDate, isActiveBool,Enum.SwimDiscipline.valueOf(swimDiscipline)));
+                        team.getMemberList().add(new MemberCompetitive(memberId, memberSince, memberName, memberBirthDate, isActiveBool, Enum.SwimDiscipline.valueOf(swimDiscipline)));
                     } else if ((team.getTeamType() == Enum.TeamType.COMPETITIVE) && (isCompetitive.equals("true")) && (team.getAgeGroup() == Enum.AgeGroup.O18) && (util.convertDateToAge(memberBirthDate) >= 18)) {
-                        team.getMemberList().add(new MemberCompetitive(memberId, memberSince, memberName, memberBirthDate, isActiveBool,Enum.SwimDiscipline.valueOf(swimDiscipline)));
+                        team.getMemberList().add(new MemberCompetitive(memberId, memberSince, memberName, memberBirthDate, isActiveBool, Enum.SwimDiscipline.valueOf(swimDiscipline)));
                     } else if ((team.getTeamType() == Enum.TeamType.REGULAR) && (isCompetitive.equals("false")) && (team.getAgeGroup() == Enum.AgeGroup.U18) && (util.convertDateToAge(memberBirthDate) < 18)) {
                         team.getMemberList().add(new MemberRegular(memberId, memberSince, memberName, memberBirthDate, isActiveBool));
                     } else if ((team.getTeamType() == Enum.TeamType.REGULAR) && (isCompetitive.equals("false")) && (team.getAgeGroup() == Enum.AgeGroup.O18) && (util.convertDateToAge(memberBirthDate) >= 18)) {
@@ -98,7 +98,7 @@ public class MemberController {
                                     case "4" -> {
                                         team.getMemberList().remove(j);
                                         if (isCompetitive) {
-                                            team.getMemberList().add(j, new MemberCompetitive(currentMember.getId(), currentMember.getMemberSinceDate(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive(),Enum.SwimDiscipline.valueOf(array[5])));
+                                            team.getMemberList().add(j, new MemberCompetitive(currentMember.getId(), currentMember.getMemberSinceDate(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive(), Enum.SwimDiscipline.valueOf(array[5])));
                                         } else {
                                             team.getMemberList().add(j, new MemberRegular(currentMember.getId(), currentMember.getMemberSinceDate(), currentMember.getName(), currentMember.getBirthDate(), currentMember.getActive()));
                                         }

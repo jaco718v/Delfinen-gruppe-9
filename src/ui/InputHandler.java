@@ -197,7 +197,7 @@ public class InputHandler {
         UI ui = new UI(con.getLanguage());
         ui.displayChooseTeamTypeCoach();
         Enum.TeamType teamType = null;
-        while(teamType==null){
+        while (teamType == null) {
             String input = sc.nextLine();
             switch (input) {
                 case "1" -> teamType = Enum.TeamType.REGULAR;
@@ -212,7 +212,7 @@ public class InputHandler {
         UI ui = new UI(con.getLanguage());
         ui.displayChooseAgeGroupCoach();
         Enum.AgeGroup ageGroup = null;
-        while(ageGroup==null){
+        while (ageGroup == null) {
             String input = sc.nextLine();
             switch (input) {
                 case "1" -> ageGroup = Enum.AgeGroup.U18;
@@ -232,7 +232,7 @@ public class InputHandler {
 
     public Enum.SwimDiscipline addSwimDisciplineToRecord(Team team, String memberID) {
         Enum.SwimDiscipline swimDiscipline;
-            swimDiscipline = team.findMemberSwimDiscipline(memberID);
+        swimDiscipline = team.findMemberSwimDiscipline(memberID);
         return swimDiscipline;
     }
 
@@ -539,7 +539,7 @@ public class InputHandler {
             if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= con.getTeamArray().size()) && (Integer.parseInt(teamId) > 0)) {
                 for (int i = 0; i < con.getTeamArray().size(); i++) {
                     Team currentTeam = con.getTeamArray().get(i);
-                    if (i+1 == Integer.parseInt(teamId)) {
+                    if (i + 1 == Integer.parseInt(teamId)) {
                         team = currentTeam;
                         enteredTeam = true;
                         break;
@@ -564,7 +564,7 @@ public class InputHandler {
             if ((util.tryParseInt(teamId)) && (Integer.parseInt(teamId) <= con.getTeamArray().size()) && (Integer.parseInt(teamId) > 0)) {
                 for (int i = 0; i < con.getTeamArray().size(); i++) {
                     Team currentTeam = con.getTeamArray().get(i);
-                    if (i+1 == Integer.parseInt(teamId)) {
+                    if (i + 1 == Integer.parseInt(teamId)) {
                         if (currentTeam.getCoach() != null) {
                             team = currentTeam;
                             enteredTeam = true;
