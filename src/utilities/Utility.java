@@ -245,15 +245,7 @@ public class Utility {
                 if (memberAge < 18) {
                     arrearsAmount = getArrearsAmount(activeU18Price, membershipMonths, arrearsMonths, monthsSinceNewYears, monthsUntilNewYears);
                 } else if (memberAge < 60) {
-                    if (membershipMonths < monthsSinceNewYears) {
-                        arrearsAmount = activeO18Price / 12 * membershipMonths;
-                    } else {
-                        if ((arrearsMonths/12) > 0) {
-                            arrearsAmount = activeO18Price * Math.ceil((double)(arrearsMonths + monthsUntilNewYears)/12);
-                        } else {
-                            arrearsAmount = activeO18Price;
-                        }
-                    }
+                    arrearsAmount = getArrearsAmount(activeO18Price, membershipMonths, arrearsMonths, monthsSinceNewYears, monthsUntilNewYears);
                 } else {
                     arrearsAmount = getArrearsAmount(active060Price, membershipMonths, arrearsMonths, monthsSinceNewYears, monthsUntilNewYears);
                 }
