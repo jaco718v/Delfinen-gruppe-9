@@ -138,6 +138,7 @@ public class MemberController {
                 if (memberArray[0].equals(memberId)) {
                     memberData.remove(i);
                     fileHandler.overwriteCSV("Members.csv", memberData);
+                    removeRecordsFromCSV(memberId);
                     for (Team team : con.getTeamArray()) {
                         ArrayList<Member> memberList = team.getMemberList();
                         for (int j = 0; j < memberList.size(); j++) {
@@ -171,6 +172,18 @@ public class MemberController {
         } else {
             ui.displayLoggedInUserNoPrivilege();
         }
+    }
+
+    private void removeRecordsFromCSV(String memberId){
+        ArrayList<String[]> recordData = fileHandler.readCSV("Records.csv");
+        int counter = 0;
+        for(int i = 0; i<recordData.size();i++){
+            if(recordData.get(counter)[0].equals(memberId)){
+                recordData.remove(counter--);
+            }
+            counter++;
+        }
+        fileHandler.overwriteCSV("Records.csv", recordData);
     }
 
     public void showMembers(Controller con) {
