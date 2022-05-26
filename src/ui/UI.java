@@ -316,6 +316,7 @@ public class UI {
     // Member Controller UI
 
     public void displayAddMember(boolean success) {
+        System.out.println();
         if (success) {
             System.out.println(addMemberSuccess);
         } else {
@@ -324,6 +325,7 @@ public class UI {
     }
 
     public void displayRemoveMember(boolean success) {
+        System.out.println();
         if (success) {
             System.out.println(removeMemberSuccess);
         } else {
@@ -334,6 +336,7 @@ public class UI {
     // User Controller UI
 
     public void displayLoginUser(boolean success) {
+        System.out.println();
         if (success) {
             System.out.println(loginSuccess);
         } else {
@@ -342,6 +345,7 @@ public class UI {
     }
 
     public void displayAddUser(boolean success) {
+        System.out.println();
         if (success) {
             System.out.println(addUserSuccess);
         } else {
@@ -350,6 +354,7 @@ public class UI {
     }
 
     public void displayRemoveUser(boolean success) {
+        System.out.println();
         if (success) {
             System.out.println(removeUserSuccess);
         } else {
@@ -378,14 +383,17 @@ public class UI {
     }
 
     public void displayPleaseEnterValidName(String memberName) {
+        System.out.println();
         System.out.println(invalidName + memberName);
     }
 
     public void displayPleaseTypeLoginPassword() {
+        System.out.println();
         System.out.print(typeUserPassword);
     }
 
     public void displayBadPassword(String userPassword) {
+        System.out.println();
         System.out.println(invalidPassword + userPassword);
     }
 
@@ -405,6 +413,7 @@ public class UI {
     }
 
     public void displayNoSuchMemberFound() {
+        System.out.println();
         System.out.println(noSuchMember);
     }
 
@@ -419,6 +428,7 @@ public class UI {
     }
 
     public void displayPleaseEnterValidBirthDay() {
+        System.out.println();
         System.out.println(invalidBirthDay);
     }
 
@@ -428,6 +438,7 @@ public class UI {
     }
 
     public void displayPleaseEnterValidBirthMonth() {
+        System.out.println();
         System.out.println(invalidBirthMonth);
     }
 
@@ -437,6 +448,7 @@ public class UI {
     }
 
     public void displayPleaseEnterValidBirthYear() {
+        System.out.println();
         System.out.println(invalidBirthYear);
     }
 
@@ -449,6 +461,7 @@ public class UI {
     }
 
     public void displayActiveOrPassiveOutcome(boolean b) {
+        System.out.println();
         if (b) {
             System.out.println(memberNowActive);
         } else {
@@ -457,6 +470,7 @@ public class UI {
     }
 
     public void displayDefaultOption() {
+        System.out.println();
         System.out.println(defaultInvalid);
     }
 
@@ -469,6 +483,7 @@ public class UI {
     }
 
     public void displayCompOrReg() {
+        System.out.println();
         System.out.println(noSuchOption);
     }
 
@@ -478,6 +493,7 @@ public class UI {
     }
 
     public void displayEnterDateException() {
+        System.out.println();
         System.out.println(invalidRecordDate);
     }
 
@@ -493,10 +509,12 @@ public class UI {
     }
 
     public void displayMemberIDNotFound() {
+        System.out.println();
         System.out.println(invalidCompetitiveMemberId);
     }
 
     public void displayNoMemberRecords() {
+        System.out.println();
         System.out.println(noRecordsFound);
     }
 
@@ -519,6 +537,7 @@ public class UI {
     }
 
     public void displayEnterSwimDisciplineException() {
+        System.out.println();
         System.out.println(invalidSwimDiscipline);
     }
 
@@ -528,6 +547,7 @@ public class UI {
     }
 
     public void displayEnterRecordInSecondsException() {
+        System.out.println();
         System.out.println(inputError);
     }
 
@@ -542,10 +562,12 @@ public class UI {
     }
 
     public void displayEnterPlacingException() {
+        System.out.println();
         System.out.println(inputErrorNumber);
     }
 
     public void displayRecordAddSucces(String recordType) {
+        System.out.println();
         System.out.println(successfullyAdded + recordType + recordToSwimmer);
     }
 
@@ -558,6 +580,7 @@ public class UI {
     }
 
     public void displayDecideAgeGroupTopFiveError() {
+        System.out.println();
         System.out.println(ageGroupTop5Error);
     }
 
@@ -580,6 +603,7 @@ public class UI {
     }
 
     public void displayTopFiveError() {
+        System.out.println();
         System.out.println(noRecordsInDiscipline);
     }
 
@@ -608,6 +632,7 @@ public class UI {
     }
 
     public void displayChooseTeamTypeCoachError() {
+        System.out.println();
         System.out.println(invalidTypeCoach);
     }
 
@@ -620,6 +645,7 @@ public class UI {
     }
 
     public void displayChooseAgeGroupCoachError() {
+        System.out.println();
         System.out.println(invalidTypeCoach);
     }
 
@@ -635,10 +661,12 @@ public class UI {
     }
 
     public void displayWrongPassword() {
+        System.out.println();
         System.out.println(wrongPassword);
     }
 
     public void displayNoRegisteredUsers() {
+        System.out.println();
         System.out.println(cantLoginNoRegisteredUsers);
     }
 
@@ -650,6 +678,7 @@ public class UI {
     }
 
     public void displayLoggedInUserNoPrivilege() {
+        System.out.println();
         System.out.println(userNoPrivilege);
     }
 
@@ -677,6 +706,7 @@ public class UI {
     }
 
     public void displayTeamInformation(int teamNumber, Team team) {
+        System.out.println();
         System.out.print(teamInfoTeam + teamNumber + teamInfoTeamType + util.addSpacesToStringToFillXCharacters(util.capitalizeString(team.getTeamType().name()), 11) + teamInfoAgeGroup + team.getAgeGroup().name());
         if (team.getCoach() != null) {
             System.out.println(teamInfoCoach + team.getCoach().getName());
@@ -686,10 +716,12 @@ public class UI {
     }
 
     public void displayReturningToMainMenu() {
+        System.out.println();
         System.out.println(returnToMainMenu);
     }
 
     public void displayShuttingDown() {
+        System.out.println();
         System.out.println(systemShutdown);
     }
 
@@ -755,6 +787,7 @@ public class UI {
     }
 
     public void displayMemberListFull() {
+        System.out.println();
         System.out.println(memberListFull);
     }
 
@@ -785,10 +818,12 @@ public class UI {
     }
 
     public void displayMemberIdOutOfRange() {
+        System.out.println();
         System.out.println(memberIdOutOfRange);
     }
 
     public void displayPleaseEnterValidCoachId(String coachId) {
+        System.out.println();
         System.out.println(invalidCoachId + coachId);
     }
 
@@ -828,6 +863,10 @@ public class UI {
 
     public void displayInvalidInputPleaseEnterNumberBetweenXandY(int x, int y) {
         System.out.println(invalidInputNumber + x + invalidInputAnd + y + ".");
+    }
+
+    public void displayEmptyLine() {
+        System.out.println();
     }
 
     public void setLanguage(String language) {

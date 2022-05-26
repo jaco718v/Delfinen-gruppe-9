@@ -116,6 +116,7 @@ public class UserController {
         UI ui = new UI(con.getLanguage());
         if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CHAIRMAN)) {
             ArrayList<String[]> userData = fileHandler.readCSV("Users.csv");
+            ui.displayEmptyLine();
             for (int i = 0; i < userData.size(); i++) {
                 String[] strArray = userData.get(i);
                 ui.displayUserInformation(strArray, con.getLoggedInUser(), i);

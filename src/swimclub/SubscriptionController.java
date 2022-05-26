@@ -73,6 +73,7 @@ public class SubscriptionController {
         if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
             updateSubscriptions();
             ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
+            ui.displayEmptyLine();
             for (String[] subArray : subscriptionData) {
                 double arrearsAmount = util.calculateArrearsAmount(subArray);
                 ui.displaySubscription(subArray, arrearsAmount);
@@ -88,6 +89,7 @@ public class SubscriptionController {
         if ((con.getLoggedInUser().getUserType() == Enum.UserType.ADMIN) || (con.getLoggedInUser().getUserType() == Enum.UserType.CASHIER)) {
             updateSubscriptions();
             ArrayList<String[]> subscriptionData = fileHandler.readCSV("Subscriptions.csv");
+            ui.displayEmptyLine();
             for (String[] subArray : subscriptionData) {
                 if (subArray[5].equals("false")) {
                     double arrearsAmount = util.calculateArrearsAmount(subArray);
