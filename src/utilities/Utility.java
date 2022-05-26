@@ -242,35 +242,43 @@ public class Utility {
             if (subArray[4].equals("false")) {
                 if (membershipMonths < monthsSinceNewYears) {
                     arrearsAmount = passivePrice / 12 * membershipMonths + monthsUntilNewYears;
-                } else if (arrearsMonths <= monthsSinceNewYears) {
-                    arrearsAmount = passivePrice / 12 * arrearsMonths;
                 } else {
-                    arrearsAmount = passivePrice * (int)(arrearsMonths/12);
+                    if ((arrearsMonths/12) > 0) {
+                        arrearsAmount = passivePrice * Math.ceil((double)arrearsMonths/12);
+                    } else {
+                        arrearsAmount = passivePrice;
+                    }
                 }
             } else {
                 if (memberAge < 18) {
                     if (membershipMonths < monthsSinceNewYears) {
                         arrearsAmount = activeU18Price / 12 * membershipMonths + monthsUntilNewYears;
-                    } else if (arrearsMonths <= monthsSinceNewYears) {
-                        arrearsAmount = activeU18Price / 12 * arrearsMonths;
                     } else {
-                        arrearsAmount = activeU18Price * (int)(arrearsMonths/12);
+                        if ((arrearsMonths/12) > 0) {
+                            arrearsAmount = activeU18Price * Math.ceil((double)arrearsMonths/12);
+                        } else {
+                            arrearsAmount = activeU18Price;
+                        }
                     }
                 } else if (memberAge < 60) {
                     if (membershipMonths < monthsSinceNewYears) {
                         arrearsAmount = activeO18Price / 12 * membershipMonths;
-                    } else if (arrearsMonths <= monthsSinceNewYears) {
-                        arrearsAmount = activeO18Price / 12 * arrearsMonths;
                     } else {
-                        arrearsAmount = activeO18Price * (int)(arrearsMonths/12);
+                        if ((arrearsMonths/12) > 0) {
+                            arrearsAmount = activeO18Price * Math.ceil((double)arrearsMonths/12);
+                        } else {
+                            arrearsAmount = activeO18Price;
+                        }
                     }
                 } else {
                     if (membershipMonths < monthsSinceNewYears) {
                         arrearsAmount = active060Price / 12 * membershipMonths + monthsUntilNewYears;
-                    } else if (arrearsMonths <= monthsSinceNewYears) {
-                        arrearsAmount = active060Price / 12 * arrearsMonths;
                     } else {
-                        arrearsAmount = active060Price * (int)(arrearsMonths/12);
+                        if ((arrearsMonths/12) > 0) {
+                            arrearsAmount = active060Price * Math.ceil((double)arrearsMonths/12);
+                        } else {
+                            arrearsAmount = active060Price;
+                        }
                     }
                 }
             }
